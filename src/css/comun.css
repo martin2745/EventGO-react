@@ -1,0 +1,109 @@
+/*.p-menubar {
+  background-color: #2196f3 !important;
+}
+
+.surface-card {
+  background-color: #f8f9fa !important;
+}*/
+
+.bandera {
+  width: 30px;
+  height: 20px;
+}
+
+.textoBandera {
+  margin-left: 5px;
+}
+
+.header {
+  margin-right: 10%;
+  margin-left: 10%;
+}
+
+/*Sección de imagenes*/
+section {
+  display: flex;
+  width: 90%; /* Cambiando de 700px a 70% del ancho del contenedor padre */
+  height: 43rem; /* Usando em como medida para la altura (aproximadamente equivalente a 530px) */
+}
+
+section img {
+  width: 0px;
+  flex-grow: 1;
+  object-fit: cover;
+  opacity: 0.8;
+  transition: 0.5s ease;
+}
+
+section img:hover {
+  width: 300px;
+  opacity: 1;
+  filter: contrast(120%);
+}
+
+.foto1 {
+  border-top-left-radius: 25%;
+  border-bottom-left-radius: 25%;
+}
+
+.foto5 {
+  border-top-right-radius: 25%;
+  border-bottom-right-radius: 25%;
+}
+
+/*Form lateral*/
+.formLateral {
+  margin-left: 10%;
+  width: 80%;
+}
+
+.container {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.div1 {
+  width: 50%;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.div2 {
+  width: 50%;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  .formLateral {
+    margin-left: 5%;
+    width: 90%;
+  }
+  .container {
+    flex-direction: column;
+  }
+
+  .div1 {
+    width: 100%;
+  }
+
+  .div2 {
+    width: 100%;
+    margin-left: 5%;
+  }
+}
+
+@media (max-width: 768px) {
+  .formLateral {
+    margin-left: 0;
+    width: 100%;
+  }
+
+  .div1 {
+    width: 100%;
+  }
+
+  .div2 {
+    display: none;
+  }
+}

@@ -1,0 +1,83 @@
+{
+  "bienvenido": "Benvido ao menú principal",
+
+  "main": {
+    "home": "Casa",
+    "instalaciones": "Instalacións",
+    "equipos": "Equipos",
+    "competiciones": "Competicións",
+    "micuenta": "Miña conta",
+    "cerrarSesion": "Pechar sesión"
+  },
+
+  "usuario": {
+    "tituloModificar": "Modificar datos personais",
+    "tituloDetalle": "DETALLE DE USUARIO",
+    "tituloRegistro": "Rexistro",
+    "tituloInicioSesion": "Inicio de sesión",
+    "tituloRecuperarPassword": "Recuperar contrasinal",
+    "login": "Login",
+    "nombre": "Nome de usuario",
+    "contraseña": "Contrasinal",
+    "dni": "DNI",
+    "email": "email",
+    "fechaNac": "Data de nacemento",
+    "pais": "País",
+    "rol": "Rol",
+    "selecPais": "Escolle un país",
+    "selectRol": "Escolle un rol",
+    "usuario": "Usuario",
+    "gerente": "Xerente",
+
+    "validaciones": {
+      "loginVacio": "É necesario un login",
+      "loginInvalidoAlfanumerico": "Login inválido (solo alfanumérico con guión, 3 caracteres mín)",
+      "loginInvalidoTamañoMax": "Login inválido (15 caracteres máx)",
+      "dniVacio": "Ë necesario un DNI",
+      "dniInvalido": "DNI inválido",
+      "dniLetraInvalida": "Letra inválida",
+      "emailVacio": "O correo electrónico do usuario non pode estar baleiro",
+      "emailInvalido": "O correo electrónico non é válido, exemplo: eXample1@eXample1.com",
+      "emailInvalidoTamañoMin": "O correo electrónico non pode ter menos de 3 caracteres",
+      "emailInvalidoTamañoMax": "O correo electrónico non pode ter máis de 40 caracteres",
+      "nombreVacio": "Ë necesario un nome",
+      "nombreInvalidoAlfabetico": "Nome inválido (solo alfabético)",
+      "nombreInvalidoTamañoMax": "Nome inválido (40 caracteres máx)",
+      "contraseñaVacia": "Ë necesario unha contrasinal",
+      "contraseñaInvalidaTamañoMax": "Contrasinal inválida (16 caracteres máx)",
+      "contraseñaInvalidaTamañoMin": "Contrasinal inválida (8 caracteres mín)",
+      "contraseñaInvalida": "O contrasinal non segue as instrucións de formato"
+    }
+  },
+
+  "botones": {
+    "cancelar": "Cancelar",
+    "modificarPerfil": "Modificar perfil",
+    "editar": "Editar",
+    "registrarse": "Rexistrarse",
+    "recuperarPassword": "Recuperar contrasinal",
+    "iniciarSesion": "Iniciar sesión",
+    "iniciar": "INICIAR"
+  },
+
+  "bandera": {
+    "Spain": "Español",
+    "United_Kingdom": "Inglés",
+    "Galicia": "Galego"
+  },
+
+  "mensajes": {
+    "registroRealizado": "Rexistro realizado con éxito",
+    "si": "Si",
+    "no": "Non",
+    "instruccionesContraseña": {
+      "recomendaciones": "Recomendacións",
+      "instruccion1": "A contrasinal debe ter entre 8 e 16 caracteres.",
+      "instruccion2": "Al menos un díxito.",
+      "instruccion3": "Al menos unha minúscula.",
+      "instruccion4": "Al menos unha maiúscula."
+    },
+
+    "error": "ERROR"
+  }
+}

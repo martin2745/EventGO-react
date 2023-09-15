@@ -1,0 +1,84 @@
+{
+  "bienvenido": "Welcome to main menu",
+
+  "main": {
+    "home": "Home",
+    "instalaciones": "Facilities",
+    "equipos": "Teams",
+    "competiciones": "Competitions",
+    "micuenta": "My account",
+    "cerrarSesion": "Sign off"
+  },
+
+  "usuario": {
+    "tituloModificar": "Modify personal data",
+    "tituloDetalle": "USER DETAIL",
+    "tituloRegistro": "Registry",
+    "tituloInicioSesion": "Login",
+    "tituloRecuperarPassword": "Recover password",
+    "login": "Login",
+    "nombre": "Username",
+    "contraseña": "Password",
+    "dni": "ID",
+    "email": "email",
+    "fechaNac": "Date of birth",
+    "pais": "Country",
+    "rol": "Role",
+    "selecPais": "Select a country",
+    "selectRol": "Select a role",
+    "usuario": "User",
+    "gerente": "Manager",
+
+    "validaciones": {
+      "loginVacio": "A login is required",
+      "loginInvalidoAlfanumerico": "Invalid login (only alphanumeric with hyphen, 3 characters min)",
+      "loginInvalidoTamañoMax": "Invalid login (15 characters max)",
+      "loginInvalidoAlfabetico": "Login name (alphabetical only)",
+      "dniVacio": "Es necesario un DNI",
+      "dniInvalido": "An ID is required",
+      "dniLetraInvalida": "Invalid letter",
+      "emailVacio": "The user email cannot be empty",
+      "emailInvalido": "The email is invalid, example: eXample1@eXample1.com",
+      "emailInvalidoTamañoMin": "The email cannot be less than 3 characters",
+      "emailInvalidoTamañoMax": "The email cannot be more than 40 characters",
+      "nombreVacio": "A name is required",
+      "nombreInvalidoAlfabetico": "Invalid name (alphabetical only)",
+      "nombreInvalidoTamañoMax": "Invalid name (40 characters max)",
+      "contraseñaVacia": "A password is required",
+      "contraseñaInvalidaTamañoMax": "Invalid password (16 characters max)",
+      "contraseñaInvalidaTamañoMin": "Invalid password (8 characters max)",
+      "contraseñaInvalida": "The password does not follow formatting instructions"
+    }
+  },
+
+  "botones": {
+    "cancelar": "Cancel",
+    "modificarPerfil": "Modify profile",
+    "editar": "Edit",
+    "registrarse": "Sign in",
+    "recuperarPassword": "Recover password",
+    "iniciarSesion": "Log in",
+    "iniciar": "START"
+  },
+
+  "bandera": {
+    "Spain": "Spanish",
+    "United_Kingdom": "English",
+    "Galicia": "Galician"
+  },
+
+  "mensajes": {
+    "registroRealizado": "Registration successful",
+    "si": "Yes",
+    "no": "No",
+    "instruccionesContraseña": {
+      "recomendaciones": "Recommendations",
+      "instruccion1": "The password must be between 8 and 16 characters.",
+      "instruccion2": "At least one digit.",
+      "instruccion3": "At least one lowercase.",
+      "instruccion4": "At least one capital letter."
+    },
+
+    "error": "ERROR"
+  }
+}
