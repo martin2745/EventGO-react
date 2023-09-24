@@ -3,7 +3,7 @@
 
   "main": {
     "home": "Casa",
-    "instalaciones": "Instalacións",
+    "usuarios": "Usuarios",
     "equipos": "Equipos",
     "competiciones": "Competicións",
     "micuenta": "Miña conta",
@@ -12,6 +12,7 @@
 
   "usuario": {
     "tituloModificar": "Modificar datos personais",
+    "tituloEditarPassword": "Editar contrasinal",
     "tituloDetalle": "DETALLE DE USUARIO",
     "tituloRegistro": "Rexistro",
     "tituloInicioSesion": "Inicio de sesión",
@@ -19,8 +20,9 @@
     "login": "Login",
     "nombre": "Nome de usuario",
     "contraseña": "Contrasinal",
-    "dni": "DNI",
-    "email": "email",
+    "repitaContraseña": "Repita o contrasinal",
+    "dni": "Dni",
+    "email": "Correo electrónico",
     "fechaNac": "Data de nacemento",
     "pais": "País",
     "rol": "Rol",
@@ -35,6 +37,7 @@
       "loginInvalidoTamañoMax": "Login inválido (15 caracteres máx)",
       "dniVacio": "Ë necesario un DNI",
       "dniInvalido": "DNI inválido",
+      "dniInvalidoTamañoMax": "O dni non pode ter mais de 9 caracteres",
       "dniLetraInvalida": "Letra inválida",
       "emailVacio": "O correo electrónico do usuario non pode estar baleiro",
       "emailInvalido": "O correo electrónico non é válido, exemplo: eXample1@eXample1.com",
@@ -46,18 +49,30 @@
       "contraseñaVacia": "Ë necesario unha contrasinal",
       "contraseñaInvalidaTamañoMax": "Contrasinal inválida (16 caracteres máx)",
       "contraseñaInvalidaTamañoMin": "Contrasinal inválida (8 caracteres mín)",
+      "contraseñasNoCoinciden": "As duas contrasinais deben de coincidir",
       "contraseñaInvalida": "O contrasinal non segue as instrucións de formato"
     }
   },
 
   "botones": {
     "cancelar": "Cancelar",
-    "modificarPerfil": "Modificar perfil",
-    "editar": "Editar",
+    "modificarPerfil": "Teus datos persoais",
     "registrarse": "Rexistrarse",
     "recuperarPassword": "Recuperar contrasinal",
     "iniciarSesion": "Iniciar sesión",
-    "iniciar": "INICIAR"
+    "iniciar": "INICIAR",
+    "subirImagen": "Subir imaxen",
+    "seleccionarArchivo": "Seleccionar arquivo",
+    "cambiarPassword": "Cambiar contrasinal",
+    "editarDatos": "Clica para editar os seus datos",
+    "nuevo": "Novo",
+    "crear": "Crear",
+    "buscar": "Buscar",
+    "editar": "Editar",
+    "eliminar": "Eliminar",
+    "verEnDetalle": "Ver en detalle",
+    "buscarClave": "Buscar por palabra clave",
+    "recargar": "Recargar"
   },
 
   "bandera": {
@@ -68,7 +83,12 @@
 
   "mensajes": {
     "registroRealizado": "Rexistro realizado con éxito",
+    "creacionElemento": "A creación realizouse con éxito",
+    "edicionElemento": "A edición realizouse con éxito",
+    "recuperarPasswordRealizado": "Contrasinal cambiada con éxito",
+    "eliminacionElemento": "A eliminación realizouse correctamente",
     "si": "Si",
+    "buscar": "Buscar",
     "no": "Non",
     "instruccionesContraseña": {
       "recomendaciones": "Recomendacións",
@@ -77,7 +97,90 @@
       "instruccion3": "Al menos unha minúscula.",
       "instruccion4": "Al menos unha maiúscula."
     },
+    "tituloModalCrear": "Vai crear un elemento no sistema",
+    "tituloModalBuscar": "Buscar elemento no sistema",
+    "tituloModalEditar": "Vai a editar un elemento do sistema",
+    "tituloModalVerEnDetalle": "Información do elemento no sistema",
+    "tituloModalBorrado": "Vai a eliminar un elemento do sistema",
+    "preguntaModalBorrado": "Estás seguro de que queres eliminar ",
+    "tituloModalEditarPassword": "Cambiar a contrasinal do usuario",
+    "tituloModalSubirImagen": "Suba unha imaxen para o usuario",
 
     "error": "ERROR"
-  }
+  },
+
+  "cuenta": {
+    "funcionalidadUsuario": "As persoas co rol de Usuario teñen a posibilidade de crear amizade con outros usuarios e xestores de eventos en EventGO. Os usuarios poderán compartir eventos do seu interese e rexistrarse neles se queren participar. Ademais , poden comentar que lles pareceu o evento",
+    "funcionalidadGestor": "Os xestores poden ter todas as funcionalidades dun usuario habitual, é dicir, poden compartir eventos de interese para os seus amigos e rexistrarse noutros eventos. Por outra banda, tamén podes crear os seus propios eventos para a comunidade EventGO.",
+    "funcionalidadAdministrador": "O administrador pode realizar todas as funcionalidades do sistema. Podes xestionar categorías de todos os eventos, crear eventos e mesmo compartilos. Ten a funcionalidade de moderar as accións dos usuarios dentro de EventGO."
+  },
+
+  "columnas": {
+    "imagenUsuario": "Imaxen",
+    "login": "Login",
+    "nombre": "Nome",
+    "dni": "Dni",
+    "email": "Email",
+    "rol": "Rol",
+    "acciones": "Accións"
+  },
+
+  "footer": {
+    "totalDe": "Total de ",
+    "usuarios": " usuarios"
+  },
+
+  "ERROR_INESPERADO": "Erro inesperado",
+
+  "LOGIN_VACIO": "O nome de usuario non pode estar baleiro",
+  "PASSWORD_VACIO": "O contrasinal de usuario non pode estar baleiro",
+  "LOGIN_ALFANUMERICO": "O nome de usuario só pode conter caracteres alfanuméricos",
+  "LOGIN_TAMANHO_MINIMO": "O nome de usuario non pode ter menos de 3 caracteres",
+  "LOGIN_TAMANHO_MAXIMO": "O nome de usuario non pode ter máis de 15 caracteres",
+  "PASSWORD_ALFANUMERICO": "O contrasinal só pode conter caracteres alfanuméricos e especiais",
+  "PASSWORD_TAMANHO_MINIMO": "O contrasinal non pode ter menos de 3 caracteres",
+  "PASSWORD_TAMANHO_MAXIMO": "O contrasinal non pode ter máis de 16 caracteres",
+
+  "LOGIN_NO_EXISTE": "Non existe un usuario con ese nome de usuario no sistema",
+  "LOGIN_PASSWORD_NO_COINCIDEN": "O nome de usuario e o contrasinal non coinciden",
+
+  "NOME_VACIO": "O nome de usuario non pode estar baleiro",
+  "EMAIL_VACIO": "O correo electrónico de usuario non pode estar baleiro",
+  "ROL_VACIO": "O rol de usuario non pode estar baleiro",
+  "DNI_VACIO": "O DNI de usuario non pode estar baleiro",
+  "FECHA_VACIO": "A data non pode estar baleira",
+  "PAIS_VACIO": "O país non pode estar baleiro",
+  "NOME_ALFABETICO": "O nome só pode conter caracteres alfabéticos",
+  "NOME_TAMANHO_MINIMO": "O nome non pode ter menos de 3 caracteres",
+  "NOME_TAMANHO_MAXIMO": "O nome non pode ter máis de 40 caracteres",
+  "EMAIL_FORMATO": "O correo electrónico válido debe ter un nome de usuario con letras, díxitos e certos caracteres especiais, seguido dun símbolo \"@\" e un dominio que pode conter letras, díxitos e caracteres especiais, cun punto (.) antes da extensión que debe ter polo menos dúas letras",
+  "EMAIL_TAMANHO_MINIMO": "O correo electrónico non pode ter menos de 3 caracteres",
+  "EMAIL_TAMANHO_MAXIMO": "O correo electrónico non pode ter máis de 40 caracteres",
+  "ROL_ALFABETICO": "O rol só pode conter caracteres alfabéticos",
+  "ROL_TAMANHO_MINIMO": "O rol non pode ter menos de 3 caracteres",
+  "ROL_TAMANHO_MAXIMO": "O rol non pode ter máis de 20 caracteres",
+  "DNI_FORMATO": "O formato do DNI non é correcto",
+  "DNI_ALFANUMERICO": "El DNI solo conten letras y números",
+  "FECHA_FORMATO": "A data ten un formato incorrecto (aaaa-MM-dd)",
+  "PAIS_ALFABETICO": "O país só pode conter caracteres alfabéticos",
+  "PAIS_TAMANHO_MINIMO": "O país non pode ter menos de 3 caracteres",
+  "PAIS_TAMANHO_MAXIMO": "O país non pode ter máis de 15 caracteres",
+
+  "LOGIN_YA_EXISTE": "Xa existe un usuario con ese nome de usuario no sistema",
+  "EMAIL_YA_EXISTE": "Xa existe un usuario con ese correo electrónico no sistema",
+  "DNI_YA_EXISTE": "Xa existe un usuario con ese DNI no sistema",
+  "USUARIO_REGISTRO_OK": "Usuario rexistrado con éxito",
+  "RECUPERAR_PASS_OK": "Enviouse un novo contrasinal ao seu correo electrónico",
+
+  "USUARIO_NO_ENCONTRADO": "Non se atopou o usuario no sistema",
+  "EMAIL_NO_ENCONTRADO": "Non se atopou o correo electrónico no sistema",
+  "MAIL_NO_ENVIADO": "Produciuse un erro ao enviar o correo electrónico",
+  "ENVIO_EMAIL_EXCEPTION": "Produciuse un erro ao enviar o correo electrónico",
+
+  "USUARIO_NO_EXISTE": "O usuario non existe no sistema",
+  "NO_EDIRTAR_ROL_ADMINISTRADOR": "Non podes editar o rol de administrador",
+  "NO_ELIMINAR_ADMINISTRADOR": "Non podes eliminar o administrador do sistema",
+  "PERMISO_DENEGADO": "Vostede non pode realizar esta acción",
+  "ARCHIVO_SUBIDO_OK": "Arquivo subido ao sistema",
+  "ARCHIVO_VACIO": "Non se pode subir un arquivo baleiro"
 }

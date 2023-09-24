@@ -1,0 +1,25 @@
+/* Estilo base para .usuarioEdit */
+.usuarioEdit {
+  width: 205rem;
+}
+
+/* Media query para pantallas pequeñas (por ejemplo, dispositivos móviles) */
+@media (max-width: 768px) {
+  .usuarioEdit {
+    width: 100rem; /* Cambiar el ancho al 100% para que se ajuste al ancho del contenedor padre */
+  }
+}
+
+/* Media query para pantallas medianas (por ejemplo, tablets) */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .usuarioEdit {
+    width: 100rem; /* Puedes ajustar este valor según tus necesidades */
+  }
+}
+
+/* Media query para pantallas grandes (por ejemplo, computadoras de escritorio) */
+@media (min-width: 1025px) {
+  .usuarioEdit {
+    width: 205rem; /* Vuelve al ancho original en pantallas grandes */
+  }
+}

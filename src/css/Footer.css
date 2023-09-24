@@ -86,7 +86,7 @@ a {
   background-color: #343e4d;
   font-size: 15px;
   width: 100%;
-  height: 4rem;
+  height: 2.5rem;
   display: grid;
   grid-template-columns: 3fr 6fr 1fr 1fr 1fr;
 }

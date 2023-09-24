@@ -3,7 +3,7 @@
 
   "main": {
     "home": "Home",
-    "instalaciones": "Facilities",
+    "usuarios": "Users",
     "equipos": "Teams",
     "competiciones": "Competitions",
     "micuenta": "My account",
@@ -12,6 +12,7 @@
 
   "usuario": {
     "tituloModificar": "Modify personal data",
+    "tituloEditarPassword": "Change password",
     "tituloDetalle": "USER DETAIL",
     "tituloRegistro": "Registry",
     "tituloInicioSesion": "Login",
@@ -19,7 +20,8 @@
     "login": "Login",
     "nombre": "Username",
     "contraseña": "Password",
-    "dni": "ID",
+    "repitaContraseña": "Repeat the password",
+    "dni": "Dni",
     "email": "email",
     "fechaNac": "Date of birth",
     "pais": "Country",
@@ -36,6 +38,7 @@
       "loginInvalidoAlfabetico": "Login name (alphabetical only)",
       "dniVacio": "Es necesario un DNI",
       "dniInvalido": "An ID is required",
+      "dniInvalidoTamañoMax": "The DNI cannot have more than 9 characters",
       "dniLetraInvalida": "Invalid letter",
       "emailVacio": "The user email cannot be empty",
       "emailInvalido": "The email is invalid, example: eXample1@eXample1.com",
@@ -47,18 +50,30 @@
       "contraseñaVacia": "A password is required",
       "contraseñaInvalidaTamañoMax": "Invalid password (16 characters max)",
       "contraseñaInvalidaTamañoMin": "Invalid password (8 characters max)",
+      "contraseñasNoCoinciden": "The two passwords must match",
       "contraseñaInvalida": "The password does not follow formatting instructions"
     }
   },
 
   "botones": {
     "cancelar": "Cancel",
-    "modificarPerfil": "Modify profile",
-    "editar": "Edit",
+    "modificarPerfil": "Your personal data",
     "registrarse": "Sign in",
     "recuperarPassword": "Recover password",
     "iniciarSesion": "Log in",
-    "iniciar": "START"
+    "iniciar": "START",
+    "subirImagen": "Upload image",
+    "seleccionarArchivo": "Select File",
+    "cambiarPassword": "Change password",
+    "editarDatos": "Click to change your data",
+    "nuevo": "New",
+    "crear": "Create",
+    "buscar": "Search",
+    "editar": "Edit",
+    "eliminar": "Delete",
+    "verEnDetalle": "See in detail",
+    "buscarClave": "Search by keyword",
+    "recargar": "Reload"
   },
 
   "bandera": {
@@ -69,7 +84,12 @@
 
   "mensajes": {
     "registroRealizado": "Registration successful",
+    "recuperarPasswordRealizado": "Password successfully changed",
+    "creacionElemento": "The creation was successful",
+    "edicionElemento": "The edicion was successful",
+    "eliminacionElemento": "The deletion was successful",
     "si": "Yes",
+    "buscar": "Search",
     "no": "No",
     "instruccionesContraseña": {
       "recomendaciones": "Recommendations",
@@ -78,7 +98,90 @@
       "instruccion3": "At least one lowercase.",
       "instruccion4": "At least one capital letter."
     },
+    "tituloModalCrear": "You are going to create an element from the system",
+    "tituloModalBuscar": "Search a element in the system",
+    "tituloModalEditar": "You are going to edit an element from the system",
+    "tituloModalVerEnDetalle": "Information of the element in the system",
+    "tituloModalBorrado": "You are going to delete an element from the system",
+    "preguntaModalBorrado": "Are you sure you want to delete ",
+    "tituloModalEditarPassword": "Change the user's password",
+    "tituloModalSubirImagen": "Upload an image for the user",
 
     "error": "ERROR"
-  }
+  },
+
+  "cuenta": {
+    "funcionalidadUsuario": "People with the User role have the possibility of having friends with other users and event managers on EventGO. Users will be able to share events of their interest and register for them if they want to participate in them. In addition, they can comment What did you think of the event?",
+    "funcionalidadGestor": "Managers can enjoy all the functionalities of a regular user, that is, they can share events of interest to their friends and register for events. On the other hand, they can also create their own events for the EventGO community",
+    "funcionalidadAdministrador": "The administrator can perform all the functionalities of the system. He can manage the categories of all events, create events and even share them. He has the functionality to moderate user actions within EventGO."
+  },
+
+  "columnas": {
+    "imagenUsuario": "Image",
+    "login": "Login",
+    "nombre": "Name",
+    "dni": "Dni",
+    "email": "Email",
+    "rol": "Rol",
+    "acciones": "Actions"
+  },
+
+  "footer": {
+    "totalDe": "Total of ",
+    "usuarios": " users"
+  },
+
+  "ERROR_INESPERADO": "Unexpected error",
+
+  "LOGIN_VACIO": "User login cannot be empty",
+  "PASSWORD_VACIO": "User password cannot be empty",
+  "LOGIN_ALFANUMERICO": "Login can only contain alphanumeric characters",
+  "LOGIN_TAMANHO_MAXIMO": "Login cannot have less than 3 characters",
+  "LOGIN_TAMANHO_MAXIMO": "Login cannot have more than 15 characters",
+  "PASSWORD_ALFANUMERICO": "Password can only contain alphanumeric and special characters",
+  "PASSWORD_TAMANHO_MAXIMO": "Password cannot have less than 3 characters",
+  "PASSWORD_TAMANHO_MAXIMO": "Password cannot have more than 16 characters",
+
+  "LOGIN_NO_EXISTE": "There is no user with that login in the system",
+  "LOGIN_PASSWORD_NO_COINCIDEN": "Login and password do not match",
+
+  "NOMBRE_VACIO": "User name cannot be empty",
+  "EMAIL_VACIO": "User email cannot be empty",
+  "ROL_VACIO": "User role cannot be empty",
+  "DNI_VACIO": "User DNI cannot be empty",
+  "FECHA_VACIO": "Date cannot be empty",
+  "PAIS_VACIO": "Country cannot be empty",
+  "NOMBRE_ALFABETICO": "Name can only contain alphabetical characters",
+  "NOMBRE_TAMANHO_MINIMO": "Name cannot have less than 3 characters",
+  "NOMBRE_TAMANHO_MAXIMO": "Name cannot have more than 40 characters",
+  "EMAIL_FORMATO": "Valid email must have a username with letters, digits, and certain special characters, followed by an \"@\" symbol and a domain that can contain letters, digits, and special characters, with a dot (.) before the extension that must have at least two letters",
+  "EMAIL_TAMANHO_MINIMO": "Email cannot have less than 3 characters",
+  "EMAIL_TAMANHO_MAXIMO": "Email cannot have more than 40 characters",
+  "ROL_ALFABETICO": "Role can only contain alphabetical characters",
+  "ROL_TAMANHO_MINIMO": "Role cannot have less than 3 characters",
+  "ROL_TAMANHO_MAXIMO": "Role cannot have more than 20 characters",
+  "DNI_FORMATO": "DNI format is incorrect",
+  "DNI_ALFANUMERICO": "The DNI only contains letters and numbers",
+  "FECHA_FORMATO": "Date has an incorrect format (yyyy-MM-dd)",
+  "PAIS_ALFABETICO": "Country can only contain alphabetical characters",
+  "PAIS_TAMANHO_MINIMO": "Country cannot have less than 3 characters",
+  "PAIS_TAMANHO_MAXIMO": "Country cannot have more than 15 characters",
+
+  "LOGIN_YA_EXISTE": "A user with that login already exists in the system",
+  "EMAIL_YA_EXISTE": "A user with that email already exists in the system",
+  "DNI_YA_EXISTE": "A user with that DNI already exists in the system",
+  "USUARIO_REGISTRO_OK": "User registered successfully",
+  "RECUPERAR_PASS_OK": "A new password has been sent to your email",
+
+  "USUARIO_NO_ENCONTRADO": "User not found in the system",
+  "EMAIL_NO_ENCONTRADO": "Email not found in the system",
+  "MAIL_NO_ENVIADO": "An error occurred while sending the email",
+  "ENVIO_EMAIL_EXCEPTION": "An error occurred while sending the email",
+
+  "USUARIO_NO_EXISTE": "The user does not exist in the system",
+  "NO_EDIRTAR_ROL_ADMINISTRADOR": "You cannot edit the role to administrator",
+  "NO_ELIMINAR_ADMINISTRADOR": "You cannot delete the system administrator",
+  "PERMISO_DENEGADO": "You are not allowed to perform this action",
+  "ARCHIVO_SUBIDO_OK": "File uploaded to the system",
+  "ARCHIVO_VACIO": "You cannot upload an empty file"
 }

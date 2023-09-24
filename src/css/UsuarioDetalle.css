@@ -1,0 +1,32 @@
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.carta {
+  text-align: center;
+}
+
+.editar {
+  display: flex;
+  flex-direction: column; /* Cambiar la dirección del flujo a columna */
+  align-items: center; /* Centrar horizontalmente los elementos en el contenedor */
+  gap: 20px; /* Espacio vertical entre los elementos */
+}
+
+.cargarImagen {
+  display: flex;
+  flex-direction: column; /* Cambiar la dirección del flujo a columna */
+  align-items: center; /* Centrar horizontalmente los elementos en el contenedor */
+  gap: 20px; /* Espacio vertical entre los elementos */
+}
+
+.inputSeleccionarArchivo {
+  display: none;
+}
+
+.labelSeleccionarArchivo {
+  height: 100px;
+  width: 150px;
+}
