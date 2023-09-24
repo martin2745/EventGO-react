@@ -14,7 +14,6 @@ export default function Home() {
     }
   }, []);
 
-  // const currentUser = autenticacionService.getCurrentUser();
   if (currentUser != null) {
     return (
       <div className="container text-900">

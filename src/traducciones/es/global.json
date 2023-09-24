@@ -3,7 +3,7 @@
 
   "main": {
     "home": "Casa",
-    "instalaciones": "Instalaciones",
+    "usuarios": "Usuarios",
     "equipos": "Equipos",
     "competiciones": "Competiciones",
     "micuenta": "Mi cuenta",
@@ -12,6 +12,7 @@
 
   "usuario": {
     "tituloModificar": "Modificar datos personales",
+    "tituloEditarPassword": "Editar contraseña",
     "tituloDetalle": "DETALLE DE USUARIO",
     "tituloRegistro": "Registro",
     "tituloInicioSesion": "Inicio de sesión",
@@ -19,8 +20,9 @@
     "login": "Login",
     "nombre": "Nombre de usuario",
     "contraseña": "Contraseña",
-    "dni": "DNI",
-    "email": "email",
+    "repitaContraseña": "Repita la contraseña",
+    "dni": "Dni",
+    "email": "Correo electrónico",
     "fechaNac": "Fecha de nacimiento",
     "pais": "País",
     "rol": "Rol",
@@ -40,6 +42,7 @@
       "emailInvalidoTamañoMax": "El email no puede tener más de 40 caracteres",
       "dniVacio": "El dni de usuario no puede ser vacío",
       "dniInvalido": "El formato del DNI no es correcto",
+      "dniInvalidoTamañoMax": "El dni no puede tener más de 9 caracteres",
       "dniLetraInvalida": "Letra inválida",
       "nombreVacio": "El nombre de usuario no puede ser vacío",
       "nombreInvalidoAlfabetico": "El nombre solo puede contener caracteres alfabéticos",
@@ -48,18 +51,30 @@
       "contraseñaVacia": "La password de usuario no puede ser vacía",
       "contraseñaInvalida": "La contraseña no cumple las instrucciones de formato",
       "contraseñaInvalidaTamañoMin": "La contraseña no puede tener menos de 3 caracteres",
+      "contraseñasNoCoinciden": "Las dos contraseñas deben de coincidir",
       "contraseñaInvalidaTamañoMax": "La contraseña no puede tener más de 16 caracteres"
     }
   },
 
   "botones": {
     "cancelar": "Cancelar",
-    "modificarPerfil": "Modificar perfil",
-    "editar": "Editar",
+    "modificarPerfil": "Tus datos personales",
     "registrarse": "Registrarse",
     "recuperarPassword": "Recuperar contraseña",
     "iniciarSesion": "Iniciar sesión",
-    "iniciar": "INICIAR"
+    "iniciar": "INICIAR",
+    "subirImagen": "Subir imagen",
+    "seleccionarArchivo": "Seleccionar archivo",
+    "cambiarPassword": "Cambiar contraseña",
+    "editarDatos": "Clica para editar tus datos",
+    "nuevo": "Nuevo",
+    "crear": "Crear",
+    "buscar": "Buscar",
+    "editar": "Editar",
+    "eliminar": "Eliminar",
+    "verEnDetalle": "Ver en detalle",
+    "buscarClave": "Buscar por palabra clave",
+    "recargar": "Recargar"
   },
 
   "bandera": {
@@ -70,8 +85,13 @@
 
   "mensajes": {
     "registroRealizado": "Registro realizado con éxito",
+    "recuperarPasswordRealizado": "Contraseña cambiada con éxito",
+    "creacionElemento": "La creación se ha realizado con éxito",
+    "edicionElemento": "La edición se ha realizado con éxito",
+    "eliminacionElemento": "La eliminación se ha realizado correctamente",
     "si": "Si",
     "no": "No",
+    "buscar": "Buscar",
     "instruccionesContraseña": {
       "recomendaciones": "Recomendaciones",
       "instruccion1": "La contraseña debe tener entre 3 y 16 caracteres.",
@@ -79,7 +99,90 @@
       "instruccion3": "Al menos una minúscula.",
       "instruccion4": "Al menos una mayúscula."
     },
+    "tituloModalCrear": "Vas a crear un elemento en el sistema",
+    "tituloModalBuscar": "Buscar elemento en el sistema",
+    "tituloModalEditar": "Vas a editar un elemento en el sistema",
+    "tituloModalVerEnDetalle": "Información del elemento en el sistema",
+    "tituloModalBorrado": "Vas a eliminar un elemento del sistema",
+    "preguntaModalBorrado": "¿Seguro que quiere eliminar a ",
+    "tituloModalEditarPassword": "Cambiar la contraseña del usuario",
+    "tituloModalSubirImagen": "Suba una imagen para el usuario",
 
     "error": "ERROR"
-  }
+  },
+
+  "cuenta": {
+    "funcionalidadUsuario": "Las personas con el rol Usuario tienen la posibilidad de tener amistad con otros usuarios y gestores de eventos en EventGO. Los usuarios podrán compartir eventos de su interés e inscribirse en ellos si quieren participar en los mismos. Además, pueden comentar que les ha parecido el evento.",
+    "funcionalidadGestor": "Los gestores pueden disfrutar de todas las funcionalidades de un usuario corriente, es decir, pueden compartir eventos de interés a sus amigos e inscribirse en eventos. Por otra parte, tambien pueden crear sus propios eventos para la comunidad de EventGO",
+    "funcionalidadAdministrador": "El administrador puede realizar todas las funcionalidades del sistema. Puede gestionar las categorías de todos los eventos, crear eventos e incluso compartirlos. Tiene la funcionalidad de moderar las acciones de los usuarios dentro de EventGO."
+  },
+
+  "columnas": {
+    "imagenUsuario": "Imagen",
+    "login": "Login",
+    "nombre": "Nombre",
+    "dni": "Dni",
+    "email": "Email",
+    "rol": "Rol",
+    "acciones": "Acciones"
+  },
+
+  "footer": {
+    "totalDe": "Total de ",
+    "usuarios": " usuarios"
+  },
+
+  "ERROR_INESPERADO": "Error inesperado",
+
+  "LOGIN_VACIO": "El login de usuario no puede ser vacío",
+  "PASSWORD_VACIO": "La password de usuario no puede ser vacía",
+  "LOGIN_ALFANUMERICO": "El login solo puede contener caracteres alfanuméricos",
+  "LOGIN_TAMANHO_MAXIMO": "El login no puede tener menos de 3 caracteres",
+  "LOGIN_TAMANHO_MAXIMO": "El login no puede tener más de 15 caracteres",
+  "PASSWORD_ALFANUMERICO": "La contraseña solo puede contener caracteres alfanuméricos y especiales",
+  "PASSWORD_TAMANHO_MAXIMO": "La contraseña no puede tener menos de 3 caracteres",
+  "PASSWORD_TAMANHO_MAXIMO": "La contraseña no puede tener más de 16 caracteres",
+
+  "LOGIN_NO_EXISTE": "No existe un usuario con ese login en el sistema",
+  "LOGIN_PASSWORD_NO_COINCIDEN": "El login y la password no coinciden",
+
+  "NOMBRE_VACIO": "El nombre de usuario no puede ser vacío",
+  "EMAIL_VACIO": "El email de usuario no puede ser vacío",
+  "ROL_VACIO": "El rol de usuario no puede ser vacío",
+  "DNI_VACIO": "El dni de usuario no puede ser vacío",
+  "FECHA_VACIO": "La fecha no puede ser vacía",
+  "PAIS_VACIO": "El pais no puede ser vacío",
+  "NOMBRE_ALFABETICO": "El nombre solo puede contener caracteres alfabéticos",
+  "NOMBRE_TAMANHO_MINIMO": "El nombre no puede tener menos de 3 caracteres",
+  "NOMBRE_TAMANHO_MAXIMO": "El nombre no puede tener más de 40 caracteres",
+  "EMAIL_FORMATO": "El correo electrónico válido debe tener un nombre de usuario con letras, dígitos y ciertos caracteres especiales, seguido de un símbolo \"@\" y un dominio que puede contener letras, dígitos y caracteres especiales, con un punto (.) antes de la extensión que debe tener al menos dos letras",
+  "EMAIL_TAMANHO_MINIMO": "El email no puede tener menos de 3 caracteres",
+  "EMAIL_TAMANHO_MAXIMO": "El email no puede tener más de 40 caracteres",
+  "ROL_ALFABETICO": "El rol solo puede contener caracteres alfabéticos",
+  "ROL_TAMANHO_MINIMO": "El rol no puede tener menos de 3 caracteres",
+  "ROL_TAMANHO_MAXIMO": "El rol no puede tener más de 20 caracteres",
+  "DNI_FORMATO": "El formato del DNI no es correcto",
+  "DNI_ALFANUMERICO": "El DNI solo contiene letras y números",
+  "FECHA_FORMATO": "La fecha tiene un formato incorrecto (yyyy-MM-dd)",
+  "PAIS_ALFABETICO": "El país solo puede contener caracteres alfabéticos",
+  "PAIS_TAMANHO_MINIMO": "El país no puede tener menos de 3 caracteres",
+  "PAIS_TAMANHO_MAXIMO": "El país no puede tener más de 15 caracteres",
+
+  "LOGIN_YA_EXISTE": "Ya existe un usuario con ese login en el sistema",
+  "EMAIL_YA_EXISTE": "Ya existe un usuario con ese email en el sistema",
+  "DNI_YA_EXISTE": "Ya existe un usuario con ese DNI en el sistema",
+  "USUARIO_REGISTRO_OK": "Usuario registrado con éxito",
+  "RECUPERAR_PASS_OK": "Se ha enviado una nueva contraseña a su email",
+
+  "USUARIO_NO_ENCONTRADO": "No se ha encontrado el usuario en el sistema",
+  "EMAIL_NO_ENCONTRADO": "No se ha encontrado el email en el sistema",
+  "MAIL_NO_ENVIADO": "Se ha producido un error al enviar el email",
+  "ENVIO_EMAIL_EXCEPTION": "Ha ocurrido un errror al enviar el email",
+
+  "USUARIO_NO_EXISTE": "El usuario no existe en el sistema",
+  "NO_EDIRTAR_ROL_ADMINISTRADOR": "No puedes editar el rol a administrador",
+  "NO_ELIMINAR_ADMINISTRADOR": "No puedes eliminar el administrador del sistema",
+  "PERMISO_DENEGADO": "Usted no puede realizar esta acción",
+  "ARCHIVO_SUBIDO_OK": "Archivo subido al sistema",
+  "ARCHIVO_VACIO": "No se puede subir un archivo vacío"
 }

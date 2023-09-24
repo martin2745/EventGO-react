@@ -35,6 +35,18 @@ export default function RecuperarPassword() {
       />
     </div>
   );
+
+  const dialogFooterError = (
+    <div className="flex justify-content-center">
+      <Button
+        label="OK"
+        className="p-button-text"
+        autoFocus
+        onClick={ocultarDialogo}
+      />
+    </div>
+  );
+
   function okeyMensaje() {
     setShowMessage(false);
     navigate("/");
@@ -44,18 +56,8 @@ export default function RecuperarPassword() {
   function ocultarDialogo() {
     setDialogoError(false);
   }
-  const pieDialogo = (
-    <React.Fragment>
-      <Button
-        label="Ok"
-        icon="pi pi-check"
-        className="p-button-text"
-        onClick={ocultarDialogo}
-      />
-    </React.Fragment>
-  );
 
-  function onRecuperarPassword(event) {
+  function onCancelar(event) {
     navigate("/");
   }
 
@@ -93,22 +95,22 @@ export default function RecuperarPassword() {
   };
 
   const onSubmit = (data, form) => {
-    autenticacionService.registro(data).then(
+    autenticacionService.recuperarPassword(data).then(
       () => {
         setShowMessage(true);
+        form.restart();
       },
       (error) => {
         const resMessage =
           (error.response &&
             error.response.data &&
-            error.response.data.texto) ||
+            error.response.data.codigo) ||
           error.message ||
           error.toString();
         setResMessage(resMessage);
         setDialogoError(true);
       }
     );
-    form.restart();
   };
 
   return (
@@ -173,7 +175,7 @@ export default function RecuperarPassword() {
                 <div className="col">
                   <Button
                     type="submit"
-                    label={t("botones.registrarse")}
+                    label={t("botones.recuperarPassword")}
                     icon="pi pi-user-plus"
                     className="text-xl mr-2"
                   />
@@ -183,7 +185,7 @@ export default function RecuperarPassword() {
                     icon="pi pi-arrow-circle-left"
                     label={t("botones.cancelar")}
                     className="text-xl p-button-outlined mr-2 "
-                    onClick={onRecuperarPassword}
+                    onClick={onCancelar}
                   />
                 </div>
               </form>
@@ -204,18 +206,25 @@ export default function RecuperarPassword() {
                 className="pi pi-check-circle"
                 style={{ fontSize: "5rem", color: "var(--green-500)" }}
               ></i>
-              <h4>{t("mensajes.registroRealizado")}</h4>
+              <h4>{t("mensajes.recuperarPasswordRealizado")}</h4>
             </div>
           </Dialog>
           <Dialog
             visible={dialogoError}
-            style={{ width: "450px" }}
-            header={t("mensajes.error")}
-            modal
-            footer={pieDialogo}
+            position="center"
+            footer={dialogFooterError}
+            showHeader={false}
             onHide={ocultarDialogo}
+            breakpoints={{ "960px": "80vw" }}
+            style={{ width: "30vw" }}
           >
-            {resMessage}
+            <div className="flex align-items-center flex-column pt-6 px-3">
+              <i
+                className="pi pi-times-circle"
+                style={{ fontSize: "5rem", color: "red" }}
+              ></i>
+              <h4>{t(resMessage)}</h4>
+            </div>
           </Dialog>
         </div>
       </div>

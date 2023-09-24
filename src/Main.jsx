@@ -13,11 +13,21 @@ import "./css/comun.css";
 import Spain from "./components/recursos/imagenes/Spain.png";
 import United_Kingdom from "./components/recursos/imagenes/United_Kingdom.png";
 import Galicia from "./components/recursos/imagenes/Galicia.png";
+//Español
 import circuito from "./components/recursos/imagenes/circuito.jpg";
 import concierto from "./components/recursos/imagenes/concierto.jpg";
 import fiesta from "./components/recursos/imagenes/fiesta.jpg";
 import formula1 from "./components/recursos/imagenes/formula1.jpg";
 import restaurante from "./components/recursos/imagenes/restaurante.jpg";
+//Inglés
+import circuitoI from "./components/recursos/imagenes/circuitoI.jpg";
+import conciertoI from "./components/recursos/imagenes/conciertoI.jpg";
+import fiestaI from "./components/recursos/imagenes/fiestaI.jpg";
+import formula1I from "./components/recursos/imagenes/formula1I.jpg";
+import restauranteI from "./components/recursos/imagenes/restauranteI.jpg";
+//Gallego
+import circuitoG from "./components/recursos/imagenes/circuitoG.jpg";
+import fiestaG from "./components/recursos/imagenes/fiestaG.jpg";
 
 //componentes
 import Home from "./components/home";
@@ -27,13 +37,22 @@ import InicioSesion from "./components/usuario/inicioSesion";
 import Registro from "./components/usuario/registro";
 import RecuperarPassword from "./components/usuario/recuperarPassword";
 import autenticacionService from "./services/autenticacionService";
+import UsuarioDetalle from "./components/usuario/usuarioDetalle";
+import UsuarioEdit from "./components/usuario/usuarioEdit";
+import CambiarPassword from "./components/usuario/cambiarPassword";
+import UsuarioShowAll from "./components/usuario/usuarioShowAll";
 
 function Main() {
   //constantes
   const [currentUser, setCurrentUser] = useState(false);
+  const [rol, setRol] = useState("");
   const [idioma, setIdioma] = useState(
     localStorage.getItem("idiomaDesplegable")
   );
+  if (!idioma) {
+    localStorage.setItem("idiomaDesplegable", "Español");
+    localStorage.setItem("idioma", "es");
+  }
   const navigate = useNavigate();
   //cambio de idioma
   const [t, i18n] = useTranslation("global");
@@ -95,6 +114,15 @@ function Main() {
     },
   ];
 
+  if (rol === "ROLE_ADMINISTRADOR") {
+    navs.push({
+      label: <a className="mr-3">{t("main.usuarios")}</a>,
+      command: (e) => {
+        navigate("/usuario/usuarioShowAll/");
+      },
+    });
+  }
+
   useState(() => {
     const user = autenticacionService.getCurrentUser();
 
@@ -105,9 +133,11 @@ function Main() {
 
   useEffect(() => {
     const user = autenticacionService.getCurrentUser();
+    const rolUser = localStorage.getItem("rol");
 
     if (user) {
       setCurrentUser(user);
+      setRol(rolUser);
     }
   }, []);
 
@@ -137,15 +167,58 @@ function Main() {
               }
               end={
                 <div className="grid">
-                  <SplitButton
-                    className="mr-2 md:mb-2"
-                    label={idioma}
-                    optionLabel="label"
-                    model={items}
-                  ></SplitButton>
+                  {idioma == "Español" ? (
+                    <div>
+                      <SplitButton
+                        className="mr-3"
+                        label={
+                          <div>
+                            <img className="bandera" src={Spain} />
+                            <span className="textoBandera">
+                              {t("bandera.Spain")}
+                            </span>
+                          </div>
+                        }
+                        optionLabel="label"
+                        model={items}
+                      ></SplitButton>
+                    </div>
+                  ) : idioma == "Inglés" ? (
+                    <div>
+                      <SplitButton
+                        className="mr-3"
+                        label={
+                          <div>
+                            <img className="bandera" src={United_Kingdom} />
+                            <span className="textoBandera">
+                              {t("bandera.United_Kingdom")}
+                            </span>
+                          </div>
+                        }
+                        optionLabel="label"
+                        model={items}
+                      ></SplitButton>
+                    </div>
+                  ) : (
+                    <div>
+                      <SplitButton
+                        className="mr-3"
+                        label={
+                          <div>
+                            <img className="bandera" src={Galicia} />
+                            <span className="textoBandera">
+                              {t("bandera.Galicia")}
+                            </span>
+                          </div>
+                        }
+                        optionLabel="label"
+                        model={items}
+                      ></SplitButton>
+                    </div>
+                  )}
                   <Button
                     className="md:mb-2"
-                    label={t("main.cerrarSesion")}
+                    label={t("main.cerrarSesion") + " " + currentUser.login}
                     icon="pi pi-power-off"
                     onClick={cerrarSesion}
                   ></Button>
@@ -220,39 +293,104 @@ function Main() {
         )}
       </nav>
       <Divider />
-      <div className="container">
-        <div className="div1">
-          <Routes>
-            <Route
-              path="/"
-              element={<InicioSesion mensaje="Inicio de sesión" />}
-            />
-            <Route path="/registro" element={<Registro mensaje="Registro" />} />
-            <Route
-              path="/recuperarPassword"
-              element={<RecuperarPassword mensaje="Recuperar Contraseña" />}
-            />
 
-            {currentUser && (
-              <React.Fragment>
-                <Route
-                  path="/home"
-                  element={<Home mensaje="Página principal" />}
-                />
-              </React.Fragment>
-            )}
-          </Routes>
+      {currentUser ? (
+        <div className="container">
+          <div>
+            <Routes>
+              <Route
+                path="/"
+                element={<InicioSesion mensaje="Inicio de sesión" />}
+              />
+              <Route
+                path="/registro"
+                element={<Registro mensaje="Registro" />}
+              />
+              <Route
+                path="/recuperarPassword"
+                element={<RecuperarPassword mensaje="Recuperar Contraseña" />}
+              />
+
+              {/* usuario */}
+              <Route path="usuario">
+                <Route path="view">
+                  <Route path=":id" element={<UsuarioDetalle />} />
+                </Route>
+                <Route path="micuenta">
+                  <Route path=":id" element={<UsuarioDetalle />} />
+                </Route>
+                <Route path="datosmicuenta">
+                  <Route path=":id" element={<UsuarioEdit />} />
+                </Route>
+                <Route path="cambiarPassword">
+                  <Route path=":id" element={<CambiarPassword />} />
+                </Route>
+                <Route path="usuarioShowAll">
+                  <Route index element={<UsuarioShowAll />} />
+                </Route>
+              </Route>
+
+              {currentUser && (
+                <React.Fragment>
+                  <Route
+                    path="/home"
+                    element={<Home mensaje="Página principal" />}
+                  />
+                </React.Fragment>
+              )}
+            </Routes>
+          </div>
         </div>
-        <div className="div2">
-          <section>
-            <img className="foto1" src={circuito} />
-            <img src={concierto} />
-            <img src={fiesta} />
-            <img src={formula1} />
-            <img className="foto5" src={restaurante} />
-          </section>
+      ) : (
+        <div className="container">
+          <div className="div1">
+            <Routes>
+              <Route
+                path="/"
+                element={<InicioSesion mensaje="Inicio de sesión" />}
+              />
+              <Route
+                path="/registro"
+                element={<Registro mensaje="Registro" />}
+              />
+              <Route
+                path="/recuperarPassword"
+                element={<RecuperarPassword mensaje="Recuperar Contraseña" />}
+              />
+            </Routes>
+          </div>
+          <div className="div2">
+            <section>
+              {idioma == "Español" ? (
+                <>
+                  <img className="foto1" src={circuito} />
+                  <img src={concierto} />
+                  <img src={fiesta} />
+                  <img src={formula1} />
+                  <img className="foto5" src={restaurante} />
+                </>
+              ) : idioma == "Inglés" ? (
+                <>
+                  <img className="foto1" src={circuitoI} />
+                  <img src={conciertoI} />
+                  <img src={fiestaI} />
+                  <img src={formula1I} />
+                  <img className="foto5" src={restauranteI} />
+                </>
+              ) : (
+                <>
+                  <img className="foto1" src={circuitoG} />
+                  <img src={concierto} />
+                  <img src={fiestaG} />
+                  <img src={formula1} />
+                  <img className="foto5" src={restaurante} />
+                </>
+              )}
+            </section>
+          </div>
         </div>
-      </div>
+      )}
+
       <Footer />
     </div>
   );

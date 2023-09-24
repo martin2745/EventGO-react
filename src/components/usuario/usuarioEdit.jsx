@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from "react";
 import { InputText } from "primereact/inputtext";
 import { Button } from "primereact/button";
 import { Dropdown } from "primereact/dropdown";
@@ -8,51 +7,55 @@ import { Password } from "primereact/password";
 import { Dialog } from "primereact/dialog";
 import { Divider } from "primereact/divider";
 import { classNames } from "primereact/utils";
+import { useParams, useNavigate } from "react-router-dom";
 import { Form, Field } from "react-final-form";
 import { useTranslation } from "react-i18next";
+
+import usuarioService from "../../services/usuarioService";
 import autenticacionService from "../../services/autenticacionService";
 import Paises from "../recursos/paises";
+import "../../css/UsuarioEdit.css";
 
-export default function Registro() {
-  //constantes
-  const [t, i18n] = useTranslation("global");
-  const [resMessage, setResMessage] = useState("");
-  const [dialogoError, setDialogoError] = useState(false);
-  const rolOptions = [
-    { label: <a>{t("usuario.usuario")}</a>, value: "usuario" },
-    { label: <a>{t("usuario.gerente")}</a>, value: "gerente" },
-  ];
-  const paises = Paises.paises();
+export default function UsuarioEdit() {
+  const params = useParams();
+  const navigate = useNavigate();
   const [showMessage, setShowMessage] = useState(false);
-  const [fecha, setFecha] = useState(new Date());
-  const [rol, setRol] = useState([" "]);
-  const [pais, setPais] = useState([" "]);
+  const [t, i18n] = useTranslation("global");
+
   const usuarioVacio = {
-    login: "",
-    password: "",
-    nombre: "",
-    email: "",
-    rol: "",
+    id: "",
     dni: "",
+    nombre: "",
     fechaNacimiento: "",
     pais: "",
+    login: "",
+    password: "",
+    rol: "",
+    imagenUsuario: "",
   };
+
+  const [pais, setPais] = useState([" "]);
+  const [dialogoError, setDialogoError] = useState(false);
+  const [resMessage, setResMessage] = useState("");
+  const f = new Date();
+  const h = null;
+  const [fech, setFech] = useState("");
   const [usuario, setUsuario] = useState(usuarioVacio);
-  //Información de contraseña
-  const passwordFooter = (
-    <React.Fragment>
-      <Divider />
-      <p className="mt-2">
-        {t("mensajes.instruccionesContraseña.recomendaciones")}
-      </p>
-      <ul className="pl-2 ml-2 mt-0" style={{ lineHeight: "1.5" }}>
-        <li>{t("mensajes.instruccionesContraseña.instruccion1")}</li>
-        <li>{t("mensajes.instruccionesContraseña.instruccion2")}</li>
-        <li>{t("mensajes.instruccionesContraseña.instruccion3")}</li>
-        <li>{t("mensajes.instruccionesContraseña.instruccion4")}</li>
-      </ul>
-    </React.Fragment>
-  );
+  const [currentUser, setCurrentUser] = useState(false);
+
+  useEffect(() => {
+    usuarioService.buscarPorId(params.id).then((res) => {
+      setUsuario(res.data);
+      setPais(res.data.pais);
+      setFech(new Date(res.data.fechaNacimiento));
+    });
+
+    const user = autenticacionService.getCurrentUser();
+    if (user) {
+      setCurrentUser(user);
+    }
+  }, []);
+
   function convertirFecha(fechaTexto) {
     const fecha = new Date(fechaTexto);
 
@@ -64,22 +67,25 @@ export default function Registro() {
 
     return fechaFormateada;
   }
-  const navigate = useNavigate();
-  function onCancelar(event) {
-    navigate("/");
+
+  const paises = Paises.paises();
+
+  function onCancel(event) {
+    navigate("/usuario/micuenta/" + currentUser.id.toString());
   }
+
   const isFormFieldValid = (meta) => !!(meta.touched && meta.error);
   const getFormErrorMessage = (meta) => {
     return (
       isFormFieldValid(meta) && <small className="p-error">{meta.error}</small>
     );
   };
+
   const validate = (data) => {
     let errors = {};
     var patron =
       /^[a-zA-ZÀ-ÿ\u00f1\u00d1\ ]*(\s*[a-zA-ZÀ-ÿ\u00f1\u00d1\ ]*)*[a-zA-ZÀ-ÿ\u00f1\u00d1\ ]*$/g; // patrón letras y espacios
     var patronLogin = /([A-Za-z0-9_]{3,15})/;
-    var patronContraseña = /^(?=.*\d)(?=.*[A-Z])(?=.*[a-z])\S{3,16}$/;
     var patronCorreoElectronico =
       /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     var validChars = "TRWAGMYFPDXBNJZSQVHLCKET";
@@ -97,21 +103,6 @@ export default function Registro() {
       errors.login = <p>{t("usuario.validaciones.loginInvalidoTamañoMax")}</p>;
     } else if (data.login.length < 3) {
       errors.login = <p>{t("usuario.validaciones.loginInvalidoTamañoMin")}</p>;
-    }
-
-    //password
-    if (!data.password) {
-      errors.password = <p>{t("usuario.validaciones.contraseñaVacia")}</p>;
-    } else if (data.password.length > 16) {
-      errors.password = (
-        <p>{t("usuario.validaciones.contraseñaInvalidaTamañoMax")}</p>
-      );
-    } else if (data.password.length < 3) {
-      errors.password = (
-        <p>{t("usuario.validaciones.contraseñaInvalidaTamañoMin")}</p>
-      );
-    } else if (!patronContraseña.test(data.password)) {
-      errors.password = <p>{t("usuario.validaciones.contraseñaInvalida")}</p>;
     }
 
     //nombre
@@ -166,11 +157,14 @@ export default function Registro() {
     return errors;
   };
 
+  function ocultarDialogo() {
+    setDialogoError(false);
+  }
+
   const onSubmit = (data, form) => {
     data[`pais`] = pais;
-    data[`rol`] = "ROLE_" + rol.toUpperCase();
-    data[`fechaNacimiento`] = convertirFecha(fecha);
-    autenticacionService.registro(data).then(
+    data[`fechaNacimiento`] = convertirFecha(fech);
+    usuarioService.modificar(data.id.toString(), data).then(
       () => {
         setShowMessage(true);
         form.restart();
@@ -187,11 +181,6 @@ export default function Registro() {
       }
     );
   };
-
-  //funciones
-  function ocultarDialogo() {
-    setDialogoError(false);
-  }
 
   const dialogFooter = (
     <div className="flex justify-content-center">
@@ -217,76 +206,30 @@ export default function Registro() {
 
   function okeyMensaje() {
     setShowMessage(false);
-    navigate("/");
-    window.location.reload();
+    navigate("/usuario/micuenta/" + currentUser.id.toString());
   }
 
   return (
-    <div className="form-demo text-xl">
-      <div className="flex justify-content-left text-xl">
-        <div className="card text-xl formLateral">
-          <h5 className="text-center text-900 text-2xl">
-            {t("usuario.tituloRegistro")}
+    <div className="form-demo usuarioEdit">
+      <div className="flex justify-content-center">
+        <div className="card col-3">
+          <h5 className="text-center text-900 text-xl ">
+            {t("usuario.tituloModificar")}
           </h5>
+
           <Form
             onSubmit={onSubmit}
             initialValues={usuario}
             validate={validate}
             render={({ handleSubmit }) => (
-              <form className=" text-xl p-fluid" onSubmit={handleSubmit}>
-                <Field
-                  name="login"
-                  render={({ input, meta }) => (
-                    <div className="field ">
-                      <span className="p-float-label">
-                        <div className="p-field px-5 text-900 ">
-                          <InputText
-                            id="login"
-                            {...input}
-                            placeholder={t("usuario.login")}
-                            required
-                            className={classNames(
-                              { "p-invalid": isFormFieldValid(meta) },
-                              { "p-error": isFormFieldValid(meta) }
-                            )}
-                          />
-                        </div>
-                      </span>
-                      {getFormErrorMessage(meta)}
-                    </div>
-                  )}
-                />
-
-                <Field
-                  name="password"
-                  render={({ input, meta }) => (
-                    <div className="field ">
-                      <span className="p-float-label">
-                        <div className="p-field px-5 text-900 ">
-                          <Password
-                            id="password"
-                            {...input}
-                            name="password"
-                            placeholder={t("usuario.contraseña")}
-                            className={classNames(
-                              { "p-invalid": isFormFieldValid(meta) },
-                              { "p-error": isFormFieldValid(meta) }
-                            )}
-                            toggleMask
-                            footer={passwordFooter}
-                            required
-                          />
-                        </div>
-                      </span>
-                      {getFormErrorMessage(meta)}
-                    </div>
-                  )}
-                />
-
+              <form className=" text-900 p-fluid" onSubmit={handleSubmit}>
                 <Field
                   name="nombre"
                   render={({ input, meta }) => (
                     <div className="field ">
+                      <div className="p-field px-5 py-1 text-900 ">
+                        <label htmlFor="nombre">{t("usuario.nombre")}</label>
+                      </div>
                       <span className="p-float-label">
                         <div className="p-field px-5 text-900 ">
                           <InputText
@@ -310,6 +253,9 @@ export default function Registro() {
                   name="email"
                   render={({ input, meta }) => (
                     <div className="field ">
+                      <div className="p-field px-5 py-1 text-900 ">
+                        <label htmlFor="email">{t("usuario.email")}</label>
+                      </div>
                       <span className="p-float-label">
                         <div className="p-field px-5 text-900 ">
                           <InputText
@@ -330,32 +276,13 @@ export default function Registro() {
                 />
 
                 <Field
-                  name="rol"
-                  render={({ input, meta }) => (
-                    <div className="field ">
-                      <span className="p-float-label">
-                        <div className="p-field px-5 text-900 ">
-                          <Dropdown
-                            value={rol}
-                            id="rol"
-                            placeholder={t("usuario.selectRol")}
-                            showClear
-                            name="rol"
-                            options={rolOptions}
-                            onChange={(e) => setRol(e.value)}
-                            required
-                          />
-                        </div>
-                      </span>
-                      {getFormErrorMessage(meta)}
-                    </div>
-                  )}
-                />
-
-                <Field
                   name="dni"
                   render={({ input, meta }) => (
                     <div className="field ">
+                      <div className="p-field px-5 py-1 text-900 ">
+                        <label htmlFor="dni">{t("usuario.dni")}</label>
+                      </div>
+
                       <span className="p-float-label">
                         <div className="p-field px-5 text-900 ">
                           <InputText
@@ -379,11 +306,18 @@ export default function Registro() {
                   name="fechaNacimiento"
                   render={({ input, meta }) => (
                     <div className="field ">
+                      <div className="p-field px-5 py-1 text-900 ">
+                        <label htmlFor="fechaNacimiento">
+                          {t("usuario.fechaNac")}
+                        </label>
+                      </div>
+
                       <span className="p-float-label">
                         <div className="p-field px-5 text-900 ">
                           <Calendar
-                            onChange={(e) => setFecha(e.value)}
+                            onChange={(e) => setFech(e.value)}
                             id="fechaNacimiento"
+                            value={fech}
                             name="fechaNacimiento"
                             placeholder={t("usuario.fechaNac")}
                             dateFormat="dd/mm/yy"
@@ -409,6 +343,10 @@ export default function Registro() {
                   name="pais"
                   render={({ input, meta }) => (
                     <div className="field ">
+                      <div className="p-field px-5 py-1 text-900 ">
+                        <label htmlFor="pais">{t("usuario.pais")}</label>
+                      </div>
+
                       <span className="p-float-label">
                         <div className="p-field px-5 text-900 ">
                           <Dropdown
@@ -429,21 +367,23 @@ export default function Registro() {
                   )}
                 />
 
-                <div className="col">
-                  <Button
-                    type="submit"
-                    label={t("botones.registrarse")}
-                    icon="pi pi-user-plus"
-                    className="text-xl mr-2"
-                  />
-                </div>
-                <div className="col">
-                  <Button
-                    icon="pi pi-arrow-circle-left"
-                    label={t("botones.cancelar")}
-                    className="text-xl p-button-outlined mr-2 "
-                    onClick={onCancelar}
-                  />
+                <div className="grid">
+                  <div className="col">
+                    <Button
+                      icon="pi pi-arrow-circle-left"
+                      label={t("botones.cancelar")}
+                      className="p-button-outlined mr-2 "
+                      onClick={onCancel}
+                    />
+                  </div>
+                  <div className="col">
+                    <Button
+                      type="submit"
+                      label={t("botones.editar")}
+                      icon="pi pi-pencil"
+                      className="p-button-outlined mr-2"
+                    />
+                  </div>
                 </div>
               </form>
             )}
@@ -463,9 +403,10 @@ export default function Registro() {
                 className="pi pi-check-circle"
                 style={{ fontSize: "5rem", color: "var(--green-500)" }}
               ></i>
-              <h4>{t("mensajes.registroRealizado")}</h4>
+              <h4>{t("mensajes.edicionElemento")}</h4>
             </div>
           </Dialog>
+
           <Dialog
             visible={dialogoError}
             position="center"

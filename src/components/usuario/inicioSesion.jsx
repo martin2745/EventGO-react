@@ -36,6 +36,18 @@ export default function InicioSesion() {
       />
     </div>
   );
+
+  const dialogFooterError = (
+    <div className="flex justify-content-center">
+      <Button
+        label="OK"
+        className="p-button-text"
+        autoFocus
+        onClick={ocultarDialogo}
+      />
+    </div>
+  );
+
   function okeyMensaje() {
     setShowMessage(false);
     navigate("/");
@@ -45,16 +57,6 @@ export default function InicioSesion() {
   function ocultarDialogo() {
     setDialogoError(false);
   }
-  const pieDialogo = (
-    <React.Fragment>
-      <Button
-        label="Ok"
-        icon="pi pi-check"
-        className="p-button-text"
-        onClick={ocultarDialogo}
-      />
-    </React.Fragment>
-  );
   const validate = (data) => {
     let errors = {};
     var patronLogin = /([A-Za-z0-9_]{3,15})/;
@@ -76,8 +78,6 @@ export default function InicioSesion() {
     //password
     if (!data.password) {
       errors.password = <p>{t("usuario.validaciones.contraseñaVacia")}</p>;
-    } else if (!patronContraseña.test(data.password)) {
-      errors.password = <p>{t("usuario.validaciones.contraseñaInvalida")}</p>;
     } else if (data.password.length > 16) {
       errors.password = (
         <p>{t("usuario.validaciones.contraseñaInvalidaTamañoMax")}</p>
@@ -86,6 +86,8 @@ export default function InicioSesion() {
       errors.password = (
         <p>{t("usuario.validaciones.contraseñaInvalidaTamañoMin")}</p>
       );
+    } else if (!patronContraseña.test(data.password)) {
+      errors.password = <p>{t("usuario.validaciones.contraseñaInvalida")}</p>;
     }
 
     return errors;
@@ -101,6 +103,7 @@ export default function InicioSesion() {
   const onSubmit = (data, form) => {
     autenticacionService.login(data).then(
       () => {
+        form.restart();
         navigate("/home");
         window.location.reload();
       },
@@ -108,14 +111,13 @@ export default function InicioSesion() {
         const resMessage =
           (error.response &&
             error.response.data &&
-            error.response.data.texto) ||
+            error.response.data.codigo) ||
           error.message ||
           error.toString();
         setResMessage(resMessage);
         setDialogoError(true);
       }
     );
-    form.restart();
   };
 
   return (
@@ -220,13 +222,20 @@ export default function InicioSesion() {
 
           <Dialog
             visible={dialogoError}
-            style={{ width: "450px" }}
-            header={t("mensajes.error")}
-            modal
-            footer={pieDialogo}
+            position="center"
+            footer={dialogFooterError}
+            showHeader={false}
             onHide={ocultarDialogo}
+            breakpoints={{ "960px": "80vw" }}
+            style={{ width: "30vw" }}
           >
-            {resMessage}
+            <div className="flex align-items-center flex-column pt-6 px-3">
+              <i
+                className="pi pi-times-circle"
+                style={{ fontSize: "5rem", color: "red" }}
+              ></i>
+              <h4>{t(resMessage)}</h4>
+            </div>
           </Dialog>
         </div>
       </div>
