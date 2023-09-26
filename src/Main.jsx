@@ -41,6 +41,8 @@ import UsuarioDetalle from "./components/usuario/usuarioDetalle";
 import UsuarioEdit from "./components/usuario/usuarioEdit";
 import CambiarPassword from "./components/usuario/cambiarPassword";
 import UsuarioShowAll from "./components/usuario/usuarioShowAll";
+import CategoriaShowAll from "./components/categoria/categoriaShowAll";
+import CategoriaLayout from "./components/categoria/categoriaLayout";
 
 function Main() {
   //constantes
@@ -112,13 +114,25 @@ function Main() {
         navigate("/usuario/micuenta/" + currentUser.id);
       },
     },
+    {
+      label: <a className="mr-3">{t("main.categorias")}</a>,
+      command: (e) => {
+        navigate("/categoria/categoriaLayout/");
+      },
+    },
   ];
 
   if (rol === "ROLE_ADMINISTRADOR") {
     navs.push({
-      label: <a className="mr-3">{t("main.usuarios")}</a>,
+      label: <a className="mr-3">{t("main.gestionUsuarios")}</a>,
       command: (e) => {
         navigate("/usuario/usuarioShowAll/");
+      },
+    });
+    navs.push({
+      label: <a className="mr-3">{t("main.gestionCategorias")}</a>,
+      command: (e) => {
+        navigate("/categoria/categoriaShowAll/");
       },
     });
   }
@@ -327,6 +341,16 @@ function Main() {
                 </Route>
                 <Route path="usuarioShowAll">
                   <Route index element={<UsuarioShowAll />} />
+                </Route>
+              </Route>
+
+              {/* categoria */}
+              <Route path="categoria">
+                <Route path="categoriaShowAll">
+                  <Route index element={<CategoriaShowAll />} />
+                </Route>
+                <Route path="categoriaLayout">
+                  <Route index element={<CategoriaLayout />} />
                 </Route>
               </Route>
 

@@ -4,6 +4,9 @@
   "main": {
     "home": "Home",
     "usuarios": "Users",
+    "gestionUsuarios": "User management",
+    "gestionCategorias": "Category management",
+    "categorias": "Categories",
     "equipos": "Teams",
     "competiciones": "Competitions",
     "micuenta": "My account",
@@ -34,6 +37,7 @@
     "validaciones": {
       "loginVacio": "A login is required",
       "loginInvalidoAlfanumerico": "Invalid login (only alphanumeric with hyphen, 3 characters min)",
+      "loginInvalidoTamañoMin": "The login cannot be less than 3 characters",
       "loginInvalidoTamañoMax": "Invalid login (15 characters max)",
       "loginInvalidoAlfabetico": "Login name (alphabetical only)",
       "dniVacio": "Es necesario un DNI",
@@ -52,6 +56,23 @@
       "contraseñaInvalidaTamañoMin": "Invalid password (8 characters max)",
       "contraseñasNoCoinciden": "The two passwords must match",
       "contraseñaInvalida": "The password does not follow formatting instructions"
+    }
+  },
+
+  "categoria": {
+    "nombre": "Name",
+    "descripcion": "Description",
+    "verEvento": "View events of the category",
+
+    "validaciones": {
+      "nombreVacio": "A name is required",
+      "nombreInvalidoAlfanumerico": "The category name can only contain alphanumeric characters.",
+      "nombreCategoriaInvalidoTamañoMax": "The category name cannot exceed 15 characters.",
+      "nombreCategoriaInvalidoTamañoMin": "The category name must have a minimum of 3 characters.",
+      "descripcionVacio": "The category description cannot be empty.",
+      "descripcionCategoriaInvalidoAlfanumerico": "The category description can only contain alphanumeric characters.",
+      "descripcionCategoriaInvalidoTamañoMax": "The category description cannot exceed 255 characters.",
+      "descripcionCategoriaInvalidoTamañoMin": "The category description must have a minimum of 3 characters."
     }
   },
 
@@ -105,7 +126,7 @@
     "tituloModalBorrado": "You are going to delete an element from the system",
     "preguntaModalBorrado": "Are you sure you want to delete ",
     "tituloModalEditarPassword": "Change the user's password",
-    "tituloModalSubirImagen": "Upload an image for the user",
+    "tituloModalSubirImagen": "Upload an image",
 
     "error": "ERROR"
   },
@@ -118,17 +139,20 @@
 
   "columnas": {
     "imagenUsuario": "Image",
+    "imagenCategoria": "Category Image",
     "login": "Login",
     "nombre": "Name",
     "dni": "Dni",
     "email": "Email",
     "rol": "Rol",
+    "descripcion": "Description",
     "acciones": "Actions"
   },
 
   "footer": {
     "totalDe": "Total of ",
-    "usuarios": " users"
+    "usuarios": " users",
+    "categorias": " categories"
   },
 
   "ERROR_INESPERADO": "Unexpected error",
@@ -183,5 +207,15 @@
   "NO_ELIMINAR_ADMINISTRADOR": "You cannot delete the system administrator",
   "PERMISO_DENEGADO": "You are not allowed to perform this action",
   "ARCHIVO_SUBIDO_OK": "File uploaded to the system",
-  "ARCHIVO_VACIO": "You cannot upload an empty file"
+  "ARCHIVO_VACIO": "You cannot upload an empty file",
+  "NOMBRE_CATEGORIA_VACIO": "The category name cannot be empty",
+  "NOMBRE_CATEGORIA_ALFANUMERICO": "The category name can only contain alphanumeric characters",
+  "NOMBRE_CATEGORIA_TAMANHO_MINIMO": "The category name cannot have less than 3 characters",
+  "NOMBRE_CATEGORIA_TAMANHO_MAXIMO": "The category name cannot exceed 15 characters",
+  "DESCRIPCION_CATEGORIA_VACIO": "The category description cannot be empty",
+  "DESCRIPCION_CATEGORIA_ALFANUMERICO": "The category description can only contain alphanumeric characters",
+  "DESCRIPCION_CATEGORIA_TAMANHO_MINIMO": "The category description cannot have less than 3 characters",
+  "DESCRIPCION_CATEGORIA_TAMANHO_MAXIMO": "The description cannot exceed 255 characters",
+  "NOMBRE_CATEGORIA_YA_EXISTE": "A category with this name already exists in the system",
+  "CATEGORIA_NO_EXISTE": "The category does not exist in the system"
 }

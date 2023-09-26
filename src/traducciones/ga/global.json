@@ -4,6 +4,9 @@
   "main": {
     "home": "Casa",
     "usuarios": "Usuarios",
+    "gestionUsuarios": "Xestión de usuarios",
+    "gestionCategorias": "Xestión de categorias",
+    "categorias": "Categorias",
     "equipos": "Equipos",
     "competiciones": "Competicións",
     "micuenta": "Miña conta",
@@ -34,6 +37,7 @@
     "validaciones": {
       "loginVacio": "É necesario un login",
       "loginInvalidoAlfanumerico": "Login inválido (solo alfanumérico con guión, 3 caracteres mín)",
+      "loginInvalidoTamañoMin": "O login non pode tener menos de 3 caracteres",
       "loginInvalidoTamañoMax": "Login inválido (15 caracteres máx)",
       "dniVacio": "Ë necesario un DNI",
       "dniInvalido": "DNI inválido",
@@ -43,14 +47,38 @@
       "emailInvalido": "O correo electrónico non é válido, exemplo: eXample1@eXample1.com",
       "emailInvalidoTamañoMin": "O correo electrónico non pode ter menos de 3 caracteres",
       "emailInvalidoTamañoMax": "O correo electrónico non pode ter máis de 40 caracteres",
-      "nombreVacio": "Ë necesario un nome",
+      "nombreVacio": "É necesario un nome",
       "nombreInvalidoAlfabetico": "Nome inválido (solo alfabético)",
       "nombreInvalidoTamañoMax": "Nome inválido (40 caracteres máx)",
       "contraseñaVacia": "Ë necesario unha contrasinal",
       "contraseñaInvalidaTamañoMax": "Contrasinal inválida (16 caracteres máx)",
       "contraseñaInvalidaTamañoMin": "Contrasinal inválida (8 caracteres mín)",
       "contraseñasNoCoinciden": "As duas contrasinais deben de coincidir",
-      "contraseñaInvalida": "O contrasinal non segue as instrucións de formato"
+      "contraseñaInvalida": "O contrasinal non segue as instrucións de formato",
+      "nombreInvalidoAlfanumerico": "O nome da categoría só pode conter caracteres alfanuméricos",
+      "nombreCategoriaInvalidoTamañoMax": "O nome da categoría non pode ter máis de 15 caracteres",
+      "nombreCategoriaInvalidoTamañoMin": "O nome da categoría non pode ter menos de 3 caracteres",
+      "descripcionVacio": "A descrición da categoría non pode estar baleira",
+      "descripcionCategoriaInvalidoAlfanumerico": "A descrición da categoría só pode conter caracteres alfanuméricos",
+      "descripcionCategoriaInvalidoTamañoMax": "A descrición da categoría non pode ter máis de 255 caracteres",
+      "descripcionCategoriaInvalidoTamañoMin": "A descrición da categoría non pode ter menos de 3 caracteres"
+    }
+  },
+
+  "categoria": {
+    "nome": "Nome",
+    "descrición": "Descrición",
+    "verEvento": "Ver eventos da categoría",
+
+    "validacións": {
+      "nombreVacio": "É necesario un nome",
+      "nomeInválidoAlfanumérico": "O nome da categoría só pode conter caracteres alfanuméricos.",
+      "nomeCategoríaInválidoTamañoMax": "O nome da categoría non pode exceder os 15 caracteres.",
+      "nomeCategoríaInválidoTamañoMin": "O nome da categoría debe ter un mínimo de 3 caracteres.",
+      "descriciónVazía": "A descrición da categoría non pode estar baleira.",
+      "descriciónCategoríaInválidoAlfanumérico": "A descrición da categoría só pode conter caracteres alfanuméricos.",
+      "descriciónCategoríaInválidoTamañoMax": "A descrición da categoría non pode exceder os 255 caracteres.",
+      "descriciónCategoríaInválidoTamañoMin": "A descrición da categoría debe ter un mínimo de 3 caracteres."
     }
   },
 
@@ -104,7 +132,7 @@
     "tituloModalBorrado": "Vai a eliminar un elemento do sistema",
     "preguntaModalBorrado": "Estás seguro de que queres eliminar ",
     "tituloModalEditarPassword": "Cambiar a contrasinal do usuario",
-    "tituloModalSubirImagen": "Suba unha imaxen para o usuario",
+    "tituloModalSubirImagen": "Suba unha imaxen",
 
     "error": "ERROR"
   },
@@ -117,17 +145,20 @@
 
   "columnas": {
     "imagenUsuario": "Imaxen",
+    "imagenCategoria": "Imaxen de la categoría",
     "login": "Login",
     "nombre": "Nome",
     "dni": "Dni",
     "email": "Email",
     "rol": "Rol",
+    "descripcion": "Descripción",
     "acciones": "Accións"
   },
 
   "footer": {
     "totalDe": "Total de ",
-    "usuarios": " usuarios"
+    "usuarios": " usuarios",
+    "categorias": " categorias"
   },
 
   "ERROR_INESPERADO": "Erro inesperado",
@@ -182,5 +213,15 @@
   "NO_ELIMINAR_ADMINISTRADOR": "Non podes eliminar o administrador do sistema",
   "PERMISO_DENEGADO": "Vostede non pode realizar esta acción",
   "ARCHIVO_SUBIDO_OK": "Arquivo subido ao sistema",
-  "ARCHIVO_VACIO": "Non se pode subir un arquivo baleiro"
+  "ARCHIVO_VACIO": "Non se pode subir un arquivo baleiro",
+  "NOMBRE_CATEGORIA_VACIO": "O nome da categoría non pode estar baleiro",
+  "NOMBRE_CATEGORIA_ALFANUMERICO": "O nome da categoría só pode conter caracteres alfanuméricos",
+  "NOMBRE_CATEGORIA_TAMANHO_MINIMO": "O nome da categoría non pode ter menos de 3 caracteres",
+  "NOMBRE_CATEGORIA_TAMANHO_MAXIMO": "O nome da categoría non pode superar os 15 caracteres",
+  "DESCRIPCION_CATEGORIA_VACIO": "A descrición da categoría non pode estar baleira",
+  "DESCRIPCION_CATEGORIA_ALFANUMERICO": "A descrición da categoría só pode conter caracteres alfanuméricos",
+  "DESCRIPCION_CATEGORIA_TAMANHO_MINIMO": "A descrición da categoría non pode ter menos de 3 caracteres",
+  "DESCRIPCION_CATEGORIA_TAMANHO_MAXIMO": "A descrición non pode superar os 255 caracteres",
+  "NOMBRE_CATEGORIA_YA_EXISTE": "Xa existe unha categoría con este nome no sistema",
+  "CATEGORIA_NO_EXISTE": "Non existe a categoría no sistema"
 }

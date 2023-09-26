@@ -3,7 +3,9 @@
 
   "main": {
     "home": "Casa",
-    "usuarios": "Usuarios",
+    "gestionUsuarios": "Gestión de usuarios",
+    "gestionCategorias": "Gestión de categorias",
+    "categorias": "Categorias",
     "equipos": "Equipos",
     "competiciones": "Competiciones",
     "micuenta": "Mi cuenta",
@@ -53,6 +55,23 @@
       "contraseñaInvalidaTamañoMin": "La contraseña no puede tener menos de 3 caracteres",
       "contraseñasNoCoinciden": "Las dos contraseñas deben de coincidir",
       "contraseñaInvalidaTamañoMax": "La contraseña no puede tener más de 16 caracteres"
+    }
+  },
+
+  "categoria": {
+    "nombre": "Nombre",
+    "descripcion": "Descripción",
+    "verEvento": "Ver eventos de la categoría",
+
+    "validaciones": {
+      "nombreVacio": "El nombre de usuario no puede ser vacío",
+      "nombreInvalidoAlfanumerico": "El nombre de la categoría solo puede contener caracteres alfanuméricos.",
+      "nombreCategoriaInvalidoTamañoMax": "El nombre de la categoría no puede exceder los 15 caracteres.",
+      "nombreCategoriaInvalidoTamañoMin": "El nombre de la categoría debe tener un mínimo de 3 caracteres.",
+      "descripcionVacio": "La descripción de la categoría no puede estar vacía.",
+      "descripcionCategoriaInvalidoAlfanumerico": "La descripción de la categoría solo puede contener caracteres alfanuméricos.",
+      "descripcionCategoriaInvalidoTamañoMax": "La descripción de la categoría no puede exceder los 255 caracteres.",
+      "descripcionCategoriaInvalidoTamañoMin": "La descripción de la categoría debe tener un mínimo de 3 caracteres."
     }
   },
 
@@ -106,7 +125,7 @@
     "tituloModalBorrado": "Vas a eliminar un elemento del sistema",
     "preguntaModalBorrado": "¿Seguro que quiere eliminar a ",
     "tituloModalEditarPassword": "Cambiar la contraseña del usuario",
-    "tituloModalSubirImagen": "Suba una imagen para el usuario",
+    "tituloModalSubirImagen": "Suba una imagen",
 
     "error": "ERROR"
   },
@@ -119,17 +138,20 @@
 
   "columnas": {
     "imagenUsuario": "Imagen",
+    "imagenCategoria": "Imagen de la categoría",
     "login": "Login",
     "nombre": "Nombre",
     "dni": "Dni",
     "email": "Email",
     "rol": "Rol",
+    "descripcion": "Descripción",
     "acciones": "Acciones"
   },
 
   "footer": {
     "totalDe": "Total de ",
-    "usuarios": " usuarios"
+    "usuarios": " usuarios",
+    "categorias": " categorias"
   },
 
   "ERROR_INESPERADO": "Error inesperado",
@@ -184,5 +206,16 @@
   "NO_ELIMINAR_ADMINISTRADOR": "No puedes eliminar el administrador del sistema",
   "PERMISO_DENEGADO": "Usted no puede realizar esta acción",
   "ARCHIVO_SUBIDO_OK": "Archivo subido al sistema",
-  "ARCHIVO_VACIO": "No se puede subir un archivo vacío"
+  "ARCHIVO_VACIO": "No se puede subir un archivo vacío",
+  "NOMBRE_CATEGORIA_VACIO": "El nombre de la categoría no puede ser vacío",
+  "NOMBRE_CATEGORIA_ALFANUMERICO": "El nombre de la categoría solo puede contener caracteres alfanuméricos",
+  "NOMBRE_CATEGORIA_TAMANHO_MINIMO": "El  nombre de la categoría no puede tener menos de 3 caracteres",
+  "NOMBRE_CATEGORIA_TAMANHO_MAXIMO": "El  nombre de la categoría no puede superar los 15 caracteres",
+  "DESCRIPCION_CATEGORIA_VACIO": "La descripción de la categoría no puede ser vacío",
+  "DESCRIPCION_CATEGORIA_ALFANUMERICO": "La descripción de la categoría solo puede contener caracteres alfanuméricos",
+  "DESCRIPCION_CATEGORIA_TAMANHO_MINIMO": "La descripción de la categoría no puede tener menos de 3 caracteres",
+  "DESCRIPCION_CATEGORIA_TAMANHO_MAXIMO": " La descripción no puede superar los 255 caracteres",
+
+  "NOMBRE_CATEGORIA_YA_EXISTE": " Ya existe una categoría con este nombre en el sistema",
+  "CATEGORIA_NO_EXISTE": "No existe la categoría en el sistema"
 }
