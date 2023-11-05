@@ -198,9 +198,7 @@ export default function UsuarioShowAll() {
     </React.Fragment>
   );
 
-  const footer = `${t("footer.totalDe")}${usuarios ? usuarios.length : 0}${t(
-    "footer.usuarios"
-  )}`;
+  const footer = `${usuarios ? usuarios.length : 0}${t("footer.usuarios")}`;
 
   const imagenUsuario = (usuario) => {
     return (
@@ -350,7 +348,8 @@ export default function UsuarioShowAll() {
 
     // Funciones de validación compartidas
     const isAlphabetic = (str) => /^[a-zA-ZÀ-ÿ\u00f1\u00d1\ ]*$/.test(str);
-    const isAlphanumeric = (str) => /^[a-zA-ZÀ-ÿ@\u00f1\u00d1\ ]*$/.test(str);
+    const isAlphanumeric = (str) =>
+      /^[a-zA-ZÀ-ÿ0-9@\u00f1\u00d1\ ]*$/.test(str);
 
     if (data.login != undefined) {
       if (!isAlphabetic(data.login)) {
@@ -957,7 +956,7 @@ export default function UsuarioShowAll() {
         >
           <Column
             field="imagenUsuario"
-            header={t("columnas.imagenUsuario")}
+            header={t("columnas.imagen")}
             body={imagenUsuario}
           ></Column>
           <Column field="login" header={t("columnas.login")} sortable></Column>

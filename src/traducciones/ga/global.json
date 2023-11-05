@@ -82,6 +82,50 @@
     }
   },
 
+  "evento": {
+    "nombre": "Nombre",
+    "descripcion": "Descripción",
+    "tipoAsistencia": "Tipo de asistencia",
+    "numAsistentes": "Número de asistentes",
+    "numInscritos": "Número de inscritos",
+    "estado": "Estado",
+    "fechaEvento": "Fecha del evento",
+    "direccion": "Direccion del evento",
+    "emailContacto": "Email",
+    "telefonoContacto": "Teléfono",
+    "categoria": "Categoria",
+    "gerente": "Gerente",
+    "publico": "Evento público",
+    "url": "Url do evento",
+    "privado": "Evento privado",
+    "abierto": "Aberto",
+    "cerrado": "Cerrado",
+
+    "validaciones": {
+      "nombreVacio": "O nome de usuario non pode estar baleiro",
+      "nombreInvalidoAlfanumerico": "O nome do evento só pode conter caracteres alfanuméricos.",
+      "nombreEventoInvalidoTamañoMax": "O nome do evento non pode exceder 30 caracteres.",
+      "nombreEventoInvalidoTamañoMin": "O nome do evento debe ter un mínimo de 3 caracteres.",
+      "descripcionVacio": "A descrición do evento non pode estar baleira.",
+      "descripcionEventoInvalidoAlfanumerico": "A descrición do evento só pode conter caracteres alfanuméricos.",
+      "descripcionEventoInvalidoTamañoMax": "A descrición do evento non pode exceder os 255 caracteres.",
+      "descripcionEventoInvalidoTamañoMin": "A descrición do evento debe ter un mínimo de 3 caracteres.",
+      "numAsistentesVacio": "O número de asistentes non pode ser vacío",
+      "numAsistentesEventoInvalidoNumerico": "O número de asistentes ten que ter formato numérico",
+      "direccionVacio": "A dirección do evento non pode ser vacío",
+      "direccionEventoInvalidoAlfanumerico": "A dirección do evento solo pode contener caracteres alfanuméricos",
+      "direccionEventoInvalidoTamañoMax": "A dirección do evento no pode tener más de 50 caracteres",
+      "direccionEventoInvalidoTamañoMin": "A dirección do evento no pode tener menos de 5 caracteres",
+      "emailVacio": "O correo electrónico do usuario non pode estar baleiro",
+      "emailInvalido": "O correo electrónico non é válido, exemplo: eXample1@eXample1.com",
+      "emailInvalidoTamañoMin": "O correo electrónico non pode ter menos de 3 caracteres",
+      "emailInvalidoTamañoMax": "O correo electrónico non pode ter máis de 40 caracteres",
+      "telefonoContactoVacio": "O teléfono non pode ser vacío",
+      "telefonoContactoFormato": "O teléfono ten que estar formado por 9 números",
+      "urlFormato": "A URL ten un formato incorrecto"
+    }
+  },
+
   "botones": {
     "cancelar": "Cancelar",
     "modificarPerfil": "Teus datos persoais",
@@ -93,6 +137,7 @@
     "seleccionarArchivo": "Seleccionar arquivo",
     "cambiarPassword": "Cambiar contrasinal",
     "editarDatos": "Clica para editar os seus datos",
+    "gestionEventos": "Xestión de eventos",
     "nuevo": "Novo",
     "crear": "Crear",
     "buscar": "Buscar",
@@ -144,21 +189,25 @@
   },
 
   "columnas": {
-    "imagenUsuario": "Imaxen",
-    "imagenCategoria": "Imaxen de la categoría",
+    "imagen": "Imaxen",
     "login": "Login",
     "nombre": "Nome",
     "dni": "Dni",
     "email": "Email",
+    "fechaEvento": "Fecha de inicio",
+    "direccion": "Direccion",
+    "estado": "Estado",
     "rol": "Rol",
     "descripcion": "Descripción",
+    "tipoAsistencia": "Tipo de asistencia",
+    "imagenEnlace": "Imaxen e enlace",
     "acciones": "Accións"
   },
 
   "footer": {
-    "totalDe": "Total de ",
     "usuarios": " usuarios",
-    "categorias": " categorias"
+    "categorias": " categorias",
+    "eventos": " eventos"
   },
 
   "ERROR_INESPERADO": "Erro inesperado",

@@ -76,6 +76,50 @@
     }
   },
 
+  "evento": {
+    "nombre": "Name",
+    "descripcion": "Description",
+    "tipoAsistencia": "Type of assistance",
+    "numAsistentes": "Number of attendees",
+    "numInscritos": "Number of registered",
+    "estado": "State",
+    "fechaEvento": "Event date",
+    "direccion": "Address of the event",
+    "emailContacto": "Email",
+    "telefonoContacto": "Phone",
+    "categoria": "Category",
+    "gerente": "Manager",
+    "publico": "Public event",
+    "url": "Event link",
+    "privado": "Private event",
+    "abierto": "Open",
+    "cerrado": "Close",
+
+    "validaciones": {
+      "nombreVacio": "The username cannot be empty",
+      "nombreInvalidoAlfanumerico": "The event name can only contain alphanumeric characters.",
+      "nombreEventoInvalidoTamañoMax": "The event name cannot exceed 30 characters.",
+      "nombreEventoInvalidoTamañoMin": "The event name must be a minimum of 3 characters.",
+      "descripcionVacio": "The event description cannot be empty.",
+      "descripcionEventoInvalidoAlfanumerico": "The event description can only contain alphanumeric characters.",
+      "descripcionEventoInvalidoTamañoMax": "The event description cannot exceed 255 characters.",
+      "descripcionEventoInvalidoTamañoMin": "The event description must have a minimum of 3 characters.",
+      "numAsistentesVacio": "The number of attendees cannot be empty",
+      "numAsistentesEventoInvalidoNumerico": "The number of attendees must be in numerical format",
+      "direccionVacio": "The event address cannot be empty",
+      "direccionEventoInvalidoAlfanumerico": "The event address can only contain alphanumeric characters",
+      "direccionEventoInvalidoTamañoMax": "The event address cannot be more than 50 characters",
+      "direccionEventoInvalidoTamañoMin": "The event address cannot be less than 5 characters",
+      "emailVacio": "The user email cannot be empty",
+      "emailInvalido": "The email is invalid, example: eXample1@eXample1.com",
+      "emailInvalidoTamañoMin": "The email cannot be less than 3 characters",
+      "emailInvalidoTamañoMax": "The email cannot be more than 40 characters",
+      "telefonoContactoVacio": "The phone cannot be empty",
+      "telefonoContactoFormato": "The phone number must be made up of 9 numbers",
+      "urlFormato": "URL is malformed"
+    }
+  },
+
   "botones": {
     "cancelar": "Cancel",
     "modificarPerfil": "Your personal data",
@@ -87,6 +131,7 @@
     "seleccionarArchivo": "Select File",
     "cambiarPassword": "Change password",
     "editarDatos": "Click to change your data",
+    "gestionEventos": "Events management",
     "nuevo": "New",
     "crear": "Create",
     "buscar": "Search",
@@ -138,21 +183,25 @@
   },
 
   "columnas": {
-    "imagenUsuario": "Image",
-    "imagenCategoria": "Category Image",
+    "imagen": "Image",
     "login": "Login",
     "nombre": "Name",
     "dni": "Dni",
     "email": "Email",
+    "fechaEvento": "Start date",
+    "direccion": "Direction",
+    "estado": "State",
     "rol": "Rol",
     "descripcion": "Description",
+    "tipoAsistencia": "Type of assistance",
+    "imagenEnlace": "Image and link",
     "acciones": "Actions"
   },
 
   "footer": {
-    "totalDe": "Total of ",
     "usuarios": " users",
-    "categorias": " categories"
+    "categorias": " categories",
+    "eventos": " events"
   },
 
   "ERROR_INESPERADO": "Unexpected error",

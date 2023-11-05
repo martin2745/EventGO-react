@@ -124,9 +124,9 @@ export default function CategoriaShowAll() {
 
   const header = renderHeader();
 
-  const footer = `${t("footer.totalDe")}${
-    categorias ? categorias.length : 0
-  }${t("footer.categorias")}`;
+  const footer = `${categorias ? categorias.length : 0}${t(
+    "footer.categorias"
+  )}`;
 
   const imagenCategoria = (categoria) => {
     return (
@@ -195,7 +195,8 @@ export default function CategoriaShowAll() {
 
   const validateBuscar = (data) => {
     let errors = {};
-    const isAlphanumeric = (str) => /^[a-zA-ZÀ-ÿ@\u00f1\u00d1\ ]*$/.test(str);
+    const isAlphanumeric = (str) =>
+      /^[a-zA-ZÀ-ÿ0-9@\u00f1\u00d1\ ]*$/.test(str);
 
     if (data.nombre != undefined) {
       if (!isAlphanumeric(data.nombre)) {
@@ -302,6 +303,11 @@ export default function CategoriaShowAll() {
   function confirmarEliminarCategoria(categoria) {
     setCategoriaActual(categoria);
     setVisibleDialogoBorrado(true);
+  }
+
+  function eventosCategoria(categoria) {
+    setCategoriaActual(categoria);
+    navigate("/evento/eventoShowAll/" + categoria.id); // navega a URL de gestión de eventos
   }
 
   function ocultarDialogoCrear() {
@@ -575,9 +581,15 @@ export default function CategoriaShowAll() {
         />
         <Button
           icon="pi pi-trash"
-          className="p-button-rounded p-button-wrap"
+          className="p-button-rounded p-button-wrap mr-2"
           tooltip={t("botones.eliminar")}
           onClick={() => confirmarEliminarCategoria(rowData)}
+        />
+        <Button
+          icon="pi pi-users"
+          className="p-button-rounded p-button-wrap"
+          tooltip={t("botones.gestionEventos")}
+          onClick={() => eventosCategoria(rowData)}
         />
       </React.Fragment>
     );
@@ -598,7 +610,7 @@ export default function CategoriaShowAll() {
         >
           <Column
             field="imagenCategoria"
-            header={t("columnas.imagenCategoria")}
+            header={t("columnas.imagen")}
             body={imagenCategoria}
           ></Column>
           <Column
