@@ -42,6 +42,8 @@ import UsuarioEdit from "./components/usuario/usuarioEdit";
 import CambiarPassword from "./components/usuario/cambiarPassword";
 import UsuarioShowAll from "./components/usuario/usuarioShowAll";
 import CategoriaShowAll from "./components/categoria/categoriaShowAll";
+import EventosCategoria from "./components/categoria/eventosCategoria";
+import EventoShowAll from "./components/evento/eventoShowAll";
 import CategoriaLayout from "./components/categoria/categoriaLayout";
 
 function Main() {
@@ -351,6 +353,16 @@ function Main() {
                 </Route>
                 <Route path="categoriaLayout">
                   <Route index element={<CategoriaLayout />} />
+                </Route>
+                <Route path="eventosCategoria">
+                  <Route path=":id" element={<EventosCategoria />} />
+                </Route>
+              </Route>
+
+              {/* evento */}
+              <Route path="evento">
+                <Route path="eventoShowAll">
+                  <Route path=":id" element={<EventoShowAll />} />
                 </Route>
               </Route>
 
