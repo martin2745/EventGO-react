@@ -30,7 +30,6 @@ import circuitoG from "./components/recursos/imagenes/circuitoG.jpg";
 import fiestaG from "./components/recursos/imagenes/fiestaG.jpg";
 
 //componentes
-import Home from "./components/home";
 import Footer from "./components/Footer/Footer";
 import "./css/Footer.css";
 import InicioSesion from "./components/usuario/inicioSesion";
@@ -44,6 +43,7 @@ import UsuarioShowAll from "./components/usuario/usuarioShowAll";
 import CategoriaShowAll from "./components/categoria/categoriaShowAll";
 import EventosCategoria from "./components/categoria/eventosCategoria";
 import EventoShowAll from "./components/evento/eventoShowAll";
+import MisEventosGestor from "./components/evento/misEventosGestor";
 import CategoriaLayout from "./components/categoria/categoriaLayout";
 
 function Main() {
@@ -105,26 +105,24 @@ function Main() {
     },
   ];
   //Cabecera
-  const navs = [
-    {
+  const navs = [];
+  if (rol === "ROLE_ADMINISTRADOR") {
+    navs.push({
       label: <p className="ml-8 h-0rem"></p>,
       disabled: true,
-    },
-    {
-      label: <a className="mr-3">{t("main.micuenta")}</a>,
-      command: (e) => {
-        navigate("/usuario/micuenta/" + currentUser.id);
-      },
-    },
-    {
+    });
+    navs.push({
       label: <a className="mr-3">{t("main.categorias")}</a>,
       command: (e) => {
         navigate("/categoria/categoriaLayout/");
       },
-    },
-  ];
-
-  if (rol === "ROLE_ADMINISTRADOR") {
+    });
+    navs.push({
+      label: <a className="mr-3">{t("main.gestionCategorias")}</a>,
+      command: (e) => {
+        navigate("/categoria/categoriaShowAll/");
+      },
+    });
     navs.push({
       label: <a className="mr-3">{t("main.gestionUsuarios")}</a>,
       command: (e) => {
@@ -132,9 +130,49 @@ function Main() {
       },
     });
     navs.push({
-      label: <a className="mr-3">{t("main.gestionCategorias")}</a>,
+      label: <a className="mr-3">{t("main.micuenta")}</a>,
       command: (e) => {
-        navigate("/categoria/categoriaShowAll/");
+        navigate("/usuario/micuenta/" + currentUser.id);
+      },
+    });
+  } else if (rol === "ROLE_GERENTE") {
+    navs.push({
+      label: <p className="ml-8 h-0rem"></p>,
+      disabled: true,
+    });
+    navs.push({
+      label: <a className="mr-3">{t("main.categorias")}</a>,
+      command: (e) => {
+        navigate("/categoria/categoriaLayout/");
+      },
+    });
+    navs.push({
+      label: <a className="mr-3">{t("main.gestionEventos")}</a>,
+      command: (e) => {
+        navigate("/evento/misEventosGestor/");
+      },
+    });
+    navs.push({
+      label: <a className="mr-3">{t("main.micuenta")}</a>,
+      command: (e) => {
+        navigate("/usuario/micuenta/" + currentUser.id);
+      },
+    });
+  } else if (rol === "ROLE_USUARIO") {
+    navs.push({
+      label: <p className="ml-8 h-0rem"></p>,
+      disabled: true,
+    });
+    navs.push({
+      label: <a className="mr-3">{t("main.categorias")}</a>,
+      command: (e) => {
+        navigate("/categoria/categoriaLayout/");
+      },
+    });
+    navs.push({
+      label: <a className="mr-3">{t("main.micuenta")}</a>,
+      command: (e) => {
+        navigate("/usuario/micuenta/" + currentUser.id);
       },
     });
   }
@@ -364,16 +402,10 @@ function Main() {
                 <Route path="eventoShowAll">
                   <Route path=":id" element={<EventoShowAll />} />
                 </Route>
+                <Route path="misEventosGestor">
+                  <Route index element={<MisEventosGestor />} />
+                </Route>
               </Route>
-
-              {currentUser && (
-                <React.Fragment>
-                  <Route
-                    path="/home"
-                    element={<Home mensaje="Página principal" />}
-                  />
-                </React.Fragment>
-              )}
             </Routes>
           </div>
         </div>

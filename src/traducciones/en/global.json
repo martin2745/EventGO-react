@@ -7,6 +7,7 @@
     "gestionUsuarios": "User management",
     "gestionCategorias": "Category management",
     "categorias": "Categories",
+    "gestionEventos": "Evento management",
     "equipos": "Teams",
     "competiciones": "Competitions",
     "micuenta": "My account",
@@ -33,6 +34,9 @@
     "selectRol": "Select a role",
     "usuario": "User",
     "gerente": "Manager",
+    "activo": "Active",
+    "inactivo": "Inactive",
+    "borradoLogico": "Active/Inactive",
 
     "validaciones": {
       "loginVacio": "A login is required",
@@ -92,8 +96,12 @@
     "publico": "Public event",
     "url": "Event link",
     "privado": "Private event",
+    "documentoInformativo": "Information document",
     "abierto": "Open",
     "cerrado": "Close",
+    "informacion": "Information",
+    "inscribirse": "Sign up",
+    "noExistenEventos": "There are no events",
 
     "validaciones": {
       "nombreVacio": "The username cannot be empty",
@@ -128,6 +136,7 @@
     "iniciarSesion": "Log in",
     "iniciar": "START",
     "subirImagen": "Upload image",
+    "subirImagenDocumento": "Upload image or document",
     "seleccionarArchivo": "Select File",
     "cambiarPassword": "Change password",
     "editarDatos": "Click to change your data",
@@ -139,7 +148,11 @@
     "eliminar": "Delete",
     "verEnDetalle": "See in detail",
     "buscarClave": "Search by keyword",
-    "recargar": "Reload"
+    "recargar": "Reload",
+    "reactivar": "Reactivate",
+    "pdfInteres": "Interesting PDF",
+    "informacion": "Events information",
+    "inscribirse": "Sign up to the event"
   },
 
   "bandera": {
@@ -168,10 +181,14 @@
     "tituloModalBuscar": "Search a element in the system",
     "tituloModalEditar": "You are going to edit an element from the system",
     "tituloModalVerEnDetalle": "Information of the element in the system",
+    "tituloModalVerEnDetalleEvento": "Event information",
     "tituloModalBorrado": "You are going to delete an element from the system",
     "preguntaModalBorrado": "Are you sure you want to delete ",
+    "preguntaModalReactivar": "Do you want to reactivate",
     "tituloModalEditarPassword": "Change the user's password",
     "tituloModalSubirImagen": "Upload an image",
+    "tituloModalSubirImagenDocumento": "Upload an image or document",
+    "tituloModalReactivar": "Reactivate system element",
 
     "error": "ERROR"
   },

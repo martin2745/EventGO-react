@@ -104,7 +104,7 @@ export default function InicioSesion() {
     autenticacionService.login(data).then(
       () => {
         form.restart();
-        navigate("/home");
+        navigate("/categoria/categoriaLayout/");
         window.location.reload();
       },
       (error) => {

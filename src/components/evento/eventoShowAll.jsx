@@ -81,7 +81,7 @@ export default function EventoShowAll() {
       navigate("/");
       window.location.reload();
     }
-  }, [visibleDialogoBorrado]);
+  }, []);
 
   useEffect(() => {
     usuarioService.buscarTodos().then((res) => {
@@ -199,19 +199,29 @@ export default function EventoShowAll() {
     return (
       <>
         {evento.imagenEvento ? (
-          <a href={evento.url}>
+          <a
+            onClick={() => enlaceImagen(evento.url)}
+            style={{ cursor: "pointer" }}
+          >
             <img
               src={evento.imagenEvento}
               className="w-4rem shadow-2 border-round"
             />
           </a>
         ) : (
-          <a href={evento.url}>
+          <a
+            onClick={() => enlaceImagen(evento.url)}
+            style={{ cursor: "pointer" }}
+          >
             <img src={avatar} className="w-4rem shadow-2 border-round" />
           </a>
         )}
       </>
     );
+  };
+
+  const enlaceImagen = (url) => {
+    window.open(url, "_blank");
   };
 
   const validateCrear = (data) => {
@@ -560,6 +570,10 @@ export default function EventoShowAll() {
     setVisibleDialogoBorrado(true);
   }
 
+  function mostrarPDF(evento) {
+    window.open(evento.documentoEvento, "_blank");
+  }
+
   function ocultarDialogoCrear() {
     setVisibleDialogoCrear(false);
   }
@@ -728,7 +742,8 @@ export default function EventoShowAll() {
 
   function onSubmitSubirImagen(event) {
     event.preventDefault();
-    const url = "http://localhost:8080/api/evento/uploadImagenEvento";
+    const fileExtension = file.name.split(".").pop().toLowerCase();
+
     const formData = new FormData();
     const idEvento = eventoActual.id;
     const user = JSON.parse(localStorage.getItem("user"));
@@ -743,8 +758,16 @@ export default function EventoShowAll() {
         Authorization: "Bearer " + user.token,
       },
     };
-    cargarImagenAlServidor(url, formData, config);
-    ocultarDialogoSubirImagen();
+
+    if (fileExtension !== "pdf") {
+      const url = "http://localhost:8080/api/evento/uploadImagenEvento";
+      cargarImagenAlServidor(url, formData, config);
+      ocultarDialogoSubirImagen();
+    } else {
+      const url = "http://localhost:8080/api/evento/uploadDocumentoEvento";
+      cargarDocumentoAlServidor(url, formData, config);
+      ocultarDialogoSubirImagen();
+    }
   }
 
   function cargarImagenAlServidor(url, formData, config) {
@@ -752,6 +775,12 @@ export default function EventoShowAll() {
       const eventoConImagen = eventoActual;
       eventoConImagen.imageEvento = response.data.texto;
       setEventoActual(eventoConImagen);
+      reloadPage();
+    });
+  }
+
+  function cargarDocumentoAlServidor(url, formData, config) {
+    axios.post(url, formData, config).then((response) => {
       reloadPage();
     });
   }
@@ -977,7 +1006,7 @@ export default function EventoShowAll() {
         <Button
           icon="pi pi-upload"
           className="p-button-rounded p-button-wrap mr-2"
-          tooltip={t("botones.subirImagen")}
+          tooltip={t("botones.subirImagenDocumento")}
           onClick={() => subirImagen(rowData)}
         />
         <Button
@@ -988,10 +1017,18 @@ export default function EventoShowAll() {
         />
         <Button
           icon="pi pi-trash"
-          className="p-button-rounded p-button-wrap"
+          className="p-button-rounded p-button-wrap mr-2"
           tooltip={t("botones.eliminar")}
           onClick={() => confirmarEliminarEvento(rowData)}
         />
+        {rowData.documentoEvento !== "" && (
+          <Button
+            icon="pi pi-file-pdf"
+            className="p-button-rounded p-button-wrap"
+            tooltip={t("botones.pdfInteres")}
+            onClick={() => mostrarPDF(rowData)}
+          />
+        )}
       </React.Fragment>
     );
   }
@@ -1912,7 +1949,7 @@ export default function EventoShowAll() {
       <Dialog
         visible={visibleDialogoSubirImagen}
         style={{ width: "450px" }}
-        header={t("mensajes.tituloModalSubirImagen")}
+        header={t("mensajes.tituloModalSubirImagenDocumento")}
         modal
         onHide={ocultarDialogoSubirImagen}
       >
@@ -1920,7 +1957,8 @@ export default function EventoShowAll() {
           <form onSubmit={onSubmitSubirImagen}>
             <Button
               type="submit"
-              label={t("botones.subirImagen")}
+              className="p-button-rounded p-button-wrap mr-2"
+              label={t("botones.subirImagenDocumento")}
               icon="pi pi-upload"
             />
             <input

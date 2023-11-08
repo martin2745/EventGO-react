@@ -49,7 +49,7 @@ export default function CategoriaShowAll() {
       navigate("/");
       window.location.reload();
     }
-  }, [visibleDialogoBorrado]);
+  }, []);
 
   const isFormFieldValid = (meta) => !!(meta.touched && meta.error);
   const getFormErrorMessage = (meta) => {
@@ -194,7 +194,7 @@ export default function CategoriaShowAll() {
   };
 
   const validateBuscar = (data) => {
-    let errors = {};
+    /*let errors = {};
     const isAlphanumeric = (str) =>
       /^[a-zA-ZÀ-ÿ0-9@\u00f1\u00d1\ ]*$/.test(str);
 
@@ -224,7 +224,7 @@ export default function CategoriaShowAll() {
       }
     }
 
-    return errors;
+    return errors;*/
   };
 
   const validateEditar = (data) => {
