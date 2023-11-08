@@ -13,6 +13,9 @@ class AutenticacionService {
       if (response.data.rol) {
         localStorage.setItem("rol", response.data.rol);
       }
+      if (response.data.id) {
+        localStorage.setItem("idUsuario", response.data.id);
+      }
       return response.data;
     });
   }

@@ -6,6 +6,8 @@
     "gestionUsuarios": "Gestión de usuarios",
     "gestionCategorias": "Gestión de categorias",
     "categorias": "Categorias",
+    "categoriasGerente": "Eventos del gerente",
+    "gestionEventos": "Gestion de eventos",
     "equipos": "Equipos",
     "competiciones": "Competiciones",
     "micuenta": "Mi cuenta",
@@ -32,6 +34,9 @@
     "selectRol": "Selecciona un rol",
     "usuario": "Usuario",
     "gerente": "Gerente",
+    "activo": "Activo",
+    "inactivo": "Inactivo",
+    "borradoLogico": "Activo/Inactivo",
 
     "validaciones": {
       "loginVacio": "El login de usuario no puede ser vacío",
@@ -91,8 +96,12 @@
     "publico": "Evento público",
     "url": "Url del evento",
     "privado": "Evento privado",
+    "documentoInformativo": "Documento informativo",
     "abierto": "Abierto",
     "cerrado": "Cerrado",
+    "informacion": "Información",
+    "inscribirse": "Inscribirse",
+    "noExistenEventos": "No existen eventos",
 
     "validaciones": {
       "nombreVacio": "El nombre de usuario no puede ser vacío",
@@ -127,7 +136,8 @@
     "iniciarSesion": "Iniciar sesión",
     "iniciar": "INICIAR",
     "subirImagen": "Subir imagen",
-    "seleccionarArchivo": "Seleccionar archivo",
+    "subirImagenDocumento": "Subir imagen o documento",
+    "seleccionarArchivo": "Seleccionar archivo a subir al sistema",
     "cambiarPassword": "Cambiar contraseña",
     "editarDatos": "Clica para editar tus datos",
     "gestionEventos": "Gestión de eventos",
@@ -138,7 +148,11 @@
     "eliminar": "Eliminar",
     "verEnDetalle": "Ver en detalle",
     "buscarClave": "Buscar por palabra clave",
-    "recargar": "Recargar"
+    "recargar": "Recargar",
+    "reactivar": "Reactivar",
+    "pdfInteres": "PDF de interes",
+    "informacion": "Información del evento",
+    "inscribirse": "Inscribirse al evento"
   },
 
   "bandera": {
@@ -167,10 +181,14 @@
     "tituloModalBuscar": "Buscar elemento en el sistema",
     "tituloModalEditar": "Vas a editar un elemento en el sistema",
     "tituloModalVerEnDetalle": "Información del elemento en el sistema",
+    "tituloModalVerEnDetalleEvento": "Información del evento",
     "tituloModalBorrado": "Vas a eliminar un elemento del sistema",
     "preguntaModalBorrado": "¿Seguro que quiere eliminar a ",
+    "preguntaModalReactivar": "¿Quieres reactivar a",
     "tituloModalEditarPassword": "Cambiar la contraseña del usuario",
     "tituloModalSubirImagen": "Suba una imagen",
+    "tituloModalSubirImagenDocumento": "Suba una imagen o documento",
+    "tituloModalReactivar": "Reactivar el elemento del sistema",
 
     "error": "ERROR"
   },

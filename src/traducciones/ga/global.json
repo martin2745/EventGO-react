@@ -6,6 +6,7 @@
     "usuarios": "Usuarios",
     "gestionUsuarios": "Xestión de usuarios",
     "gestionCategorias": "Xestión de categorias",
+    "gestionEventos": "Xestión de eventos",
     "categorias": "Categorias",
     "equipos": "Equipos",
     "competiciones": "Competicións",
@@ -33,6 +34,9 @@
     "selectRol": "Escolle un rol",
     "usuario": "Usuario",
     "gerente": "Xerente",
+    "activo": "Activo",
+    "inactivo": "Inactivo",
+    "borradoLogico": "Activo/Inactivo",
 
     "validaciones": {
       "loginVacio": "É necesario un login",
@@ -98,8 +102,12 @@
     "publico": "Evento público",
     "url": "Url do evento",
     "privado": "Evento privado",
+    "documentoInformativo": "Documento informativo",
     "abierto": "Aberto",
     "cerrado": "Cerrado",
+    "informacion": "Información",
+    "inscribirse": "Inscribirse",
+    "noExistenEventos": "Non existen eventos",
 
     "validaciones": {
       "nombreVacio": "O nome de usuario non pode estar baleiro",
@@ -134,6 +142,7 @@
     "iniciarSesion": "Iniciar sesión",
     "iniciar": "INICIAR",
     "subirImagen": "Subir imaxen",
+    "subirImagenDocumento": "Subir imaxen ou documento",
     "seleccionarArchivo": "Seleccionar arquivo",
     "cambiarPassword": "Cambiar contrasinal",
     "editarDatos": "Clica para editar os seus datos",
@@ -145,7 +154,11 @@
     "eliminar": "Eliminar",
     "verEnDetalle": "Ver en detalle",
     "buscarClave": "Buscar por palabra clave",
-    "recargar": "Recargar"
+    "recargar": "Recargar",
+    "reactivar": "Reactivar",
+    "pdfInteres": "PDF de interese",
+    "informacion": "Información do evento",
+    "inscribirse": "Inscribirse ao evento"
   },
 
   "bandera": {
@@ -174,10 +187,14 @@
     "tituloModalBuscar": "Buscar elemento no sistema",
     "tituloModalEditar": "Vai a editar un elemento do sistema",
     "tituloModalVerEnDetalle": "Información do elemento no sistema",
+    "tituloModalVerEnDetalleEvento": "Información do evento",
     "tituloModalBorrado": "Vai a eliminar un elemento do sistema",
     "preguntaModalBorrado": "Estás seguro de que queres eliminar ",
+    "preguntaModalReactivar": "Queres reactivar a",
     "tituloModalEditarPassword": "Cambiar a contrasinal do usuario",
     "tituloModalSubirImagen": "Suba unha imaxen",
+    "tituloModalSubirImagenDocumento": "Suba unha imaxen ou documento",
+    "tituloModalReactivar": "Reactivar o elemento do sistema",
 
     "error": "ERROR"
   },

@@ -31,6 +31,7 @@ export default function UsuarioShowAll() {
     fechaNacimiento: "",
     pais: "",
     imagenUsuario: "",
+    borradoLogico: "",
   };
   const [usuarios, setUsuarios] = useState([]);
   const [t, i18n] = useTranslation("global");
@@ -50,6 +51,8 @@ export default function UsuarioShowAll() {
     useState(false);
   const [visibleDialogoSubirImagen, setVisibleDialogoSubirImagen] =
     useState(false);
+  const [visibleDialogoReactivarUsuario, setVisibleDialogoReactivarUsuario] =
+    useState(false);
   const [file, setFile] = useState();
   const [visibleDialogoVerEnDetalle, setVisibleDialogoVerEnDetalle] =
     useState(false);
@@ -58,10 +61,15 @@ export default function UsuarioShowAll() {
   const [fech, setFech] = useState("");
   const [fecha, setFecha] = useState(new Date());
   const [rol, setRol] = useState([" "]);
+  const [borradoLogico, setBorradoLogico] = useState([""]);
   const [pais, setPais] = useState([" "]);
   const rolOptions = [
     { label: <a>{t("usuario.usuario")}</a>, value: "usuario" },
     { label: <a>{t("usuario.gerente")}</a>, value: "gerente" },
+  ];
+  const borradoLogicoOptions = [
+    { label: <a>{t("usuario.activo")}</a>, value: "0" },
+    { label: <a>{t("usuario.inactivo")}</a>, value: "1" },
   ];
 
   useEffect(() => {
@@ -82,7 +90,7 @@ export default function UsuarioShowAll() {
       navigate("/");
       window.location.reload();
     }
-  }, [visibleDialogoBorrado]);
+  }, []);
 
   const isFormFieldValid = (meta) => !!(meta.touched && meta.error);
   const getFormErrorMessage = (meta) => {
@@ -251,6 +259,32 @@ export default function UsuarioShowAll() {
     }
   };
 
+  const formatoEstado = (usuario) => {
+    const idioma = localStorage.getItem("idioma");
+    switch (usuario.borradoLogico) {
+      case "0":
+        if (idioma == "es") {
+          return "Activo";
+        } else if (idioma == "en") {
+          return "Activo";
+        } else if (idioma == "ga") {
+          return "Active";
+        } else {
+          return "Activo";
+        }
+      case "1":
+        if (idioma == "es") {
+          return "Inactivo";
+        } else if (idioma == "en") {
+          return "Inactivo";
+        } else if (idioma == "ga") {
+          return "Inactive";
+        } else {
+          return "Inactivo";
+        }
+    }
+  };
+
   const validateCrear = (data) => {
     let errors = {};
     var patron =
@@ -344,7 +378,7 @@ export default function UsuarioShowAll() {
   };
 
   const validateBuscar = (data) => {
-    let errors = {};
+    /*let errors = {};
 
     // Funciones de validación compartidas
     const isAlphabetic = (str) => /^[a-zA-ZÀ-ÿ\u00f1\u00d1\ ]*$/.test(str);
@@ -393,7 +427,7 @@ export default function UsuarioShowAll() {
       }
     }
 
-    return errors;
+    return errors;*/
   };
 
   const validateEditar = (data) => {
@@ -527,6 +561,7 @@ export default function UsuarioShowAll() {
   function buscarUsuario() {
     setPais([" "]);
     setRol([" "]);
+    setBorradoLogico([""]);
     setFecha(new Date());
     setVisibleDialogoBuscar(true);
   }
@@ -548,6 +583,12 @@ export default function UsuarioShowAll() {
   function subirImagen(usuario) {
     setUsuarioActual(usuario);
     setVisibleDialogoSubirImagen(true);
+  }
+
+  function confirmarReactivarUsuario(usuario) {
+    usuario.borradoLogico = "0";
+    setUsuarioActual(usuario);
+    setVisibleDialogoReactivarUsuario(true);
   }
 
   function confirmarVerEnDetalleUsuario(usuario) {
@@ -590,6 +631,10 @@ export default function UsuarioShowAll() {
   function ocultarDialogoBorrado() {
     setUsuarioActual(usuarioVacio);
     setVisibleDialogoBorrado(false);
+  }
+
+  function ocultarDialogoReactivarUsuario() {
+    setVisibleDialogoReactivarUsuario(false);
   }
 
   const onSubmitCrear = (data, form) => {
@@ -637,6 +682,9 @@ export default function UsuarioShowAll() {
     if (convertirFechaGuiones(fecha) != convertirFechaGuiones(fechaActual)) {
       data[`fechaNacimiento`] = convertirFechaGuiones(fecha);
     }
+    if (borradoLogico != "") {
+      data[`borradoLogico`] = borradoLogico;
+    }
     usuarioService.buscarTodosParametros(data).then(
       (res) => {
         if (res.data && Array.isArray(res.data)) {
@@ -662,6 +710,7 @@ export default function UsuarioShowAll() {
         setDialogoError(true);
       }
     );
+    setBorradoLogico([""]);
     setPais([" "]);
     setRol([" "]);
     setFecha(new Date());
@@ -750,6 +799,28 @@ export default function UsuarioShowAll() {
     ocultarDialogoSubirImagen();
   }
 
+  function onSubmitReactivar() {
+    usuarioActual.borradoLogico = "0";
+    usuarioService.modificar(usuarioActual.id.toString(), usuarioActual).then(
+      () => {
+        setShowMessageCambiarPassword(true);
+        ocultarDialogoCambiarPassword();
+        reloadPage();
+      },
+      (error) => {
+        const resMessage =
+          (error.response &&
+            error.response.usuarioActual &&
+            error.response.usuarioActual.codigo) ||
+          error.message ||
+          error.toString();
+        setResMessage(resMessage);
+        setDialogoError(true);
+      }
+    );
+    ocultarDialogoReactivarUsuario();
+  }
+
   function cargarImagenAlServidor(url, formData, config) {
     axios.post(url, formData, config).then((response) => {
       const usuarioConImagen = usuarioActual;
@@ -771,6 +842,7 @@ export default function UsuarioShowAll() {
         );
         setUsuarios(usuariosActualizados);
         setShowMessageEliminar(true);
+        reloadPage();
       },
       (error) => {
         const resMessage =
@@ -825,6 +897,23 @@ export default function UsuarioShowAll() {
         icon="pi pi-check"
         className="p-button-text"
         onClick={onSubmitEliminarUsuario}
+      />
+    </div>
+  );
+
+  const pieDialogoReactivar = (
+    <div style={{ display: "flex", justifyContent: "center" }}>
+      <Button
+        label={t("mensajes.no")}
+        icon="pi pi-times"
+        className="p-button-text"
+        onClick={ocultarDialogoReactivarUsuario}
+      />
+      <Button
+        label={t("mensajes.si")}
+        icon="pi pi-check"
+        className="p-button-text"
+        onClick={onSubmitReactivar}
       />
     </div>
   );
@@ -933,10 +1022,18 @@ export default function UsuarioShowAll() {
         />
         <Button
           icon="pi pi-trash"
-          className="p-button-rounded p-button-wrap"
+          className="p-button-rounded p-button-wrap mr-2"
           tooltip={t("botones.eliminar")}
           onClick={() => confirmarEliminarUsuario(rowData)}
         />
+        {rowData.borradoLogico === "1" && (
+          <Button
+            icon="pi pi-check"
+            className="p-button-rounded p-button-wrap"
+            tooltip={t("botones.reactivar")}
+            onClick={() => confirmarReactivarUsuario(rowData)}
+          />
+        )}
       </React.Fragment>
     );
   }
@@ -971,6 +1068,11 @@ export default function UsuarioShowAll() {
             field="rol"
             header={t("columnas.rol")}
             body={formatoRol}
+            sortable
+          ></Column>
+          <Column
+            field={formatoEstado}
+            header={t("columnas.estado")}
             sortable
           ></Column>
           <Column header={t("columnas.acciones")} body={accionesUsuario} />
@@ -1378,6 +1480,29 @@ export default function UsuarioShowAll() {
                     </div>
                   )}
                 />
+
+                <Field
+                  name="borradoLogico"
+                  render={({ input, meta }) => (
+                    <div className="field ">
+                      <span className="p-float-label">
+                        <div className="p-field px-5 text-900 ">
+                          <Dropdown
+                            value={borradoLogico}
+                            id="borradoLogico"
+                            placeholder={t("usuario.borradoLogico")}
+                            showClear
+                            name="borradoLogico"
+                            options={borradoLogicoOptions}
+                            onChange={(e) => setBorradoLogico(e.value)}
+                          />
+                        </div>
+                      </span>
+                      {getFormErrorMessage(meta)}
+                    </div>
+                  )}
+                />
+
                 <div className="col">
                   <Button
                     type="submit"
@@ -1797,6 +1922,28 @@ export default function UsuarioShowAll() {
             <span>
               {t("mensajes.preguntaModalBorrado")} <b>{usuarioActual.nombre}</b>
               ?
+            </span>
+          )}
+        </div>
+      </Dialog>
+
+      <Dialog
+        visible={visibleDialogoReactivarUsuario}
+        style={{ width: "450px" }}
+        header={t("mensajes.tituloModalReactivar")}
+        modal
+        footer={pieDialogoReactivar}
+        onHide={ocultarDialogoReactivarUsuario}
+      >
+        <div className="flex align-items-center justify-content-center">
+          <i
+            className="pi pi-exclamation-triangle mr-3"
+            style={{ fontSize: "2rem" }}
+          />
+          {usuarioActual && (
+            <span>
+              {t("mensajes.preguntaModalReactivar")}{" "}
+              <b>{usuarioActual.nombre}</b>?
             </span>
           )}
         </div>

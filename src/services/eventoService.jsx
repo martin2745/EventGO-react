@@ -26,6 +26,12 @@ class EventoService {
     });
   }
 
+  buscarEventosCategoriaValidos(id) {
+    return REST.get(`/evento/eventosCategoriaValidos/${id}`, {
+      headers: authHeader(),
+    });
+  }
+
   crear(solicitud) {
     return REST.post("/evento", solicitud, {
       headers: authHeader(),
