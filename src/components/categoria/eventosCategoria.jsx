@@ -3,28 +3,86 @@ import { Button } from "primereact/button";
 import { DataView, DataViewLayoutOptions } from "primereact/dataview";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
-import eventoService from "../../services/eventoService";
+import { Dropdown } from "primereact/dropdown";
+import { Calendar } from "primereact/calendar";
 import eventoGenerica from "./../recursos/imagenes/categoriaGenerica.png";
 import { Dialog } from "primereact/dialog";
+import { Form, Field } from "react-final-form";
+import { classNames } from "primereact/utils";
 import { InputText } from "primereact/inputtext";
+import eventoService from "../../services/eventoService";
+import usuarioService from "../../services/usuarioService";
 
 export default function Eventosevento() {
   const pathname = window.location.pathname;
   const parts = pathname.split("/");
   const numero = parseInt(parts[parts.length - 1], 10);
+  const [t, i18n] = useTranslation("global");
   const [eventos, setEventos] = useState([]);
   const [eventoActual, setEventoActual] = useState([""]);
-  const [t, i18n] = useTranslation("global");
   const [layout, setLayout] = useState("grid");
   const navigate = useNavigate();
   const [visibleDialogoVerEnDetalle, setVisibleDialogoVerEnDetalle] =
     useState(false);
+  const [usuario, setUsuario] = useState([" "]);
+  const [fecha, setFecha] = useState(new Date());
+  const [visibleDialogoBuscar, setVisibleDialogoBuscar] = useState(false);
+  const [tipoAsistencia, setTipoAsistencia] = useState([" "]);
+  const [resMessage, setResMessage] = useState("");
+  const [dialogoError, setDialogoError] = useState(false);
+  const [estado, setEstado] = useState([" "]);
+  const [gerente, setGerente] = useState([" "]);
+  const [gerenteOptions, setGerenteOptions] = useState([" "]);
+  const tipoAsistenciaOptions = [
+    { label: <a>{t("evento.publico")}</a>, value: "PUBLICO" },
+    { label: <a>{t("evento.privado")}</a>, value: "PRIVADO" },
+  ];
+  const [gerenteDetalle, setGerenteDetalle] = useState("");
+
+  const eventoVacio = {
+    id: "",
+    nombre: "",
+    descripcion: "",
+    tipoAsistencia: "",
+    numAsistentes: "",
+    numInscritos: "",
+    estado: "",
+    fechaEvento: "",
+    direccion: "",
+    emailContacto: "",
+    telefonoContacto: "",
+    categoria: "",
+    usuario: "",
+    imagenEvento: "",
+    url: "",
+  };
 
   useEffect(() => {
     eventoService.buscarEventosCategoriaValidos(numero).then((res) => {
       setEventos(res.data);
     });
   }, []);
+
+  useEffect(() => {
+    usuarioService.buscarTodos().then((res) => {
+      setGerente(res.data);
+      for (var i = 0; i < res.data.length; i++) {
+        if (res.data[i].rol == "ROLE_GERENTE") {
+          gerenteOptions[i] = {
+            label: res.data[i][`login`],
+            value: res.data[i][`id`],
+          };
+        }
+      }
+    });
+  }, [gerente]);
+
+  const isFormFieldValid = (meta) => !!(meta.touched && meta.error);
+  const getFormErrorMessage = (meta) => {
+    return (
+      isFormFieldValid(meta) && <small className="p-error">{meta.error}</small>
+    );
+  };
 
   const enlaceImagen = (url) => {
     window.open(url, "_blank");
@@ -58,7 +116,7 @@ export default function Eventosevento() {
                 onClick={() => enlaceImagen(evento.url)}
                 style={{ cursor: "pointer" }}
               >
-                Web del evento
+                {t("botones.webEvento")}
               </a>
             </div>
             <div className="flex sm:flex-column align-items-center sm:align-items-end gap-3 sm:gap-2">
@@ -111,7 +169,7 @@ export default function Eventosevento() {
               onClick={() => enlaceImagen(evento.url)}
               style={{ cursor: "pointer" }}
             >
-              Web del evento
+              {t("botones.webEvento")}
             </a>
           </div>
           <div className="card flex justify-content-center">
@@ -151,15 +209,73 @@ export default function Eventosevento() {
   const header = () => {
     return (
       <div className="flex justify-content-end">
-        <DataViewLayoutOptions
-          layout={layout}
-          onChange={(e) => setLayout(e.value)}
-        />
+        <React.Fragment>
+          <Button
+            icon="pi pi-arrow-left"
+            className="p-button-rounded mr-2"
+            tooltip={t("botones.volverCategorias")}
+            onClick={volverCategorias}
+          />
+          <Button
+            icon="pi pi-search"
+            className="p-button-rounded mr-2"
+            tooltip={t("botones.buscar")}
+            onClick={buscarEvento}
+          />
+          <Button
+            icon="pi pi-undo"
+            className="p-button-rounded mr-2"
+            tooltip={t("botones.recargar")}
+            onClick={reloadPage}
+          />
+          <DataViewLayoutOptions
+            layout={layout}
+            onChange={(e) => setLayout(e.value)}
+          />
+        </React.Fragment>
       </div>
     );
   };
 
-  function cambiarFormatoFecha(fecha) {
+  const volverCategorias = () => {
+    navigate("/categoria/categoriaLayout/");
+  };
+
+  const buscarEvento = () => {
+    setTipoAsistencia("");
+    setEstado("");
+    setFecha("");
+    setUsuario("");
+    setVisibleDialogoBuscar(true);
+  };
+
+  const ocultarDialogoBuscar = () => {
+    setVisibleDialogoBuscar(false);
+  };
+
+  const reloadPage = () => {
+    eventoService.buscarEventosCategoria(numero).then(
+      (res) => {
+        if (res.data && Array.isArray(res.data)) {
+          setEventos(res.data);
+        } else {
+          setEventos([]);
+        }
+      },
+      (error) => {
+        const resMessage =
+          (error.response &&
+            error.response.data &&
+            error.response.data.codigo) ||
+          error.message ||
+          error.toString();
+        setResMessage(resMessage);
+        setDialogoError(true);
+      }
+    );
+  };
+
+  const cambiarFormatoFecha = (fecha) => {
     if (fecha != undefined) {
       var partes = fecha.split("-");
       var year = partes[0];
@@ -168,7 +284,16 @@ export default function Eventosevento() {
       var fechaFormateada = day + "/" + month + "/" + year;
       return fechaFormateada;
     }
-  }
+  };
+
+  const convertirFecha = (fechaTexto) => {
+    const fecha = new Date(fechaTexto);
+    const año = fecha.getFullYear();
+    const mes = String(fecha.getMonth() + 1).padStart(2, "0");
+    const dia = String(fecha.getDate()).padStart(2, "0");
+    const fechaFormateada = `${año}-${mes}-${dia}`;
+    return fechaFormateada;
+  };
 
   const formatoTipoAsistencia = (tipoAsistencia) => {
     const idioma = localStorage.getItem("idioma");
@@ -204,6 +329,7 @@ export default function Eventosevento() {
   };
 
   const infoEvento = (evento) => {
+    setGerenteDetalle(evento.usuario.nombre);
     setEventoActual(evento);
     setVisibleDialogoVerEnDetalle(true);
   };
@@ -222,6 +348,54 @@ export default function Eventosevento() {
 
   const documentoInformativo = () => {
     window.open(eventoActual.documentoEvento, "_blank");
+  };
+
+  const onSubmitBuscar = (data, form) => {
+    const pathname = window.location.pathname;
+    const parts = pathname.split("/");
+    const idCategoria = parseInt(parts[parts.length - 1], 10);
+    let fechaBuscar = "";
+
+    if (fecha != "" && fecha != undefined) {
+      fechaBuscar = convertirFecha(fecha);
+    }
+
+    const datos = {
+      nombre: data.nombre,
+      descripcion: data.descripcion,
+      tipoAsistencia: tipoAsistencia,
+      numAsistentes: data.numAsistentes,
+      numInscritos: data.numInscritos,
+      estado: estado,
+      fechaEvento: fechaBuscar,
+      direccion: data.direccion,
+      emailContacto: data.emailContacto,
+      telefonoContacto: data.telefonoContacto,
+      idCategoria: idCategoria,
+      idUsuario: usuario,
+    };
+
+    eventoService.buscarTodosParametros(datos).then(
+      (res) => {
+        if (res.data && Array.isArray(res.data)) {
+          setEventos(res.data);
+        } else {
+          setEventos([]);
+        }
+        form.restart();
+        ocultarDialogoBuscar();
+      },
+      (error) => {
+        const resMessage =
+          (error.response &&
+            error.response.data &&
+            error.response.data.codigo) ||
+          error.message ||
+          error.toString();
+        setResMessage(resMessage);
+        setDialogoError(true);
+      }
+    );
   };
 
   return (
@@ -248,6 +422,19 @@ export default function Eventosevento() {
         onHide={ocultarDialogoVerEnDetalle}
       >
         <div className="formGestion">
+          <div className="flex align-items-center justify-content-center">
+            <div className="field ">
+              <div className="p-field px-5 py-1 text-900 ">
+                <label htmlFor="gerente">{t("evento.gerente")}</label>
+              </div>
+              <span className="p-float-label">
+                <div className="p-field px-5 text-900 ">
+                  <InputText className="tamanhoInput" value={gerenteDetalle} />
+                </div>
+              </span>
+            </div>
+          </div>
+
           <div className="flex align-items-center justify-content-center">
             <div className="field ">
               <div className="p-field px-5 py-1 text-900 ">
@@ -383,6 +570,219 @@ export default function Eventosevento() {
               </Button>
             )}
           </div>
+        </div>
+      </Dialog>
+      <Dialog
+        visible={visibleDialogoBuscar}
+        style={{ width: "450px" }}
+        header={t("mensajes.tituloModalBuscar")}
+        modal
+        onHide={ocultarDialogoBuscar}
+      >
+        <div className="flex align-items-center justify-content-center">
+          <Form
+            onSubmit={onSubmitBuscar}
+            initialValues={eventoVacio}
+            render={({ handleSubmit }) => (
+              <form
+                className=" text-xl p-fluid formGestion"
+                onSubmit={handleSubmit}
+              >
+                <Field
+                  name="nombre"
+                  render={({ input, meta }) => (
+                    <div className="field ">
+                      <span className="p-float-label">
+                        <div className="p-field px-5 text-900 ">
+                          <InputText
+                            id="nombre"
+                            {...input}
+                            placeholder={t("evento.nombre")}
+                            className={classNames(
+                              { "p-invalid": isFormFieldValid(meta) },
+                              { "p-error": isFormFieldValid(meta) }
+                            )}
+                          />
+                        </div>
+                      </span>
+                      {getFormErrorMessage(meta)}
+                    </div>
+                  )}
+                />
+
+                <Field
+                  name="descripcion"
+                  render={({ input, meta }) => (
+                    <div className="field ">
+                      <span className="p-float-label">
+                        <div className="p-field px-5 text-900 ">
+                          <InputText
+                            id="descripcion"
+                            {...input}
+                            placeholder={t("evento.descripcion")}
+                            className={classNames(
+                              { "p-invalid": isFormFieldValid(meta) },
+                              { "p-error": isFormFieldValid(meta) }
+                            )}
+                          />
+                        </div>
+                      </span>
+                      {getFormErrorMessage(meta)}
+                    </div>
+                  )}
+                />
+
+                <Field
+                  name="tipoAsistencia"
+                  render={({ input, meta }) => (
+                    <div className="field ">
+                      <span className="p-float-label">
+                        <div className="p-field px-5 text-900 ">
+                          <Dropdown
+                            id="tipoAsistencia"
+                            value={tipoAsistencia}
+                            placeholder={t("evento.tipoAsistencia")}
+                            showClear
+                            name="tipoAsistencia"
+                            options={tipoAsistenciaOptions}
+                            onChange={(e) => setTipoAsistencia(e.value)}
+                          />
+                        </div>
+                      </span>
+                      {getFormErrorMessage(meta)}
+                    </div>
+                  )}
+                />
+
+                <Field
+                  name="gerente"
+                  render={({ input, meta }) => (
+                    <div className="field ">
+                      <span className="p-float-label">
+                        <div className="p-field px-5 text-900 ">
+                          <Dropdown
+                            id="tipoAsistencia"
+                            value={usuario}
+                            placeholder={t("evento.gerente")}
+                            showClear
+                            name="gerente"
+                            options={gerenteOptions}
+                            onChange={(e) => setUsuario(e.value)}
+                          />
+                        </div>
+                      </span>
+                      {getFormErrorMessage(meta)}
+                    </div>
+                  )}
+                />
+
+                <Field
+                  name="fechaEvento"
+                  render={({ input, meta }) => (
+                    <div className="field ">
+                      <span className="p-float-label">
+                        <div className="p-field px-5 text-900 ">
+                          <Calendar
+                            onChange={(e) => setFecha(e.value)}
+                            id="fechaEvento"
+                            value={null}
+                            name="fechaEvento"
+                            placeholder={t("evento.fechaEvento")}
+                            dateFormat="dd/mm/yy"
+                            mask="99/99/9999"
+                            monthNavigator
+                            yearNavigator
+                            yearRange="1900:2030"
+                            className={classNames(
+                              { "p-invalid": isFormFieldValid(meta) },
+                              { "p-error": isFormFieldValid(meta) }
+                            )}
+                            showIcon
+                          />
+                        </div>
+                      </span>
+                      {getFormErrorMessage(meta)}
+                    </div>
+                  )}
+                />
+
+                <Field
+                  name="direccion"
+                  render={({ input, meta }) => (
+                    <div className="field ">
+                      <span className="p-float-label">
+                        <div className="p-field px-5 text-900 ">
+                          <InputText
+                            id="direccion"
+                            {...input}
+                            placeholder={t("evento.direccion")}
+                            className={classNames(
+                              { "p-invalid": isFormFieldValid(meta) },
+                              { "p-error": isFormFieldValid(meta) }
+                            )}
+                          />
+                        </div>
+                      </span>
+                      {getFormErrorMessage(meta)}
+                    </div>
+                  )}
+                />
+
+                <Field
+                  name="emailContacto"
+                  render={({ input, meta }) => (
+                    <div className="field ">
+                      <span className="p-float-label">
+                        <div className="p-field px-5 text-900 ">
+                          <InputText
+                            id="emailContacto"
+                            {...input}
+                            placeholder={t("evento.emailContacto")}
+                            className={classNames(
+                              { "p-invalid": isFormFieldValid(meta) },
+                              { "p-error": isFormFieldValid(meta) }
+                            )}
+                          />
+                        </div>
+                      </span>
+                      {getFormErrorMessage(meta)}
+                    </div>
+                  )}
+                />
+
+                <Field
+                  name="telefonoContacto"
+                  render={({ input, meta }) => (
+                    <div className="field ">
+                      <span className="p-float-label">
+                        <div className="p-field px-5 text-900 ">
+                          <InputText
+                            id="telefonoContacto"
+                            {...input}
+                            placeholder={t("evento.telefonoContacto")}
+                            className={classNames(
+                              { "p-invalid": isFormFieldValid(meta) },
+                              { "p-error": isFormFieldValid(meta) }
+                            )}
+                          />
+                        </div>
+                      </span>
+                      {getFormErrorMessage(meta)}
+                    </div>
+                  )}
+                />
+
+                <div className="col">
+                  <Button
+                    type="submit"
+                    label={t("botones.buscar")}
+                    icon="pi pi-search"
+                    className="p-button-outlined mr-2"
+                  />
+                </div>
+              </form>
+            )}
+          />
         </div>
       </Dialog>
     </div>
