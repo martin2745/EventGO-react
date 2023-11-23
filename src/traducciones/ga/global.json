@@ -8,6 +8,7 @@
     "gestionCategorias": "Xestión de categorias",
     "gestionEventos": "Xestión de eventos",
     "categorias": "Categorias",
+    "misEventos": "Meus Eventos",
     "equipos": "Equipos",
     "competiciones": "Competicións",
     "micuenta": "Miña conta",
@@ -109,6 +110,16 @@
     "inscribirse": "Inscribirse",
     "noExistenEventos": "Non existen eventos",
 
+    "carta": {
+      "suscripcionesTitulo": "Subscricións",
+      "suscripcionesSubtitulo": "Eventos nos que podemos participar",
+      "suscripcionesTexto": "No apartado de Subscricións poderá ver aqueles eventos nos que está inscrito e, por tanto, pode participar. Tamén, se así o desexa, poderá eliminar estas subscricións en calquera momento se xa non está interesado en participar.",
+      "solicitudesTitulo": "Solicitudes",
+      "solicitudesSubtitulo": "Solicitudes a eventos pendentes de aprobación",
+      "solicitudesTexto": "No apartado de solicitudes poderá ver solicitudes de participación nun evento que están pendentes de ser aprobadas polo xerente do evento. Isto ocorre cando queremos solicitar unha subscrición a un evento privado.",
+      "ver": "Ver"
+    },
+
     "validaciones": {
       "nombreVacio": "O nome de usuario non pode estar baleiro",
       "nombreInvalidoAlfanumerico": "O nome do evento só pode conter caracteres alfanuméricos.",
@@ -134,6 +145,18 @@
     }
   },
 
+  "suscripcion": {
+    "nombreEvento": "Nome do evento",
+    "nombreUsuario": "Nome de usuario",
+    "fechaSuscripcion": "Fecha da suscripcion"
+  },
+
+  "solicitud": {
+    "nombreEvento": "Usuario",
+    "nombreEvento": "Nome do evento",
+    "fechaSolicitud": "Fecha da solicitude"
+  },
+
   "botones": {
     "cancelar": "Cancelar",
     "modificarPerfil": "Teus datos persoais",
@@ -152,6 +175,7 @@
     "buscar": "Buscar",
     "editar": "Editar",
     "eliminar": "Eliminar",
+    "aceptarSolicitud": "Aceptar solicitude",
     "verEnDetalle": "Ver en detalle",
     "buscarClave": "Buscar por palabra clave",
     "recargar": "Recargar",
@@ -159,8 +183,10 @@
     "pdfInteres": "PDF de interese",
     "informacion": "Información do evento",
     "inscribirse": "Inscribirse ao evento",
-    "inscripcionesEvento": "Incripciones no evento",
+    "solicitudesEvento": "Solicitudes no evento",
+    "suscripcionesEvento": "Suscripcións no evento",
     "volverCategorias": "Volver a categorias",
+    "volverMisEventos": "Volver os meus eventos",
     "webEvento": "Web do evento"
   },
 
@@ -176,6 +202,7 @@
     "edicionElemento": "A edición realizouse con éxito",
     "recuperarPasswordRealizado": "Contrasinal cambiada con éxito",
     "eliminacionElemento": "A eliminación realizouse correctamente",
+    "aceptarSolicitud": "Aceptar solicitude",
     "si": "Si",
     "buscar": "Buscar",
     "no": "Non",
@@ -192,12 +219,17 @@
     "tituloModalVerEnDetalle": "Información do elemento no sistema",
     "tituloModalVerEnDetalleEvento": "Información do evento",
     "tituloModalBorrado": "Vai a eliminar un elemento do sistema",
+    "tituloModalAceptado": "Vai a aceptar a solicitude do usuario",
     "preguntaModalBorrado": "Estás seguro de que queres eliminar ",
+    "preguntaModalBorradoSuscripcion": "Seguro que quere eliminar a suscripcion?",
+    "preguntaModalBorradoSolicitud": "Seguro que quere eliminar a solicitude?",
     "preguntaModalReactivar": "Queres reactivar a",
+    "preguntaModalAceptadoSolicitud": "Queres aceptar a solicitude a ",
     "tituloModalEditarPassword": "Cambiar a contrasinal do usuario",
     "tituloModalSubirImagen": "Suba unha imaxen",
     "tituloModalSubirImagenDocumento": "Suba unha imaxen ou documento",
     "tituloModalReactivar": "Reactivar o elemento do sistema",
+    "accionExito": "Acción realizada con éxito",
 
     "error": "ERROR"
   },
@@ -212,22 +244,29 @@
     "imagen": "Imaxen",
     "login": "Login",
     "nombre": "Nome",
+    "nombreUsuario": "Nome de usuario",
     "dni": "Dni",
     "email": "Email",
+    "telefono": "Telefono",
     "fechaEvento": "Fecha de inicio",
+    "fechaSuscripcion": "Fecha da suscripcion",
+    "fechaSolicitud": "Fecha da solicitude",
     "direccion": "Direccion",
     "estado": "Estado",
     "rol": "Rol",
     "descripcion": "Descripción",
     "tipoAsistencia": "Tipo de asistencia",
     "imagenEnlace": "Imaxen e enlace",
+    "evento": "Evento",
     "acciones": "Accións"
   },
 
   "footer": {
     "usuarios": " usuarios",
     "categorias": " categorias",
-    "eventos": " eventos"
+    "eventos": " eventos",
+    "suscripciones": " suscripcións",
+    "solicitudes": " solicitudes"
   },
 
   "ERROR_INESPERADO": "Erro inesperado",

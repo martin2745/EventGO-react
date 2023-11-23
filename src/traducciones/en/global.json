@@ -7,6 +7,7 @@
     "gestionUsuarios": "User management",
     "gestionCategorias": "Category management",
     "categorias": "Categories",
+    "misEventos": "My Events",
     "gestionEventos": "Evento management",
     "equipos": "Teams",
     "competiciones": "Competitions",
@@ -109,6 +110,16 @@
     "inscribirse": "Sign up",
     "noExistenEventos": "There are no events",
 
+    "carta": {
+      "suscripcionesTitulo": "Subscriptions",
+      "suscripcionesSubtitulo": "Events in which we can participate",
+      "suscripcionesTexto": "In the Subscriptions section, you can see the events you have registered for and can therefore participate in. Also, if you wish, you can delete these subscriptions at any time if you are no longer interested in participating.",
+      "solicitudesTitulo": "Requests",
+      "solicitudesSubtitulo": "Requests for events pending approval",
+      "solicitudesTexto": "In the Requests section, you can see participation requests for an event that are pending approval by the event manager. This occurs when we want to request a subscription to a private event.",
+      "ver": "View"
+    },
+
     "validaciones": {
       "nombreVacio": "The username cannot be empty",
       "nombreInvalidoAlfanumerico": "The event name can only contain alphanumeric characters.",
@@ -134,6 +145,18 @@
     }
   },
 
+  "suscripcion": {
+    "nombreEvento": "Events name",
+    "nombreUsuario": "User name",
+    "fechaSuscripcion": "Suscription date"
+  },
+
+  "solicitud": {
+    "nombreEvento": "User",
+    "nombreEvento": "Events name",
+    "fechaSolicitud": "Request date"
+  },
+
   "botones": {
     "cancelar": "Cancel",
     "modificarPerfil": "Your personal data",
@@ -152,6 +175,7 @@
     "buscar": "Search",
     "editar": "Edit",
     "eliminar": "Delete",
+    "aceptarSolicitud": "Request accept",
     "verEnDetalle": "See in detail",
     "buscarClave": "Search by keyword",
     "recargar": "Reload",
@@ -159,8 +183,10 @@
     "pdfInteres": "Interesting PDF",
     "informacion": "Events information",
     "inscribirse": "Sign up to the event",
-    "inscripcionesEvento": "Event registrations",
+    "solicitudesEvento": "Requests at the event",
+    "suscripcionesEvento": "Subscriptions at the event",
     "volverCategorias": "Return to categories",
+    "volverMisEventos": "Return to my events",
     "webEvento": "Event web"
   },
 
@@ -176,6 +202,7 @@
     "creacionElemento": "The creation was successful",
     "edicionElemento": "The edicion was successful",
     "eliminacionElemento": "The deletion was successful",
+    "aceptarSolicitud": "Request accept",
     "si": "Yes",
     "buscar": "Search",
     "no": "No",
@@ -192,12 +219,17 @@
     "tituloModalVerEnDetalle": "Information of the element in the system",
     "tituloModalVerEnDetalleEvento": "Event information",
     "tituloModalBorrado": "You are going to delete an element from the system",
+    "tituloModalAceptado": "You are going to accept the user's request",
     "preguntaModalBorrado": "Are you sure you want to delete ",
+    "preguntaModalBorradoSuscripcion": "Are you sure you want to unsubscribe?",
+    "preguntaModalBorradoSolicitud": "Are you sure you want to delete the request?",
     "preguntaModalReactivar": "Do you want to reactivate",
+    "preguntaModalAceptadoSolicitud": "Do you want to accept the request to ",
     "tituloModalEditarPassword": "Change the user's password",
     "tituloModalSubirImagen": "Upload an image",
     "tituloModalSubirImagenDocumento": "Upload an image or document",
     "tituloModalReactivar": "Reactivate system element",
+    "accionExito": "Action completed successfully",
 
     "error": "ERROR"
   },
@@ -212,22 +244,29 @@
     "imagen": "Image",
     "login": "Login",
     "nombre": "Name",
+    "nombreUsuario": "User name",
     "dni": "Dni",
     "email": "Email",
+    "telefono": "Phone number",
     "fechaEvento": "Start date",
+    "fechaSuscripcion": "Suscription date",
+    "fechaSolicitud": "Request date",
     "direccion": "Direction",
     "estado": "State",
     "rol": "Rol",
     "descripcion": "Description",
     "tipoAsistencia": "Type of assistance",
     "imagenEnlace": "Image and link",
+    "evento": "Events",
     "acciones": "Actions"
   },
 
   "footer": {
     "usuarios": " users",
     "categorias": " categories",
-    "eventos": " events"
+    "eventos": " events",
+    "suscripciones": " subscriptions",
+    "solicitudes": " requests"
   },
 
   "ERROR_INESPERADO": "Unexpected error",

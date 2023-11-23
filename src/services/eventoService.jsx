@@ -16,6 +16,26 @@ class EventoService {
     return REST.get(url, { headers: authHeader() });
   }
 
+  eventosSuscritos(data) {
+    const parametros = Object.keys(data)
+      .filter((key) => data[key] !== "")
+      .map((key) => `${key}=${encodeURIComponent(data[key])}`)
+      .join("&");
+
+    const url = `/evento/eventosSuscritos?${parametros}`;
+    return REST.get(url, { headers: authHeader() });
+  }
+
+  eventosSolicitud(data) {
+    const parametros = Object.keys(data)
+      .filter((key) => data[key] !== "")
+      .map((key) => `${key}=${encodeURIComponent(data[key])}`)
+      .join("&");
+
+    const url = `/evento/eventosSolicitud?${parametros}`;
+    return REST.get(url, { headers: authHeader() });
+  }
+
   buscarPorId(id) {
     return REST.get(`/evento/${id}`, { headers: authHeader() });
   }

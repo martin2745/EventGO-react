@@ -1,5 +1,6 @@
 //recursos
 import "./css/App.css";
+import "./css/Footer.css";
 import React, { useState } from "react";
 import { Routes, Route } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
@@ -31,7 +32,6 @@ import fiestaG from "./components/recursos/imagenes/fiestaG.jpg";
 
 //componentes
 import Footer from "./components/Footer/Footer";
-import "./css/Footer.css";
 import InicioSesion from "./components/usuario/inicioSesion";
 import Registro from "./components/usuario/registro";
 import RecuperarPassword from "./components/usuario/recuperarPassword";
@@ -44,6 +44,11 @@ import CategoriaShowAll from "./components/categoria/categoriaShowAll";
 import EventosCategoria from "./components/categoria/eventosCategoria";
 import EventoShowAll from "./components/evento/eventoShowAll";
 import MisEventosGestor from "./components/evento/misEventosGestor";
+import MisEventosLayout from "./components/evento/misEventosLayout";
+import MisSuscripciones from "./components/evento/misSuscripciones";
+import MisSolicitudes from "./components/evento/misSolicitudes";
+import SuscripcionesEvento from "./components/evento/suscripcionesEvento";
+import SolicitudesEvento from "./components/evento/solicitudesEvento";
 import CategoriaLayout from "./components/categoria/categoriaLayout";
 
 function Main() {
@@ -153,6 +158,12 @@ function Main() {
       },
     });
     navs.push({
+      label: <a className="mr-3">{t("main.misEventos")}</a>,
+      command: (e) => {
+        navigate("/evento/evetosLayout");
+      },
+    });
+    navs.push({
       label: <a className="mr-3">{t("main.micuenta")}</a>,
       command: (e) => {
         navigate("/usuario/micuenta/" + currentUser.id);
@@ -167,6 +178,12 @@ function Main() {
       label: <a className="mr-3">{t("main.categorias")}</a>,
       command: (e) => {
         navigate("/categoria/categoriaLayout/");
+      },
+    });
+    navs.push({
+      label: <a className="mr-3">{t("main.misEventos")}</a>,
+      command: (e) => {
+        navigate("/evento/evetosLayout");
       },
     });
     navs.push({
@@ -404,6 +421,21 @@ function Main() {
                 </Route>
                 <Route path="misEventosGestor">
                   <Route index element={<MisEventosGestor />} />
+                </Route>
+                <Route path="evetosLayout">
+                  <Route index element={<MisEventosLayout />} />
+                </Route>
+                <Route path="misSuscripciones">
+                  <Route index element={<MisSuscripciones />} />
+                </Route>
+                <Route path="misSolicitudes">
+                  <Route index element={<MisSolicitudes />} />
+                </Route>
+                <Route path="suscripcionesEvento">
+                  <Route path=":id" element={<SuscripcionesEvento />} />
+                </Route>
+                <Route path="solicitudesEvento">
+                  <Route path=":id" element={<SolicitudesEvento />} />
                 </Route>
               </Route>
             </Routes>
