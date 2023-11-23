@@ -16,6 +16,26 @@ class UsuarioService {
     return REST.get(url, { headers: authHeader() });
   }
 
+  usuariosSuscritos(data) {
+    const parametros = Object.keys(data)
+      .filter((key) => data[key] !== "")
+      .map((key) => `${key}=${encodeURIComponent(data[key])}`)
+      .join("&");
+
+    const url = `/usuario/usuariosSuscritos?${parametros}`;
+    return REST.get(url, { headers: authHeader() });
+  }
+
+  usuariosSolicitud(data) {
+    const parametros = Object.keys(data)
+      .filter((key) => data[key] !== "")
+      .map((key) => `${key}=${encodeURIComponent(data[key])}`)
+      .join("&");
+
+    const url = `/usuario/usuariosSolicitud?${parametros}`;
+    return REST.get(url, { headers: authHeader() });
+  }
+
   buscarPorId(id) {
     return REST.get(`/usuario/${id}`, { headers: authHeader() });
   }

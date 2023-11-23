@@ -12,6 +12,8 @@ import { classNames } from "primereact/utils";
 import { InputText } from "primereact/inputtext";
 import eventoService from "../../services/eventoService";
 import usuarioService from "../../services/usuarioService";
+import suscripcionService from "../../services/suscripcionService";
+import solicitudService from "../../services/solicitudService";
 
 export default function Eventosevento() {
   const pathname = window.location.pathname;
@@ -30,6 +32,7 @@ export default function Eventosevento() {
   const [tipoAsistencia, setTipoAsistencia] = useState([" "]);
   const [resMessage, setResMessage] = useState("");
   const [dialogoError, setDialogoError] = useState(false);
+  const [showSuscripcionCrear, setShowSuscripcionCrear] = useState(false);
   const [estado, setEstado] = useState([" "]);
   const [gerente, setGerente] = useState([" "]);
   const [gerenteOptions, setGerenteOptions] = useState([" "]);
@@ -38,6 +41,7 @@ export default function Eventosevento() {
     { label: <a>{t("evento.privado")}</a>, value: "PRIVADO" },
   ];
   const [gerenteDetalle, setGerenteDetalle] = useState("");
+  const idUsuario = localStorage.getItem("idUsuario");
 
   const eventoVacio = {
     id: "",
@@ -237,6 +241,21 @@ export default function Eventosevento() {
     );
   };
 
+  const okeyMensajeCrear = () => {
+    setShowSuscripcionCrear(false);
+  };
+
+  const dialogFooterSuscripcion = (
+    <div className="flex justify-content-center">
+      <Button
+        label="OK"
+        className="p-button-text"
+        autoFocus
+        onClick={okeyMensajeCrear}
+      />
+    </div>
+  );
+
   const volverCategorias = () => {
     navigate("/categoria/categoriaLayout/");
   };
@@ -338,16 +357,64 @@ export default function Eventosevento() {
     setVisibleDialogoVerEnDetalle(false);
   };
 
+  //En esta usamos evento
   const inscribirse = (evento) => {
-    setEventoActual(evento);
+    onSubmitInscribirse(evento);
   };
 
+  //En esta usamos eventoActual
   const inscribirseEvento = () => {
-    console.log(eventoActual);
+    onSubmitInscribirse(eventoActual);
   };
 
   const documentoInformativo = () => {
     window.open(eventoActual.documentoEvento, "_blank");
+  };
+
+  const onSubmitInscribirse = (evento) => {
+    const datos = {
+      usuario: {
+        id: idUsuario,
+      },
+      evento: {
+        id: evento.id,
+      },
+      fechaSuscripcion: "",
+    };
+
+    if (evento.tipoAsistencia === "PUBLICO") {
+      suscripcionService.crear(datos).then(
+        () => {
+          setShowSuscripcionCrear(true);
+        },
+        (error) => {
+          const resMessage =
+            (error.response &&
+              error.response.data &&
+              error.response.data.codigo) ||
+            error.message ||
+            error.toString();
+          setResMessage(resMessage);
+          setDialogoError(true);
+        }
+      );
+    } else {
+      solicitudService.crear(datos).then(
+        () => {
+          setShowSuscripcionCrear(true);
+        },
+        (error) => {
+          const resMessage =
+            (error.response &&
+              error.response.data &&
+              error.response.data.codigo) ||
+            error.message ||
+            error.toString();
+          setResMessage(resMessage);
+          setDialogoError(true);
+        }
+      );
+    }
   };
 
   const onSubmitBuscar = (data, form) => {
@@ -783,6 +850,24 @@ export default function Eventosevento() {
               </form>
             )}
           />
+        </div>
+      </Dialog>
+
+      <Dialog
+        visible={showSuscripcionCrear}
+        onHide={() => showSuscripcionCrear(false)}
+        position="center"
+        footer={dialogFooterSuscripcion}
+        showHeader={false}
+        breakpoints={{ "960px": "80vw" }}
+        style={{ width: "30vw" }}
+      >
+        <div className="flex align-items-center flex-column pt-6 px-3">
+          <i
+            className="pi pi-check-circle"
+            style={{ fontSize: "5rem", color: "var(--green-500)" }}
+          ></i>
+          <h4>{t("mensajes.accionExito")}</h4>
         </div>
       </Dialog>
     </div>
