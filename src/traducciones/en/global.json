@@ -157,6 +157,10 @@
     "fechaSolicitud": "Request date"
   },
 
+  "comentarios": {
+    "titulo": "Swipe to see more comments"
+  },
+
   "botones": {
     "cancelar": "Cancel",
     "modificarPerfil": "Your personal data",
@@ -175,6 +179,7 @@
     "buscar": "Search",
     "editar": "Edit",
     "eliminar": "Delete",
+    "comentar": "Comment event",
     "aceptarSolicitud": "Request accept",
     "verEnDetalle": "See in detail",
     "buscarClave": "Search by keyword",
@@ -185,8 +190,10 @@
     "inscribirse": "Sign up to the event",
     "solicitudesEvento": "Requests at the event",
     "suscripcionesEvento": "Subscriptions at the event",
+    "comentariosEvento": "Event comments",
     "volverCategorias": "Return to categories",
     "volverMisEventos": "Return to my events",
+    "volverGestionEventos": "Return to event management",
     "webEvento": "Event web"
   },
 
@@ -200,6 +207,7 @@
     "registroRealizado": "Registration successful",
     "recuperarPasswordRealizado": "Password successfully changed",
     "creacionElemento": "The creation was successful",
+    "creacionComentario": "Comment create",
     "edicionElemento": "The edicion was successful",
     "eliminacionElemento": "The deletion was successful",
     "aceptarSolicitud": "Request accept",
@@ -229,6 +237,7 @@
     "tituloModalSubirImagen": "Upload an image",
     "tituloModalSubirImagenDocumento": "Upload an image or document",
     "tituloModalReactivar": "Reactivate system element",
+    "tituloModalComentar": "Comment what it looks like or event",
     "accionExito": "Action completed successfully",
 
     "error": "ERROR"

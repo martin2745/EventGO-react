@@ -157,6 +157,10 @@
     "fechaSolicitud": "Fecha de la solicitud"
   },
 
+  "comentarios": {
+    "titulo": "Desliza para ver más comentarios"
+  },
+
   "botones": {
     "cancelar": "Cancelar",
     "modificarPerfil": "Tus datos personales",
@@ -175,6 +179,7 @@
     "buscar": "Buscar",
     "editar": "Editar",
     "eliminar": "Eliminar",
+    "comentar": "Comentar evento",
     "aceptarSolicitud": "Aceptar solicitud",
     "verEnDetalle": "Ver en detalle",
     "buscarClave": "Buscar por palabra clave",
@@ -185,8 +190,10 @@
     "inscribirse": "Inscribirse al evento",
     "solicitudesEvento": "Solicitudes en el evento",
     "suscripcionesEvento": "Suscripciones en el evento",
+    "comentariosEvento": "Comentarios del evento",
     "volverCategorias": "Volver a categorias",
     "volverMisEventos": "Volver a mis eventos",
+    "volverGestionEventos": "Volver a la gestión de eventos",
     "webEvento": "Web del evento"
   },
 
@@ -200,6 +207,7 @@
     "registroRealizado": "Registro realizado con éxito",
     "recuperarPasswordRealizado": "Contraseña cambiada con éxito",
     "creacionElemento": "La creación se ha realizado con éxito",
+    "creacionComentario": "Evento comentado",
     "edicionElemento": "La edición se ha realizado con éxito",
     "eliminacionElemento": "La eliminación se ha realizado correctamente",
     "aceptarSolicitud": "Aceptar solicitud",
@@ -229,6 +237,7 @@
     "tituloModalSubirImagen": "Suba una imagen",
     "tituloModalSubirImagenDocumento": "Suba una imagen o documento",
     "tituloModalReactivar": "Reactivar el elemento del sistema",
+    "tituloModalComentar": "Comenta que te ha parecido el evento",
     "accionExito": "Acción realizada con éxito",
 
     "error": "ERROR"

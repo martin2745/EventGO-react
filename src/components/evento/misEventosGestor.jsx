@@ -525,11 +525,15 @@ export default function MisEventosGestor() {
   };
 
   const solicitudesEvento = (evento) => {
-    navigate("/evento/solicitudesEvento/" + evento.id.toString()); // navega a URL del cliente
+    navigate("/evento/solicitudesEvento/" + evento.id.toString());
   };
 
   const suscripcionesEvento = (evento) => {
-    navigate("/evento/suscripcionesEvento/" + evento.id.toString()); // navega a URL del cliente
+    navigate("/evento/suscripcionesEvento/" + evento.id.toString());
+  };
+
+  const comentariosEvento = (evento) => {
+    navigate("/evento/comentarios/" + evento.id.toString());
   };
 
   const ocultarDialogoCrear = () => {
@@ -910,9 +914,15 @@ export default function MisEventosGestor() {
         />
         <Button
           icon="pi pi-users"
-          className="p-button-rounded p-button-wrap"
+          className="p-button-rounded p-button-wrap mr-2"
           tooltip={t("botones.suscripcionesEvento")}
           onClick={() => suscripcionesEvento(rowData)}
+        />
+        <Button
+          icon="pi pi-comments"
+          className="p-button-rounded p-button-wrap"
+          tooltip={t("botones.comentariosEvento")}
+          onClick={() => comentariosEvento(rowData)}
         />
       </React.Fragment>
     );
