@@ -157,6 +157,10 @@
     "fechaSolicitud": "Fecha da solicitude"
   },
 
+  "comentarios": {
+    "titulo": "Desliza para ver mais comentarios"
+  },
+
   "botones": {
     "cancelar": "Cancelar",
     "modificarPerfil": "Teus datos persoais",
@@ -175,6 +179,7 @@
     "buscar": "Buscar",
     "editar": "Editar",
     "eliminar": "Eliminar",
+    "comentar": "Comentar evento",
     "aceptarSolicitud": "Aceptar solicitude",
     "verEnDetalle": "Ver en detalle",
     "buscarClave": "Buscar por palabra clave",
@@ -185,8 +190,10 @@
     "inscribirse": "Inscribirse ao evento",
     "solicitudesEvento": "Solicitudes no evento",
     "suscripcionesEvento": "Suscripcións no evento",
+    "comentariosEvento": "Comentarios do evento",
     "volverCategorias": "Volver a categorias",
     "volverMisEventos": "Volver os meus eventos",
+    "volverGestionEventos": "Volver a xestión de eventos",
     "webEvento": "Web do evento"
   },
 
@@ -198,9 +205,10 @@
 
   "mensajes": {
     "registroRealizado": "Rexistro realizado con éxito",
-    "creacionElemento": "A creación realizouse con éxito",
-    "edicionElemento": "A edición realizouse con éxito",
     "recuperarPasswordRealizado": "Contrasinal cambiada con éxito",
+    "creacionElemento": "A creación realizouse con éxito",
+    "creacionComentario": "Evento comentado",
+    "edicionElemento": "A edición realizouse con éxito",
     "eliminacionElemento": "A eliminación realizouse correctamente",
     "aceptarSolicitud": "Aceptar solicitude",
     "si": "Si",
@@ -229,6 +237,7 @@
     "tituloModalSubirImagen": "Suba unha imaxen",
     "tituloModalSubirImagenDocumento": "Suba unha imaxen ou documento",
     "tituloModalReactivar": "Reactivar o elemento do sistema",
+    "tituloModalComentar": "Comenta que pareceuche o evento",
     "accionExito": "Acción realizada con éxito",
 
     "error": "ERROR"

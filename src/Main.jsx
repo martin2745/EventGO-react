@@ -50,6 +50,7 @@ import MisSolicitudes from "./components/evento/misSolicitudes";
 import SuscripcionesEvento from "./components/evento/suscripcionesEvento";
 import SolicitudesEvento from "./components/evento/solicitudesEvento";
 import CategoriaLayout from "./components/categoria/categoriaLayout";
+import ComentariosEvento from "./components/comentario/comentariosEvento";
 
 function Main() {
   //constantes
@@ -436,6 +437,9 @@ function Main() {
                 </Route>
                 <Route path="solicitudesEvento">
                   <Route path=":id" element={<SolicitudesEvento />} />
+                </Route>
+                <Route path="comentarios">
+                  <Route path=":id" element={<ComentariosEvento />} />
                 </Route>
               </Route>
             </Routes>

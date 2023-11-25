@@ -6,16 +6,26 @@ import { Dropdown } from "primereact/dropdown";
 import { Calendar } from "primereact/calendar";
 import { FilterMatchMode, FilterOperator } from "primereact/api";
 import { InputText } from "primereact/inputtext";
+import { InputTextarea } from "primereact/inputtextarea";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { Dialog } from "primereact/dialog";
 import { Form, Field } from "react-final-form";
 import { classNames } from "primereact/utils";
 import eventoService from "../../services/eventoService";
+import comentarioService from "../../services/comentarioService";
 import suscripcionService from "../../services/suscripcionService";
 import avatar from "./../recursos/imagenes/avatar.png";
+import { Rating } from "primereact/rating";
 
 export default function MisSuscripciones() {
+  const comentarioVacio = {
+    id: "",
+    comentario: "",
+    puntuacion: "",
+    evento: "",
+    usuario: "",
+  };
   const suscripcionVacio = {
     id: "",
     fechaSuscripcion: "",
@@ -26,6 +36,7 @@ export default function MisSuscripciones() {
   const [t, i18n] = useTranslation("global");
   const [fechaSuscripcion, setFechaSuscripcion] = useState(new Date());
   const navigate = useNavigate();
+  const [showMessageCrear, setShowMessageCrear] = useState(false);
   const [showMessageEliminar, setShowMessageEliminar] = useState(false);
   const [dialogoError, setDialogoError] = useState(false);
   const [resMessage, setResMessage] = useState("");
@@ -34,7 +45,10 @@ export default function MisSuscripciones() {
   const [eventoOptions, setEventoOptions] = useState([" "]);
   const [evento, setEvento] = useState([" "]);
   const [visibleDialogoBorrado, setVisibleDialogoBorrado] = useState(false);
+  const [visibleDialogoComentar, setVisibleDialogoComentar] = useState(false);
   const idUsuario = localStorage.getItem("idUsuario");
+  const [comentario, setComentario] = useState(null);
+  const [puntuacion, setPuntuacion] = useState(null);
 
   //Carga inicial de datos
   useEffect(() => {
@@ -175,10 +189,19 @@ export default function MisSuscripciones() {
 
   const validateBuscar = (data) => {};
 
+  const validateComentar = (data) => {};
+
   const buscarSuscripcion = () => {
     setFechaSuscripcion("");
     setEvento("");
     setVisibleDialogoBuscar(true);
+  };
+
+  const comentarSuscripcion = (suscripcion) => {
+    setPuntuacion(1);
+    setComentario("");
+    setSuscripcionActual(suscripcion);
+    setVisibleDialogoComentar(true);
   };
 
   const confirmarEliminarSuscripcion = (suscripcion) => {
@@ -188,6 +211,10 @@ export default function MisSuscripciones() {
 
   const ocultarDialogoBuscar = () => {
     setVisibleDialogoBuscar(false);
+  };
+
+  const ocultarDialogoComentar = () => {
+    setVisibleDialogoComentar(false);
   };
 
   const ocultarDialogoBorrado = () => {
@@ -305,6 +332,37 @@ export default function MisSuscripciones() {
     );
   };
 
+  const onSubmitComentar = (data, form) => {
+    const datos = {
+      comentario: comentario,
+      puntuacion: puntuacion,
+      usuario: {
+        id: suscripcionActual.usuario.id,
+      },
+      evento: {
+        id: suscripcionActual.evento.id,
+      },
+    };
+
+    comentarioService.crear(datos).then(
+      (res) => {
+        setShowMessageCrear(true);
+        form.restart();
+        ocultarDialogoComentar();
+      },
+      (error) => {
+        const resMessage =
+          (error.response &&
+            error.response.data &&
+            error.response.data.codigo) ||
+          error.message ||
+          error.toString();
+        setResMessage(resMessage);
+        setDialogoError(true);
+      }
+    );
+  };
+
   const onSubmitEliminarSuscripcion = () => {
     suscripcionService.eliminar(suscripcionActual.id.toString()).then(
       () => {
@@ -334,6 +392,10 @@ export default function MisSuscripciones() {
     setDialogoError(false);
   };
 
+  const okeyMensajeCrear = () => {
+    setShowMessageCrear(false);
+  };
+
   const okeyMensajeEliminar = () => {
     setShowMessageEliminar(false);
   };
@@ -343,8 +405,14 @@ export default function MisSuscripciones() {
     return (
       <React.Fragment>
         <Button
-          icon="pi pi-trash"
+          icon="pi pi-comment"
           className="p-button-rounded p-button-wrap mr-2"
+          tooltip={t("botones.comentar")}
+          onClick={() => comentarSuscripcion(rowData)}
+        />
+        <Button
+          icon="pi pi-trash"
+          className="p-button-rounded p-button-wrap"
           tooltip={t("botones.eliminar")}
           onClick={() => confirmarEliminarSuscripcion(rowData)}
         />
@@ -366,6 +434,17 @@ export default function MisSuscripciones() {
         icon="pi pi-check"
         className="p-button-text"
         onClick={onSubmitEliminarSuscripcion}
+      />
+    </div>
+  );
+
+  const dialogFooterCrear = (
+    <div className="flex justify-content-center">
+      <Button
+        label="OK"
+        className="p-button-text"
+        autoFocus
+        onClick={okeyMensajeCrear}
       />
     </div>
   );
@@ -527,6 +606,52 @@ export default function MisSuscripciones() {
         </div>
       </Dialog>
       <Dialog
+        visible={visibleDialogoComentar}
+        style={{ width: "450px" }}
+        header={t("mensajes.tituloModalComentar")}
+        modal
+        onHide={ocultarDialogoComentar}
+      >
+        <div className="flex align-items-center justify-content-center">
+          <Form
+            onSubmit={onSubmitComentar}
+            initialValues={comentarioVacio}
+            validate={validateComentar}
+            render={({ handleSubmit }) => (
+              <form
+                className=" text-xl p-fluid formGestion"
+                onSubmit={handleSubmit}
+              >
+                <InputTextarea
+                  value={comentario}
+                  onChange={(e) => setComentario(e.target.value)}
+                  placeholder="Comenta el evento y puntualo"
+                  rows={5}
+                  cols={30}
+                  required
+                  className="mb-2 ml-2 mr-2"
+                />
+                <Rating
+                  value={puntuacion}
+                  onChange={(e) => setPuntuacion(e.value)}
+                  cancel={false}
+                  required
+                  className="mb-2 ml-2"
+                />
+                <div className="col">
+                  <Button
+                    type="submit"
+                    label={t("botones.comentar")}
+                    icon="pi pi-comment"
+                    className="p-button-outlined mr-2"
+                  />
+                </div>
+              </form>
+            )}
+          />
+        </div>
+      </Dialog>
+      <Dialog
         visible={visibleDialogoBorrado}
         style={{ width: "450px" }}
         header={t("mensajes.tituloModalBorrado")}
@@ -542,6 +667,24 @@ export default function MisSuscripciones() {
           {suscripcionActual && (
             <span>{t("mensajes.preguntaModalBorradoSuscripcion")}</span>
           )}
+        </div>
+      </Dialog>
+
+      <Dialog
+        visible={showMessageCrear}
+        onHide={() => setShowMessageCrear(false)}
+        position="center"
+        footer={dialogFooterCrear}
+        showHeader={false}
+        breakpoints={{ "960px": "80vw" }}
+        style={{ width: "30vw" }}
+      >
+        <div className="flex align-items-center flex-column pt-6 px-3">
+          <i
+            className="pi pi-check-circle"
+            style={{ fontSize: "5rem", color: "var(--green-500)" }}
+          ></i>
+          <h4>{t("mensajes.creacionComentario")}</h4>
         </div>
       </Dialog>
 
