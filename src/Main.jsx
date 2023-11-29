@@ -51,6 +51,8 @@ import SuscripcionesEvento from "./components/evento/suscripcionesEvento";
 import SolicitudesEvento from "./components/evento/solicitudesEvento";
 import CategoriaLayout from "./components/categoria/categoriaLayout";
 import ComentariosEvento from "./components/comentario/comentariosEvento";
+import GerentesSeguir from "./components/red/gerentesSeguir";
+import GerentesSeguidos from "./components/red/gerentesSeguidos";
 
 function Main() {
   //constantes
@@ -165,6 +167,18 @@ function Main() {
       },
     });
     navs.push({
+      label: <a className="mr-3">{t("main.red")}</a>,
+      command: (e) => {
+        navigate("/red");
+      },
+    });
+    navs.push({
+      label: <a className="mr-3">{t("main.misAmistades")}</a>,
+      command: (e) => {
+        navigate("/misAmistades");
+      },
+    });
+    navs.push({
       label: <a className="mr-3">{t("main.micuenta")}</a>,
       command: (e) => {
         navigate("/usuario/micuenta/" + currentUser.id);
@@ -185,6 +199,18 @@ function Main() {
       label: <a className="mr-3">{t("main.misEventos")}</a>,
       command: (e) => {
         navigate("/evento/evetosLayout");
+      },
+    });
+    navs.push({
+      label: <a className="mr-3">{t("main.red")}</a>,
+      command: (e) => {
+        navigate("/red");
+      },
+    });
+    navs.push({
+      label: <a className="mr-3">{t("main.misAmistades")}</a>,
+      command: (e) => {
+        navigate("/misAmistades");
       },
     });
     navs.push({
@@ -382,7 +408,6 @@ function Main() {
                 path="/recuperarPassword"
                 element={<RecuperarPassword mensaje="Recuperar Contraseña" />}
               />
-
               {/* usuario */}
               <Route path="usuario">
                 <Route path="view">
@@ -401,7 +426,6 @@ function Main() {
                   <Route index element={<UsuarioShowAll />} />
                 </Route>
               </Route>
-
               {/* categoria */}
               <Route path="categoria">
                 <Route path="categoriaShowAll">
@@ -414,7 +438,6 @@ function Main() {
                   <Route path=":id" element={<EventosCategoria />} />
                 </Route>
               </Route>
-
               {/* evento */}
               <Route path="evento">
                 <Route path="eventoShowAll">
@@ -442,6 +465,9 @@ function Main() {
                   <Route path=":id" element={<ComentariosEvento />} />
                 </Route>
               </Route>
+              {/* red */}
+              <Route path="red" element={<GerentesSeguir />}></Route>
+              <Route path="misAmistades" element={<GerentesSeguidos />}></Route>
             </Routes>
           </div>
         </div>
