@@ -6,6 +6,10 @@ class UsuarioService {
     return REST.get("/usuario", { headers: authHeader() });
   }
 
+  buscarGerentes(id) {
+    return REST.get(`/usuario/gerentes/${id}`, { headers: authHeader() });
+  }
+
   buscarTodosParametros(data) {
     const parametros = Object.keys(data)
       .filter((key) => data[key] !== "")
