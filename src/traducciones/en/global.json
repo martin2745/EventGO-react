@@ -9,7 +9,8 @@
     "categorias": "Categories",
     "misEventos": "My Events",
     "red": "NetWork",
-    "misAmistades": "Managers followed",
+    "miRed": "My NetWork",
+    "misAmistades": "Followed",
     "gestionEventos": "Events",
     "equipos": "Teams",
     "competiciones": "Competitions",
@@ -164,6 +165,12 @@
     "titulo": "Swipe to see more comments"
   },
 
+  "noticia": {
+    "titulo": "Title of the news",
+    "descripcion": "Description of the news",
+    "fechaNoticia": "Date of the news"
+  },
+
   "botones": {
     "cancelar": "Cancel",
     "modificarPerfil": "Your personal data",
@@ -234,6 +241,7 @@
     "tituloModalAceptado": "You are going to accept the user's request",
     "tituloModalSeguido": "You are going to follow a manager",
     "preguntaModalBorrado": "Are you sure you want to delete ",
+    "preguntaModalBorradoNoticia": "Are you sure you want to delete the new?",
     "preguntaModalBorradoSuscripcion": "Are you sure you want to unsubscribe?",
     "preguntaModalBorradoSolicitud": "Are you sure you want to delete the request?",
     "preguntaModalBorradoAmistad": "Are you sure you want to delete the friendship?",
@@ -267,6 +275,7 @@
     "fechaEvento": "Start date",
     "fechaSuscripcion": "Suscription date",
     "fechaSolicitud": "Request date",
+    "fechaNoticia": "News date",
     "direccion": "Direction",
     "estado": "State",
     "rol": "Rol",
@@ -274,6 +283,7 @@
     "tipoAsistencia": "Type of assistance",
     "imagenEnlace": "Image and link",
     "evento": "Events",
+    "titulo": "Title",
     "acciones": "Actions"
   },
 
@@ -283,7 +293,8 @@
     "eventos": " events",
     "suscripciones": " subscriptions",
     "solicitudes": " requests",
-    "gestoresSeguidos": " followed managers"
+    "gestoresSeguidos": " followed managers",
+    "noticias": " news"
   },
 
   "ERROR_INESPERADO": "Unexpected error",

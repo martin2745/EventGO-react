@@ -53,6 +53,7 @@ import CategoriaLayout from "./components/categoria/categoriaLayout";
 import ComentariosEvento from "./components/comentario/comentariosEvento";
 import GerentesSeguir from "./components/red/gerentesSeguir";
 import GerentesSeguidos from "./components/red/gerentesSeguidos";
+import NoticiaShowAll from "./components/red/noticiaShowAll";
 
 function Main() {
   //constantes
@@ -176,6 +177,12 @@ function Main() {
       label: <a className="mr-3">{t("main.misAmistades")}</a>,
       command: (e) => {
         navigate("/misAmistades");
+      },
+    });
+    navs.push({
+      label: <a className="mr-3">{t("main.miRed")}</a>,
+      command: (e) => {
+        navigate("/miRed");
       },
     });
     navs.push({
@@ -467,6 +474,7 @@ function Main() {
               </Route>
               {/* red */}
               <Route path="red" element={<GerentesSeguir />}></Route>
+              <Route path="miRed" element={<NoticiaShowAll />}></Route>
               <Route path="misAmistades" element={<GerentesSeguidos />}></Route>
             </Routes>
           </div>

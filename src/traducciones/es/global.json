@@ -8,7 +8,8 @@
     "categorias": "Categorias",
     "misEventos": "Mis Eventos",
     "red": "Red",
-    "misAmistades": "Gerentes seguidos",
+    "miRed": "Mi red",
+    "misAmistades": "Seguidos",
     "categoriasGerente": "Eventos del gerente",
     "gestionEventos": "Eventos",
     "equipos": "Equipos",
@@ -164,6 +165,12 @@
     "titulo": "Desliza para ver más comentarios"
   },
 
+  "noticia": {
+    "titulo": "Título de la noticia",
+    "descripcion": "Descripción de la noticia",
+    "fechaNoticia": "Fecha de la noticia"
+  },
+
   "botones": {
     "cancelar": "Cancelar",
     "modificarPerfil": "Tus datos personales",
@@ -234,6 +241,7 @@
     "tituloModalAceptado": "Vas a aceptar la solicitud del usuario",
     "tituloModalSeguido": "Vas a seguir a un gerente",
     "preguntaModalBorrado": "¿Seguro que quiere eliminar a ",
+    "preguntaModalBorradoNoticia": "¿Seguro que quiere eliminar la noticia?",
     "preguntaModalBorradoSuscripcion": "¿Seguro que quiere eliminar la suscripcion?",
     "preguntaModalBorradoSolicitud": "¿Seguro que quiere eliminar la solicitud?",
     "preguntaModalBorradoAmistad": "¿Seguro que quiere eliminar la amistad?",
@@ -267,6 +275,7 @@
     "fechaEvento": "Fecha de inicio",
     "fechaSuscripcion": "Fecha de la suscripcion",
     "fechaSolicitud": "Fecha de la solicitud",
+    "fechaNoticia": "Fecha de la noticia",
     "direccion": "Direccion",
     "rol": "Rol",
     "descripcion": "Descripción",
@@ -274,6 +283,7 @@
     "tipoAsistencia": "Tipo de asistencia",
     "imagenEnlace": "Imagen y enlace",
     "evento": "Evento",
+    "titulo": "Titulos",
     "acciones": "Acciones"
   },
 
@@ -283,7 +293,8 @@
     "eventos": " eventos",
     "suscripciones": " suscripciones",
     "solicitudes": " solicitudes",
-    "gestoresSeguidos": " gestores seguidos"
+    "gestoresSeguidos": " gestores seguidos",
+    "noticias": " noticias"
   },
 
   "ERROR_INESPERADO": "Error inesperado",
