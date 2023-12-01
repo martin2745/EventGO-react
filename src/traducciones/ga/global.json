@@ -10,7 +10,8 @@
     "categorias": "Categorias",
     "misEventos": "Meus Eventos",
     "red": "Rede",
-    "misAmistades": "Gerentes seguidos",
+    "miRed": "Miña rede",
+    "misAmistades": "Seguidos",
     "equipos": "Equipos",
     "competiciones": "Competicións",
     "micuenta": "Miña conta",
@@ -97,7 +98,7 @@
     "numAsistentes": "Número de asistentes",
     "numInscritos": "Número de inscritos",
     "estado": "Estado",
-    "fechaEvento": "Fecha del evento",
+    "fechaEvento": "Data do evento",
     "direccion": "Direccion del evento",
     "emailContacto": "Email",
     "telefonoContacto": "Teléfono",
@@ -151,17 +152,23 @@
   "suscripcion": {
     "nombreEvento": "Nome do evento",
     "nombreUsuario": "Nome de usuario",
-    "fechaSuscripcion": "Fecha da suscripcion"
+    "fechaSuscripcion": "Data da suscripcion"
   },
 
   "solicitud": {
     "nombreEvento": "Usuario",
     "nombreEvento": "Nome do evento",
-    "fechaSolicitud": "Fecha da solicitude"
+    "fechaSolicitud": "Data da solicitude"
   },
 
   "comentarios": {
     "titulo": "Desliza para ver mais comentarios"
+  },
+
+  "noticia": {
+    "titulo": "Título da noticia",
+    "descripcion": "Descripción da noticia",
+    "fechaNoticia": "Data da noticia"
   },
 
   "botones": {
@@ -234,6 +241,7 @@
     "tituloModalAceptado": "Vai a aceptar a solicitude do usuario",
     "tituloModalSeguido": "Vas a seguir a un xerente",
     "preguntaModalBorrado": "Estás seguro de que queres eliminar ",
+    "preguntaModalBorradoNoticia": "Seguro que quere eliminar a noticia?",
     "preguntaModalBorradoSuscripcion": "Seguro que quere eliminar a suscripcion?",
     "preguntaModalBorradoSolicitud": "Seguro que quere eliminar a solicitude?",
     "preguntaModalBorradoAmistad": "Seguro que quere eliminar a amistade?",
@@ -264,9 +272,10 @@
     "dni": "Dni",
     "email": "Email",
     "telefono": "Telefono",
-    "fechaEvento": "Fecha de inicio",
-    "fechaSuscripcion": "Fecha da suscripcion",
-    "fechaSolicitud": "Fecha da solicitude",
+    "fechaEvento": "Data de inicio",
+    "fechaSuscripcion": "Data da suscripcion",
+    "fechaSolicitud": "Data da solicitude",
+    "fechaNoticia": "Data da noticia",
     "direccion": "Direccion",
     "estado": "Estado",
     "rol": "Rol",
@@ -274,6 +283,7 @@
     "tipoAsistencia": "Tipo de asistencia",
     "imagenEnlace": "Imaxen e enlace",
     "evento": "Evento",
+    "titulo": "Titulos",
     "acciones": "Accións"
   },
 
@@ -283,7 +293,8 @@
     "eventos": " eventos",
     "suscripciones": " suscripcións",
     "solicitudes": " solicitudes",
-    "gestoresSeguidos": " xestores seguidos"
+    "gestoresSeguidos": " xestores seguidos",
+    "noticias": " noticias"
   },
 
   "ERROR_INESPERADO": "Erro inesperado",
