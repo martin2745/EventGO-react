@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { jsPDF } from "jspdf";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { Button } from "primereact/button";
@@ -16,6 +17,7 @@ import eventoService from "../../services/eventoService";
 import comentarioService from "../../services/comentarioService";
 import suscripcionService from "../../services/suscripcionService";
 import avatar from "./../recursos/imagenes/avatar.png";
+import logo from "./../recursos/imagenes/logo.png";
 import { Rating } from "primereact/rating";
 
 export default function MisSuscripciones() {
@@ -120,14 +122,10 @@ export default function MisSuscripciones() {
   const formatoFechaEvento = (rowData) => {
     const fechaOriginal = rowData.evento.fechaEvento; // Supongamos que la fecha está en el formato 'YYYY-MM-DD'
     const fecha = new Date(fechaOriginal);
-
     const dia = fecha.getDate();
     const mes = fecha.getMonth() + 1; // Los meses en JavaScript se cuentan desde 0, así que sumamos 1
     const anio = fecha.getFullYear();
-
-    // Formateamos la fecha en el formato 'DD/MM/YYYY'
     const fechaFormateada = `${dia}/${mes}/${anio}`;
-
     return fechaFormateada;
   };
 
@@ -387,6 +385,202 @@ export default function MisSuscripciones() {
     ocultarDialogoBorrado();
   };
 
+  const generarPDF = (rowData) => {
+    let doc;
+    const login = localStorage.getItem("login");
+    const idioma = localStorage.getItem("idioma");
+    const arrayDescripcion = dividirDescripcionEnArray(
+      rowData.evento.descripcion
+    );
+
+    switch (idioma) {
+      case "es":
+        doc = new jsPDF();
+        doc.setFont("italic");
+        doc.setFontSize(25);
+        doc.setTextColor(86, 189, 255);
+        doc.text("Datos del evento", 30, 18);
+
+        doc.setFontSize(15);
+        doc.setTextColor(0, 0, 0);
+        doc.line(10, 20, 140, 20);
+        doc.addImage(logo, 140, 10, 50, 10);
+
+        doc.text(`- Usuario inscrito: ${login}`, 20, 35);
+        doc.setTextColor(100, 100, 100);
+        doc.text(
+          `- Nombre de la categoría: ${rowData.evento.categoria.nombre}`,
+          20,
+          45
+        );
+        doc.setTextColor(0, 0, 0);
+        doc.text(`- Nombre del evento: ${rowData.evento.nombre}`, 20, 55);
+        doc.setTextColor(100, 100, 100);
+        doc.text(
+          `- Plazas del evento: ${rowData.evento.numAsistentes}`,
+          20,
+          65
+        );
+        doc.setTextColor(0, 0, 0);
+        doc.text(
+          `- Número de inscritos: ${rowData.evento.numInscritos}`,
+          20,
+          75
+        );
+        doc.setTextColor(100, 100, 100);
+        doc.text(
+          `- Teléfono de contacto: ${rowData.evento.telefonoContacto}`,
+          20,
+          85
+        );
+        doc.setTextColor(0, 0, 0);
+        doc.text(
+          `- Email de contacto: ${rowData.evento.emailContacto}`,
+          20,
+          95
+        );
+        doc.setTextColor(100, 100, 100);
+        doc.text(
+          `- Tipo de asistencia: ${rowData.evento.tipoAsistencia}`,
+          20,
+          105
+        );
+        doc.setTextColor(0, 0, 0);
+        doc.text(`- Descripción del evento:`, 20, 115, 0, 30);
+
+        // Ejecutar el código para cada elemento del array
+        arrayDescripcion.forEach((elemento, index) => {
+          doc.text(elemento, 30, 125 + 10 * index, 0, 30);
+        });
+
+        doc.addImage(rowData.evento.imagenEvento, 140, 30, 50, 50);
+        doc.line(10, 280, 200, 280);
+        doc.text("Copyright 2023 Martín Gil Blanco - MEI", 60, 290);
+        doc.save(`factura_${rowData.evento.nombre}_${login}.pdf`);
+        break;
+      case "ga":
+        doc = new jsPDF();
+        doc.setFont("italic");
+        doc.setFontSize(25);
+        doc.setTextColor(86, 189, 255);
+        doc.text("Datos do evento", 30, 18);
+
+        doc.setFontSize(15);
+        doc.setTextColor(0, 0, 0);
+        doc.line(10, 20, 140, 20);
+        doc.addImage(logo, 140, 10, 50, 10);
+
+        doc.text(`- Usuario inscrito: ${login}`, 20, 35);
+        doc.setTextColor(100, 100, 100);
+        doc.text(
+          `- Nome da categoría: ${rowData.evento.categoria.nombre}`,
+          20,
+          45
+        );
+        doc.setTextColor(0, 0, 0);
+        doc.text(`- Nome do evento: ${rowData.evento.nombre}`, 20, 55);
+        doc.setTextColor(100, 100, 100);
+        doc.text(`- Plazas do evento: ${rowData.evento.numAsistentes}`, 20, 65);
+        doc.setTextColor(0, 0, 0);
+        doc.text(
+          `- Número de inscritos: ${rowData.evento.numInscritos}`,
+          20,
+          75
+        );
+        doc.setTextColor(100, 100, 100);
+        doc.text(
+          `- Teléfono de contacto: ${rowData.evento.telefonoContacto}`,
+          20,
+          85
+        );
+        doc.setTextColor(0, 0, 0);
+        doc.text(
+          `- Email de contacto: ${rowData.evento.emailContacto}`,
+          20,
+          95
+        );
+        doc.setTextColor(100, 100, 100);
+        doc.text(
+          `- Tipo de asistencia: ${rowData.evento.tipoAsistencia}`,
+          20,
+          105
+        );
+        doc.setTextColor(0, 0, 0);
+        doc.text(`- Descripción do evento:`, 20, 115, 0, 30);
+
+        // Ejecutar el código para cada elemento del array
+        arrayDescripcion.forEach((elemento, index) => {
+          doc.text(elemento, 30, 125 + 10 * index, 0, 30);
+        });
+
+        doc.addImage(rowData.evento.imagenEvento, 140, 30, 50, 50);
+        doc.line(10, 280, 200, 280);
+        doc.text("Copyright 2023 Martín Gil Blanco - MEI", 60, 290);
+        doc.save(`factura_${rowData.evento.nombre}_${login}.pdf`);
+        break;
+      case "en":
+        doc = new jsPDF();
+        doc.setFont("italic");
+        doc.setFontSize(25);
+        doc.setTextColor(86, 189, 255);
+        doc.text("Event details", 30, 18);
+
+        doc.setFontSize(15);
+        doc.setTextColor(0, 0, 0);
+        doc.line(10, 20, 140, 20);
+        doc.addImage(logo, 140, 10, 50, 10);
+
+        doc.text(`- Registered user: ${login}`, 20, 35);
+        doc.setTextColor(100, 100, 100);
+        doc.text(`- Event name: ${rowData.evento.nombre}`, 20, 45);
+        doc.setTextColor(0, 0, 0);
+        doc.text(
+          `- Number of participants: ${rowData.evento.numInscritos}`,
+          20,
+          55
+        );
+        doc.setTextColor(100, 100, 100);
+        doc.text(`- Category name: ${rowData.evento.categoria.nombre}`, 20, 65);
+        doc.setTextColor(0, 0, 0);
+        doc.text(`- Contact email: ${rowData.evento.emailContacto}`, 20, 75);
+        doc.setTextColor(100, 100, 100);
+        doc.text(`- Event capacity: ${rowData.evento.numAsistentes}`, 20, 85);
+        doc.setTextColor(0, 0, 0);
+        doc.text(`- Attendance type: ${rowData.evento.tipoAsistencia}`, 20, 95);
+        doc.setTextColor(100, 100, 100);
+        doc.text(
+          `- Contact phone: ${rowData.evento.telefonoContacto}`,
+          20,
+          105
+        );
+        doc.setTextColor(0, 0, 0);
+        doc.text(`- Event description:`, 20, 115, 0, 30);
+
+        // Ejecutar el código para cada elemento del array
+        arrayDescripcion.forEach((elemento, index) => {
+          doc.text(elemento, 30, 125 + 10 * index, 0, 30);
+        });
+
+        doc.addImage(rowData.evento.imagenEvento, 140, 30, 50, 50);
+        doc.line(10, 280, 200, 280);
+        doc.text("Copyright 2023 Martín Gil Blanco - MEI", 60, 290);
+        doc.save(`factura_${rowData.evento.nombre}_${login}.pdf`);
+        break;
+      default:
+        doc.save(`IDIOMA_NO_DISPONIBLE.pdf`);
+    }
+  };
+
+  const dividirDescripcionEnArray = (descripcion) => {
+    const palabras = descripcion.split(" ");
+    const arrayResultado = [];
+    while (palabras.length > 0) {
+      const elementoArray = palabras.splice(0, 12).join(" ");
+      arrayResultado.push(elementoArray);
+    }
+    return arrayResultado;
+  };
+
   //Funciones de modal
   const ocultarDialogo = () => {
     setDialogoError(false);
@@ -412,9 +606,15 @@ export default function MisSuscripciones() {
         />
         <Button
           icon="pi pi-trash"
-          className="p-button-rounded p-button-wrap"
+          className="p-button-rounded p-button-wrap mr-2"
           tooltip={t("botones.eliminar")}
           onClick={() => confirmarEliminarSuscripcion(rowData)}
+        />
+        <Button
+          icon="pi pi-file-pdf"
+          className="p-button-rounded p-button-wrap"
+          tooltip={t("botones.generarSuscripciónPDF")}
+          onClick={() => generarPDF(rowData)}
         />
       </React.Fragment>
     );
