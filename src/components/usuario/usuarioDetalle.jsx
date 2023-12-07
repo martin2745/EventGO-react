@@ -65,7 +65,11 @@ export default function UsuarioDetalle() {
   useEffect(() => {
     usuarioService.buscarPorId(params.id).then((res) => {
       setUsuario(res.data);
-      setImagenUsuario(res.data.imagenUsuario);
+      if (res.data.imagenUsuario === "") {
+        setImagenUsuario(avatar);
+      } else {
+        setImagenUsuario(res.data.imagenUsuario);
+      }
       const fechAux = new Date(res.data.fechaNacimiento);
       const fecha = fechAux.toLocaleDateString("ES", {
         day: "2-digit",
@@ -80,12 +84,10 @@ export default function UsuarioDetalle() {
     }
   }, []);
 
-  const headerVacio = (
-    <Image id="imagen" src={avatar} imageClassName="w-15rem h-15rem" />
-  );
-
   const header = (
-    <Image id="imagen" src={imagenUsuario} imageClassName="w-15rem h-15rem" />
+    <>
+      <Image id="imagen" src={imagenUsuario} imageClassName="w-15rem h-15rem" />
+    </>
   );
 
   function convertirFecha(fechaTexto) {
@@ -463,31 +465,17 @@ export default function UsuarioDetalle() {
   return (
     <div>
       <div className="card flex justify-content-center carta">
-        {usuario.imagenUsuario !== "" ? (
-          <Card
-            header={header}
-            title={usuario.login}
-            subTitle={usuario.rol.split("_")[1]}
-            footer={footer}
-            className="md:w-25rem"
-          >
-            <p className="m-0" style={{ textAlign: "justify" }}>
-              {t("cuenta.funcionalidadUsuario")}
-            </p>
-          </Card>
-        ) : (
-          <Card
-            header={headerVacio}
-            title={usuario.login}
-            subTitle={usuario.rol.split("_")[1]}
-            footer={footer}
-            className="md:w-25rem"
-          >
-            <p className="m-0" style={{ textAlign: "justify" }}>
-              {t("cuenta.funcionalidadUsuario")}
-            </p>
-          </Card>
-        )}
+        <Card
+          header={header}
+          title={usuario.login}
+          subTitle={usuario.rol.split("_")[1]}
+          footer={footer}
+          className="md:w-25rem"
+        >
+          <p className="m-0" style={{ textAlign: "justify" }}>
+            {t("cuenta.funcionalidadUsuario")}
+          </p>
+        </Card>
       </div>
     </div>
   );

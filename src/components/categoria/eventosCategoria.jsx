@@ -88,6 +88,10 @@ export default function Eventosevento() {
     );
   };
 
+  const comentariosEvento = (evento) => {
+    navigate("/evento/comentarios/" + evento.id.toString());
+  };
+
   const enlaceImagen = (url) => {
     window.open(url, "_blank");
   };
@@ -175,6 +179,12 @@ export default function Eventosevento() {
             >
               {t("botones.webEvento")}
             </a>
+            <a
+              onClick={() => comentariosEvento(evento)}
+              style={{ cursor: "pointer" }}
+            >
+              {t("botones.comentariosEvento")}
+            </a>
           </div>
           <div className="card flex justify-content-center">
             <Button
@@ -255,6 +265,21 @@ export default function Eventosevento() {
       />
     </div>
   );
+
+  const dialogFooterError = (
+    <div className="flex justify-content-center">
+      <Button
+        label="OK"
+        className="p-button-text"
+        autoFocus
+        onClick={ocultarDialogo}
+      />
+    </div>
+  );
+
+  function ocultarDialogo() {
+    setDialogoError(false);
+  }
 
   const volverCategorias = () => {
     navigate("/categoria/categoriaLayout/");
@@ -386,6 +411,7 @@ export default function Eventosevento() {
       suscripcionService.crear(datos).then(
         () => {
           setShowSuscripcionCrear(true);
+          setVisibleDialogoVerEnDetalle(false);
         },
         (error) => {
           const resMessage =
@@ -402,6 +428,7 @@ export default function Eventosevento() {
       solicitudService.crear(datos).then(
         () => {
           setShowSuscripcionCrear(true);
+          setVisibleDialogoVerEnDetalle(false);
         },
         (error) => {
           const resMessage =
@@ -467,20 +494,14 @@ export default function Eventosevento() {
 
   return (
     <div className="card">
-      {eventos.length > 0 ? (
-        <DataView
-          value={eventos}
-          itemTemplate={itemTemplate}
-          layout={layout}
-          header={header()}
-          paginator
-          rows={6}
-        />
-      ) : (
-        <div className="col text-900 py-3">
-          <h1>{t("evento.noExistenEventos")}</h1>
-        </div>
-      )}
+      <DataView
+        value={eventos}
+        itemTemplate={itemTemplate}
+        layout={layout}
+        header={header()}
+        paginator
+        rows={6}
+      />
       <Dialog
         visible={visibleDialogoVerEnDetalle}
         style={{ width: "450px" }}
@@ -735,6 +756,7 @@ export default function Eventosevento() {
                             name="gerente"
                             options={gerenteOptions}
                             onChange={(e) => setUsuario(e.value)}
+                            filter
                           />
                         </div>
                       </span>
@@ -855,7 +877,9 @@ export default function Eventosevento() {
 
       <Dialog
         visible={showSuscripcionCrear}
-        onHide={() => showSuscripcionCrear(false)}
+        onHide={() => {
+          showSuscripcionCrear(false);
+        }}
         position="center"
         footer={dialogFooterSuscripcion}
         showHeader={false}
@@ -868,6 +892,24 @@ export default function Eventosevento() {
             style={{ fontSize: "5rem", color: "var(--green-500)" }}
           ></i>
           <h4>{t("mensajes.accionExito")}</h4>
+        </div>
+      </Dialog>
+
+      <Dialog
+        visible={dialogoError}
+        position="center"
+        footer={dialogFooterError}
+        showHeader={false}
+        onHide={ocultarDialogo}
+        breakpoints={{ "960px": "80vw" }}
+        style={{ width: "30vw" }}
+      >
+        <div className="flex align-items-center flex-column pt-6 px-3">
+          <i
+            className="pi pi-times-circle"
+            style={{ fontSize: "5rem", color: "red" }}
+          ></i>
+          <h4>{t(resMessage)}</h4>
         </div>
       </Dialog>
     </div>

@@ -158,8 +158,6 @@ export default function SuscripcionesEvento() {
     return fechaFormateada;
   };
 
-  const validateBuscar = (data) => {};
-
   const buscarSuscripcion = () => {
     setFechaSuscripcion("");
     setUsuario("");
@@ -380,10 +378,11 @@ export default function SuscripcionesEvento() {
   return (
     <div className="card">
       <div>
+        <h2 className="tituloTablas">{t("main.gestionSuscripciones")}</h2>
         <DataTable
           value={suscripciones}
           paginator
-          rows={2}
+          rows={5}
           header={header}
           filters={filters}
           onFilter={(e) => setFilters(e.filters)}
@@ -430,7 +429,6 @@ export default function SuscripcionesEvento() {
           <Form
             onSubmit={onSubmitBuscar}
             initialValues={suscripcionVacio}
-            validate={validateBuscar}
             render={({ handleSubmit }) => (
               <form
                 className=" text-xl p-fluid formGestion"
@@ -480,6 +478,7 @@ export default function SuscripcionesEvento() {
                             name="usuario"
                             options={usuarioOptions}
                             onChange={(e) => setUsuario(e.value)}
+                            filter
                           />
                         </div>
                       </span>

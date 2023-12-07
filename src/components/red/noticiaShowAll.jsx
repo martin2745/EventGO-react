@@ -12,6 +12,7 @@ import { Form, Field } from "react-final-form";
 import { classNames } from "primereact/utils";
 import autenticacionService from "../../services/autenticacionService";
 import noticiaService from "../../services/noticiaService";
+import { InputTextarea } from "primereact/inputtextarea";
 
 export default function NoticiaShowAll() {
   const noticiaVacio = {
@@ -151,9 +152,49 @@ export default function NoticiaShowAll() {
 
   const footer = `${noticias ? noticias.length : 0}${t("footer.noticias")}`;
 
-  const validateCrear = (data) => {};
+  const validateCrear = (data) => {
+    let errors = {};
+    let patronTitulo = /^[A-Za-z0-9_áéíóúñÁÉÍÓÚÑ ]+$/;
+    let patronDescripcion = /^[A-Za-z0-9_áéíóúñÁÉÍÓÚÑ., ]+$/;
 
-  const validateBuscar = (data) => {};
+    //titulo
+    if (!data.titulo) {
+      errors.titulo = <p>{t("noticia.validaciones.tituloVacio")}</p>;
+    } else if (!patronTitulo.test(data.titulo)) {
+      errors.titulo = (
+        <p>{t("noticia.validaciones.tituloInvalidoAlfanumerico")}</p>
+      );
+    } else if (data.titulo.length > 30) {
+      errors.titulo = (
+        <p>{t("noticia.validaciones.tituloNoticiaInvalidoTamañoMax")}</p>
+      );
+    } else if (data.titulo.length < 3) {
+      errors.titulo = (
+        <p>{t("noticia.validaciones.tituloNoticiaInvalidoTamañoMin")}</p>
+      );
+    }
+
+    //descripcion
+    if (!data.descripcion) {
+      errors.descripcion = <p>{t("noticia.validaciones.descripcionVacio")}</p>;
+    } else if (!patronDescripcion.test(data.descripcion)) {
+      errors.descripcion = (
+        <p>
+          {t("noticia.validaciones.descripcionNoticiaInvalidoAlfanumerico")}
+        </p>
+      );
+    } else if (data.descripcion.length > 255) {
+      errors.descripcion = (
+        <p>{t("noticia.validaciones.descripcionNoticiaInvalidoTamañoMax")}</p>
+      );
+    } else if (data.descripcion.length < 3) {
+      errors.descripcion = (
+        <p>{t("noticia.validaciones.descripcionNoticiaInvalidoTamañoMin")}</p>
+      );
+    }
+
+    return errors;
+  };
 
   function crearNoticia() {
     setVisibleDialogoCrear(true);
@@ -376,11 +417,12 @@ export default function NoticiaShowAll() {
 
   return (
     <div className="card">
+      <h2 className="tituloTablas">{t("main.gestionNoticias")}</h2>
       <div>
         <DataTable
           value={noticias}
           paginator
-          rows={2}
+          rows={5}
           header={header}
           filters={filters}
           onFilter={(e) => setFilters(e.filters)}
@@ -452,7 +494,7 @@ export default function NoticiaShowAll() {
                     <div className="field ">
                       <span className="p-float-label">
                         <div className="p-field px-5 text-900 ">
-                          <InputText
+                          <InputTextarea
                             id="descripcion"
                             {...input}
                             placeholder={t("noticia.descripcion")}
@@ -492,7 +534,6 @@ export default function NoticiaShowAll() {
           <Form
             onSubmit={onSubmitBuscar}
             initialValues={noticiaVacio}
-            validate={validateBuscar}
             render={({ handleSubmit }) => (
               <form
                 className=" text-xl p-fluid formGestion"
@@ -526,7 +567,7 @@ export default function NoticiaShowAll() {
                     <div className="field ">
                       <span className="p-float-label">
                         <div className="p-field px-5 text-900 ">
-                          <InputText
+                          <InputTextarea
                             id="descripcion"
                             {...input}
                             placeholder={t("noticia.descripcion")}

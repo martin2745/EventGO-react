@@ -6,6 +6,7 @@ import { Dropdown } from "primereact/dropdown";
 import { Calendar } from "primereact/calendar";
 import { FilterMatchMode, FilterOperator } from "primereact/api";
 import { InputText } from "primereact/inputtext";
+import { InputTextarea } from "primereact/inputtextarea";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { Dialog } from "primereact/dialog";
@@ -34,6 +35,7 @@ export default function EventoShowAll() {
     usuario: "",
     imagenEvento: "",
     url: "",
+    borradoLogico: "",
   };
   const pathname = window.location.pathname; // Obtén la parte de la URL
   const parts = pathname.split("/"); // Separa la parte de la URL en partes usando '/'
@@ -70,6 +72,13 @@ export default function EventoShowAll() {
   const [visibleDialogoVerEnDetalle, setVisibleDialogoVerEnDetalle] =
     useState(false);
   const [visibleDialogoBorrado, setVisibleDialogoBorrado] = useState(false);
+  const [borradoLogico, setBorradoLogico] = useState([""]);
+  const borradoLogicoOptions = [
+    { label: <a>{t("usuario.activo")}</a>, value: "0" },
+    { label: <a>{t("usuario.inactivo")}</a>, value: "1" },
+  ];
+  const [visibleDialogoReactivarEvento, setVisibleDialogoReactivarEvento] =
+    useState(false);
 
   useEffect(() => {
     if (JSON.parse(localStorage.getItem("user")).rol === "ROLE_ADMINISTRADOR") {
@@ -190,6 +199,32 @@ export default function EventoShowAll() {
     var fechaFormateada = day + "/" + month + "/" + year;
     return fechaFormateada;
   }
+
+  const formatoEstado = (usuario) => {
+    const idioma = localStorage.getItem("idioma");
+    switch (usuario.borradoLogico) {
+      case "0":
+        if (idioma == "es") {
+          return "Activo";
+        } else if (idioma == "en") {
+          return "Activo";
+        } else if (idioma == "ga") {
+          return "Active";
+        } else {
+          return "Activo";
+        }
+      case "1":
+        if (idioma == "es") {
+          return "Inactivo";
+        } else if (idioma == "en") {
+          return "Inactivo";
+        } else if (idioma == "ga") {
+          return "Inactive";
+        } else {
+          return "Inactivo";
+        }
+    }
+  };
 
   const header = renderHeader();
 
@@ -338,91 +373,6 @@ export default function EventoShowAll() {
     return errors;
   };
 
-  const validateBuscar = (data) => {
-    /*let errors = {};
-    var patronNombre = /^[A-Za-z0-9_áéíóúñÁÉÍÓÚÑ ]+$/;
-    var patronDescripcion = /^[A-Za-z0-9_áéíóúñÁÉÍÓÚÑ ]+$/;
-    var patronNum = /^[0-9]+$/;
-    var patronDireccion = /^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚüÜ/ºª,.;: ]+$/;
-    var patronEmailContacto = /^[A-Za-z0-9@. ]+$/;
-
-    //nombre
-    if (data.nombre != "" && data.nombre != undefined) {
-      if (!patronNombre.test(data.nombre)) {
-        errors.nombre = (
-          <p>{t("evento.validaciones.nombreInvalidoAlfanumerico")}</p>
-        );
-      } else if (data.nombre.length > 15) {
-        errors.nombre = (
-          <p>{t("evento.validaciones.nombreEventoInvalidoTamañoMax")}</p>
-        );
-      }
-    }
-
-    //descripcion
-    if (data.descripcion != "" && data.descripcion != undefined) {
-      if (!patronDescripcion.test(data.descripcion)) {
-        errors.descripcion = (
-          <p>
-            {t("evento.validaciones.descripcionEventoInvalidoAlfanumerico")}
-          </p>
-        );
-      } else if (data.descripcion.length > 255) {
-        errors.descripcion = (
-          <p>{t("evento.validaciones.descripcionEventoInvalidoTamañoMax")}</p>
-        );
-      }
-    }
-
-    //numAsistentes
-    if (data.numAsistentes != "" && data.numAsistentes != undefined) {
-      if (!patronNum.test(data.numAsistentes)) {
-        errors.numAsistentes = (
-          <p>{t("evento.validaciones.numAsistentesEventoInvalidoNumerico")}</p>
-        );
-      }
-    }
-
-    //direccion
-    if (data.direccion != "" && data.direccion != undefined) {
-      if (!patronDireccion.test(data.direccion)) {
-        errors.direccion = (
-          <p>{t("evento.validaciones.direccionEventoInvalidoAlfanumerico")}</p>
-        );
-      } else if (data.direccion.length > 50) {
-        errors.direccion = (
-          <p>{t("evento.validaciones.direccionEventoInvalidoTamañoMax")}</p>
-        );
-      }
-    }
-
-    //emailContacto
-    if (data.emailContacto != "" && data.emailContacto != undefined) {
-      if (!patronEmailContacto.test(data.emailContacto)) {
-        errors.emailContacto = <p>{t("evento.validaciones.emailInvalido")}</p>;
-      } else if (data.emailContacto.length > 40) {
-        errors.emailContacto = (
-          <p>{t("evento.validaciones.emailInvalidoTamañoMax")}</p>
-        );
-      }
-    }
-
-    //telefonoContacto
-    if (data.telefonoContacto != "" && data.telefonoContacto != undefined) {
-      if (!patronNum.test(data.telefonoContacto)) {
-        errors.telefonoContacto = (
-          <p>{t("evento.validaciones.telefonoContactoFormato")}</p>
-        );
-      } else if (data.telefonoContacto.length > 9) {
-        errors.telefonoContacto = (
-          <p>{t("evento.validaciones.telefonoContactoFormato")}</p>
-        );
-      }
-    }
-
-    return errors;*/
-  };
-
   const validateEditar = (data) => {
     let errors = {};
     var patronNombre = /^[A-Za-z0-9_áéíóúñÁÉÍÓÚÑ. ]+$/;
@@ -545,6 +495,7 @@ export default function EventoShowAll() {
     setFecha("");
     setEstado("");
     setUsuario("");
+    setBorradoLogico([""]);
     setVisibleDialogoBuscar(true);
   }
 
@@ -554,6 +505,16 @@ export default function EventoShowAll() {
     setEstado(evento.estado);
     setVisibleDialogoEditar(true);
   }
+
+  function confirmarReactivarEvento(evento) {
+    evento.borradoLogico = "0";
+    setEventoActual(evento);
+    setVisibleDialogoReactivarEvento(true);
+  }
+
+  const comentariosEvento = (evento) => {
+    navigate("/evento/comentarios/" + evento.id.toString());
+  };
 
   function subirImagen(evento) {
     setEventoActual(evento);
@@ -597,6 +558,10 @@ export default function EventoShowAll() {
   function ocultarDialogoBorrado() {
     setEventoActual(eventoVacio);
     setVisibleDialogoBorrado(false);
+  }
+
+  function ocultarDialogoReactivarEvento() {
+    setVisibleDialogoReactivarEvento(false);
   }
 
   const onSubmitCrear = (data, form) => {
@@ -655,6 +620,10 @@ export default function EventoShowAll() {
       fechaBuscar = convertirFecha(fecha);
     }
 
+    if (borradoLogico != "") {
+      data[`borradoLogico`] = borradoLogico;
+    }
+
     const datos = {
       nombre: data.nombre,
       descripcion: data.descripcion,
@@ -668,6 +637,7 @@ export default function EventoShowAll() {
       telefonoContacto: data.telefonoContacto,
       idCategoria: idCategoria,
       idUsuario: usuario,
+      borradoLogico: data[`borradoLogico`],
     };
 
     eventoService.buscarTodosParametros(datos).then(
@@ -740,6 +710,26 @@ export default function EventoShowAll() {
     );
   };
 
+  function onSubmitReactivar() {
+    eventoActual.borradoLogico = "0";
+    eventoService.modificar(eventoActual.id.toString(), eventoActual).then(
+      () => {
+        reloadPage();
+      },
+      (error) => {
+        const resMessage =
+          (error.response &&
+            error.response.usuarioActual &&
+            error.response.usuarioActual.codigo) ||
+          error.message ||
+          error.toString();
+        setResMessage(resMessage);
+        setDialogoError(true);
+      }
+    );
+    ocultarDialogoReactivarEvento();
+  }
+
   function onSubmitSubirImagen(event) {
     event.preventDefault();
     const fileExtension = file.name.split(".").pop().toLowerCase();
@@ -797,6 +787,7 @@ export default function EventoShowAll() {
         );
         setEventos(eventosActualizados);
         setShowMessageEliminar(true);
+        reloadPage();
       },
       (error) => {
         const resMessage =
@@ -883,7 +874,7 @@ export default function EventoShowAll() {
     }
   };
 
-  const formatoEstado = (rowData) => {
+  const formatoEstadoAbiertoCerrado = (rowData) => {
     const idioma = localStorage.getItem("idioma");
     const estado = rowData.estado;
 
@@ -930,6 +921,23 @@ export default function EventoShowAll() {
         icon="pi pi-check"
         className="p-button-text"
         onClick={onSubmitEliminarEvento}
+      />
+    </div>
+  );
+
+  const pieDialogoReactivar = (
+    <div style={{ display: "flex", justifyContent: "center" }}>
+      <Button
+        label={t("mensajes.no")}
+        icon="pi pi-times"
+        className="p-button-text"
+        onClick={ocultarDialogoReactivarEvento}
+      />
+      <Button
+        label={t("mensajes.si")}
+        icon="pi pi-check"
+        className="p-button-text"
+        onClick={onSubmitReactivar}
       />
     </div>
   );
@@ -1024,11 +1032,25 @@ export default function EventoShowAll() {
         {rowData.documentoEvento !== "" && (
           <Button
             icon="pi pi-file-pdf"
-            className="p-button-rounded p-button-wrap"
+            className="p-button-rounded p-button-wrap mr-2"
             tooltip={t("botones.pdfInteres")}
             onClick={() => mostrarPDF(rowData)}
           />
         )}
+        {rowData.borradoLogico === "1" && (
+          <Button
+            icon="pi pi-heart mr-2"
+            className="p-button-rounded p-button-wrap"
+            tooltip={t("botones.reactivar")}
+            onClick={() => confirmarReactivarEvento(rowData)}
+          />
+        )}
+        <Button
+          icon="pi pi-comments"
+          className="p-button-rounded p-button-wrap"
+          tooltip={t("botones.comentariosEvento")}
+          onClick={() => comentariosEvento(rowData)}
+        />
       </React.Fragment>
     );
   }
@@ -1036,10 +1058,11 @@ export default function EventoShowAll() {
   return (
     <div className="card">
       <div>
+        <h2 className="tituloTablas">{t("main.gestionEventosTabla")}</h2>
         <DataTable
           value={eventos}
           paginator
-          rows={2}
+          rows={5}
           header={header}
           filters={filters}
           onFilter={(e) => setFilters(e.filters)}
@@ -1057,14 +1080,8 @@ export default function EventoShowAll() {
             sortable
           ></Column>
           <Column
-            field="descripcion"
-            header={t("columnas.descripcion")}
-            sortable
-            style={{ width: "250px" }}
-          ></Column>
-          <Column
-            field={formatoEstado}
-            header={t("columnas.estado")}
+            field={formatoEstadoAbiertoCerrado}
+            header={t("columnas.tipoAsistencia")}
             sortable
           ></Column>
           <Column
@@ -1080,6 +1097,11 @@ export default function EventoShowAll() {
           <Column
             field="direccion"
             header={t("columnas.direccion")}
+            sortable
+          ></Column>
+          <Column
+            field={formatoEstado}
+            header={t("columnas.estado")}
             sortable
           ></Column>
           <Column header={t("columnas.acciones")} body={accionesEvento} />
@@ -1132,7 +1154,7 @@ export default function EventoShowAll() {
                     <div className="field ">
                       <span className="p-float-label">
                         <div className="p-field px-5 text-900 ">
-                          <InputText
+                          <InputTextarea
                             id="descripcion"
                             {...input}
                             placeholder={t("evento.descripcion")}
@@ -1364,7 +1386,6 @@ export default function EventoShowAll() {
           <Form
             onSubmit={onSubmitBuscar}
             initialValues={eventoVacio}
-            validate={validateBuscar}
             render={({ handleSubmit }) => (
               <form
                 className=" text-xl p-fluid formGestion"
@@ -1398,7 +1419,7 @@ export default function EventoShowAll() {
                     <div className="field ">
                       <span className="p-float-label">
                         <div className="p-field px-5 text-900 ">
-                          <InputText
+                          <InputTextarea
                             id="descripcion"
                             {...input}
                             placeholder={t("evento.descripcion")}
@@ -1597,6 +1618,27 @@ export default function EventoShowAll() {
                     </div>
                   )}
                 />
+                <Field
+                  name="borradoLogico"
+                  render={({ input, meta }) => (
+                    <div className="field ">
+                      <span className="p-float-label">
+                        <div className="p-field px-5 text-900 ">
+                          <Dropdown
+                            value={borradoLogico}
+                            id="borradoLogico"
+                            placeholder={t("evento.borradoLogico")}
+                            showClear
+                            name="borradoLogico"
+                            options={borradoLogicoOptions}
+                            onChange={(e) => setBorradoLogico(e.value)}
+                          />
+                        </div>
+                      </span>
+                      {getFormErrorMessage(meta)}
+                    </div>
+                  )}
+                />
 
                 <div className="col">
                   <Button
@@ -1665,7 +1707,7 @@ export default function EventoShowAll() {
                       </div>
                       <span className="p-float-label">
                         <div className="p-field px-5 text-900 ">
-                          <InputText
+                          <InputTextarea
                             id="descripcion"
                             {...input}
                             placeholder={t("evento.descripcion")}
@@ -2005,7 +2047,7 @@ export default function EventoShowAll() {
               </div>
               <span className="p-float-label">
                 <div className="p-field px-5 text-900 ">
-                  <InputText
+                  <InputTextarea
                     className="tamanhoInput"
                     value={eventoActual.descripcion}
                   />
@@ -2242,6 +2284,28 @@ export default function EventoShowAll() {
             style={{ fontSize: "5rem", color: "var(--green-500)" }}
           ></i>
           <h4>{t("mensajes.eliminacionElemento")}</h4>
+        </div>
+      </Dialog>
+
+      <Dialog
+        visible={visibleDialogoReactivarEvento}
+        style={{ width: "450px" }}
+        header={t("mensajes.tituloModalReactivar")}
+        modal
+        footer={pieDialogoReactivar}
+        onHide={ocultarDialogoReactivarEvento}
+      >
+        <div className="flex align-items-center justify-content-center">
+          <i
+            className="pi pi-exclamation-triangle mr-3"
+            style={{ fontSize: "2rem" }}
+          />
+          {eventoActual && (
+            <span>
+              {t("mensajes.preguntaModalReactivar")}{" "}
+              <b>{eventoActual.nombre}</b>?
+            </span>
+          )}
         </div>
       </Dialog>
 

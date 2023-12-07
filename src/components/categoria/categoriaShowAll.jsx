@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { DataTable } from "primereact/datatable";
+import { Dropdown } from "primereact/dropdown";
 import { Column } from "primereact/column";
 import { Button } from "primereact/button";
 import { FilterMatchMode, FilterOperator } from "primereact/api";
@@ -19,6 +20,7 @@ export default function CategoriaShowAll() {
     id: "",
     nombre: "",
     descripcion: "",
+    borradoLogico: "",
   };
   const [categorias, setCategorias] = useState([]);
   const [t, i18n] = useTranslation("global");
@@ -38,6 +40,15 @@ export default function CategoriaShowAll() {
   const [visibleDialogoVerEnDetalle, setVisibleDialogoVerEnDetalle] =
     useState(false);
   const [visibleDialogoBorrado, setVisibleDialogoBorrado] = useState(false);
+  const [borradoLogico, setBorradoLogico] = useState([""]);
+  const borradoLogicoOptions = [
+    { label: <a>{t("usuario.activo")}</a>, value: "0" },
+    { label: <a>{t("usuario.inactivo")}</a>, value: "1" },
+  ];
+  const [
+    visibleDialogoReactivarCategoria,
+    setVisibleDialogoReactivarCategoria,
+  ] = useState(false);
 
   useEffect(() => {
     if (JSON.parse(localStorage.getItem("user")).rol === "ROLE_ADMINISTRADOR") {
@@ -143,6 +154,32 @@ export default function CategoriaShowAll() {
     );
   };
 
+  const formatoEstado = (usuario) => {
+    const idioma = localStorage.getItem("idioma");
+    switch (usuario.borradoLogico) {
+      case "0":
+        if (idioma == "es") {
+          return "Activo";
+        } else if (idioma == "en") {
+          return "Activo";
+        } else if (idioma == "ga") {
+          return "Active";
+        } else {
+          return "Activo";
+        }
+      case "1":
+        if (idioma == "es") {
+          return "Inactivo";
+        } else if (idioma == "en") {
+          return "Inactivo";
+        } else if (idioma == "ga") {
+          return "Inactive";
+        } else {
+          return "Inactivo";
+        }
+    }
+  };
+
   const validateCrear = (data) => {
     let errors = {};
     var patronNombre = /^[A-Za-z0-9_áéíóúñÁÉÍÓÚÑ ]+$/;
@@ -191,40 +228,6 @@ export default function CategoriaShowAll() {
     }
 
     return errors;
-  };
-
-  const validateBuscar = (data) => {
-    /*let errors = {};
-    const isAlphanumeric = (str) =>
-      /^[a-zA-ZÀ-ÿ0-9@\u00f1\u00d1\ ]*$/.test(str);
-
-    if (data.nombre != undefined) {
-      if (!isAlphanumeric(data.nombre)) {
-        errors.nombre = (
-          <p>{t("categoria.validaciones.nombreInvalidoAlfanumerico")}</p>
-        );
-      } else if (data.nombre.length > 15) {
-        errors.nombre = (
-          <p>{t("categoria.validaciones.nombreCategoriaInvalidoTamañoMax")}</p>
-        );
-      }
-    }
-
-    if (data.descripcion != undefined) {
-      if (!isAlphanumeric(data.descripcion)) {
-        errors.descripcion = (
-          <p>{t("categoria.validaciones.nombreInvalidoAlfanumerico")}</p>
-        );
-      } else if (data.descripcion.length > 255) {
-        errors.descripcion = (
-          <p>
-            {t("categoria.validaciones.descripcionCategoriaInvalidoTamañoMax")}
-          </p>
-        );
-      }
-    }
-
-    return errors;*/
   };
 
   const validateEditar = (data) => {
@@ -282,12 +285,19 @@ export default function CategoriaShowAll() {
   }
 
   function buscarCategoria() {
+    setBorradoLogico([""]);
     setVisibleDialogoBuscar(true);
   }
 
   function editarCategoria(categoria) {
     setCategoriaActual(categoria);
     setVisibleDialogoEditar(true);
+  }
+
+  function confirmarReactivarCategoria(categoria) {
+    categoria.borradoLogico = "0";
+    setCategoriaActual(categoria);
+    setVisibleDialogoReactivarCategoria(true);
   }
 
   function subirImagen(categoria) {
@@ -335,6 +345,10 @@ export default function CategoriaShowAll() {
     setVisibleDialogoBorrado(false);
   }
 
+  function ocultarDialogoReactivarCategoria() {
+    setVisibleDialogoReactivarCategoria(false);
+  }
+
   const onSubmitCrear = (data, form) => {
     categoriaService.crear(data).then(
       () => {
@@ -357,6 +371,10 @@ export default function CategoriaShowAll() {
   };
 
   const onSubmitBuscar = (data, form) => {
+    if (borradoLogico != "") {
+      data[`borradoLogico`] = borradoLogico;
+    }
+
     categoriaService.buscarTodosParametros(data).then(
       (res) => {
         if (res.data && Array.isArray(res.data)) {
@@ -401,6 +419,28 @@ export default function CategoriaShowAll() {
     );
   };
 
+  function onSubmitReactivar() {
+    categoriaActual.borradoLogico = "0";
+    categoriaService
+      .modificar(categoriaActual.id.toString(), categoriaActual)
+      .then(
+        () => {
+          reloadPage();
+        },
+        (error) => {
+          const resMessage =
+            (error.response &&
+              error.response.usuarioActual &&
+              error.response.usuarioActual.codigo) ||
+            error.message ||
+            error.toString();
+          setResMessage(resMessage);
+          setDialogoError(true);
+        }
+      );
+    ocultarDialogoReactivarCategoria();
+  }
+
   function onSubmitSubirImagen(event) {
     event.preventDefault();
     const url = "http://localhost:8080/api/categoria/uploadImagenCategoria";
@@ -443,6 +483,7 @@ export default function CategoriaShowAll() {
         );
         setCategorias(categoriasActualizados);
         setShowMessageEliminar(true);
+        reloadPage();
       },
       (error) => {
         const resMessage =
@@ -494,6 +535,23 @@ export default function CategoriaShowAll() {
         icon="pi pi-check"
         className="p-button-text"
         onClick={onSubmitEliminarCategoria}
+      />
+    </div>
+  );
+
+  const pieDialogoReactivar = (
+    <div style={{ display: "flex", justifyContent: "center" }}>
+      <Button
+        label={t("mensajes.no")}
+        icon="pi pi-times"
+        className="p-button-text"
+        onClick={ocultarDialogoReactivarCategoria}
+      />
+      <Button
+        label={t("mensajes.si")}
+        icon="pi pi-check"
+        className="p-button-text"
+        onClick={onSubmitReactivar}
       />
     </div>
   );
@@ -587,10 +645,18 @@ export default function CategoriaShowAll() {
         />
         <Button
           icon="pi pi-users"
-          className="p-button-rounded p-button-wrap"
+          className="p-button-rounded p-button-wrap mr-2"
           tooltip={t("botones.gestionEventos")}
           onClick={() => eventosCategoria(rowData)}
         />
+        {rowData.borradoLogico === "1" && (
+          <Button
+            icon="pi pi-heart mr-2"
+            className="p-button-rounded p-button-wrap"
+            tooltip={t("botones.reactivar")}
+            onClick={() => confirmarReactivarCategoria(rowData)}
+          />
+        )}
       </React.Fragment>
     );
   }
@@ -598,10 +664,11 @@ export default function CategoriaShowAll() {
   return (
     <div className="card">
       <div>
+        <h2 className="tituloTablas">{t("main.gestionCategorias")}</h2>
         <DataTable
           value={categorias}
           paginator
-          rows={2}
+          rows={5}
           header={header}
           filters={filters}
           onFilter={(e) => setFilters(e.filters)}
@@ -621,6 +688,11 @@ export default function CategoriaShowAll() {
           <Column
             field="descripcion"
             header={t("columnas.descripcion")}
+            sortable
+          ></Column>
+          <Column
+            field={formatoEstado}
+            header={t("columnas.estado")}
             sortable
           ></Column>
           <Column header={t("columnas.acciones")} body={accionesCategoria} />
@@ -714,7 +786,6 @@ export default function CategoriaShowAll() {
           <Form
             onSubmit={onSubmitBuscar}
             initialValues={categoriaVacio}
-            validate={validateBuscar}
             render={({ handleSubmit }) => (
               <form
                 className=" text-xl p-fluid formGestion"
@@ -756,6 +827,28 @@ export default function CategoriaShowAll() {
                               { "p-invalid": isFormFieldValid(meta) },
                               { "p-error": isFormFieldValid(meta) }
                             )}
+                          />
+                        </div>
+                      </span>
+                      {getFormErrorMessage(meta)}
+                    </div>
+                  )}
+                />
+
+                <Field
+                  name="borradoLogico"
+                  render={({ input, meta }) => (
+                    <div className="field ">
+                      <span className="p-float-label">
+                        <div className="p-field px-5 text-900 ">
+                          <Dropdown
+                            value={borradoLogico}
+                            id="borradoLogico"
+                            placeholder={t("categoria.borradoLogico")}
+                            showClear
+                            name="borradoLogico"
+                            options={borradoLogicoOptions}
+                            onChange={(e) => setBorradoLogico(e.value)}
                           />
                         </div>
                       </span>
@@ -937,6 +1030,28 @@ export default function CategoriaShowAll() {
           {categoriaActual && (
             <span>
               {t("mensajes.preguntaModalBorrado")}{" "}
+              <b>{categoriaActual.nombre}</b>?
+            </span>
+          )}
+        </div>
+      </Dialog>
+
+      <Dialog
+        visible={visibleDialogoReactivarCategoria}
+        style={{ width: "450px" }}
+        header={t("mensajes.tituloModalReactivar")}
+        modal
+        footer={pieDialogoReactivar}
+        onHide={ocultarDialogoReactivarCategoria}
+      >
+        <div className="flex align-items-center justify-content-center">
+          <i
+            className="pi pi-exclamation-triangle mr-3"
+            style={{ fontSize: "2rem" }}
+          />
+          {categoriaActual && (
+            <span>
+              {t("mensajes.preguntaModalReactivar")}{" "}
               <b>{categoriaActual.nombre}</b>?
             </span>
           )}
