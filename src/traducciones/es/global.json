@@ -8,10 +8,17 @@
     "categorias": "Categorias",
     "misEventos": "Mis Eventos",
     "red": "Red",
-    "miRed": "Mi red",
+    "miRed": "Noticias",
     "misAmistades": "Seguidos",
     "categoriasGerente": "Eventos del gerente",
     "gestionEventos": "Eventos",
+    "gestionEventosTabla": "Gestión de eventos",
+    "gestionSuscripciones": "Gestión de suscripciones",
+    "gestionSolicitudes": "Gestión de solicitudes",
+    "gestionGerentesSeguidos": "Gerentes seguidos",
+    "gerentesSeguir": "Gerentes a seguir",
+    "comentariosValoraciones": "Comentarios y valoraciones",
+    "gestionNoticias": "Mis noticias",
     "equipos": "Equipos",
     "competiciones": "Competiciones",
     "micuenta": "Mi cuenta",
@@ -78,6 +85,7 @@
     "nombre": "Nombre",
     "descripcion": "Descripción",
     "verEvento": "Ver eventos de la categoría",
+    "borradoLogico": "Activo/Inactivo",
 
     "validaciones": {
       "nombreVacio": "El nombre de usuario no puede ser vacío",
@@ -113,6 +121,9 @@
     "informacion": "Información",
     "inscribirse": "Inscribirse",
     "noExistenEventos": "No existen eventos",
+    "noExistenGerentes": "No existen gerentes a seguir",
+    "noExistenComentarios": "No existen comentarios",
+    "borradoLogico": "Activo/Inactivo",
 
     "carta": {
       "suscripcionesTitulo": "Suscripciones",
@@ -125,7 +136,7 @@
     },
 
     "validaciones": {
-      "nombreVacio": "El nombre de usuario no puede ser vacío",
+      "nombreVacio": "El nombre del evento no puede ser vacío",
       "nombreInvalidoAlfanumerico": "El nombre del evento solo puede contener caracteres alfanuméricos.",
       "nombreEventoInvalidoTamañoMax": "El nombre del evento no puede exceder los 30 caracteres.",
       "nombreEventoInvalidoTamañoMin": "El nombre del evento debe tener un mínimo de 3 caracteres.",
@@ -157,18 +168,37 @@
 
   "solicitud": {
     "nombreEvento": "Usuario",
-    "nombreEvento": "Nombre del evento",
+    "nombreUsuario": "Nombre del evento",
     "fechaSolicitud": "Fecha de la solicitud"
   },
 
   "comentarios": {
-    "titulo": "Desliza para ver más comentarios"
+    "titulo": "Desliza para ver más comentarios",
+    "comentarioTexto": "Puntua y comentar el evento",
+
+    "validaciones": {
+      "comentarioVacio": "El comentario del evento no puede ser vacío",
+      "comentarioInvalidoAlfanumerico": "El comentario del evento solo puede contener caracteres alfanuméricos.",
+      "comentarioEventoInvalidoTamañoMax": "El comentario del evento no puede exceder los 255 caracteres.",
+      "comentarioEventoInvalidoTamañoMin": "El comentario del evento debe tener un mínimo de 3 caracteres."
+    }
   },
 
   "noticia": {
     "titulo": "Título de la noticia",
     "descripcion": "Descripción de la noticia",
-    "fechaNoticia": "Fecha de la noticia"
+    "fechaNoticia": "Fecha de la noticia",
+
+    "validaciones": {
+      "tituloVacio": "El título de la noticia no puede ser vacío",
+      "tituloInvalidoAlfanumerico": "El título de la noticia solo puede contener caracteres alfanuméricos.",
+      "tituloNoticiaInvalidoTamañoMax": "El título de la noticia no puede exceder los 30 caracteres.",
+      "tituloNoticiaInvalidoTamañoMin": "El título de la noticia debe tener un mínimo de 3 caracteres.",
+      "descripcionVacio": "La descripción de la noticia no puede ser vacío",
+      "descripcionNoticiaInvalidoAlfanumerico": "La descripción de la noticia solo puede contener caracteres alfanuméricos.",
+      "descripcionNoticiaInvalidoTamañoMax": "La descripción de la noticia no puede exceder los 255 caracteres.",
+      "descripcionNoticiaInvalidoTamañoMin": "El comentario del evento debe tener un mínimo de 3 caracteres."
+    }
   },
 
   "botones": {
@@ -184,6 +214,8 @@
     "cambiarPassword": "Cambiar contraseña",
     "editarDatos": "Clica para editar tus datos",
     "gestionEventos": "Gestión de eventos",
+    "solicitudesUsuario": "Solicitudes usuario",
+    "suscripcionesUsuario": "Suscripciones usuario",
     "nuevo": "Nuevo",
     "crear": "Crear",
     "buscar": "Buscar",
@@ -223,6 +255,7 @@
     "eliminacionElemento": "La eliminación se ha realizado correctamente",
     "aceptarSolicitud": "Aceptar solicitud",
     "seguir": "Has comenzado a seguir al Gerente",
+    "inscribir": "Solicitud realizada con éxito",
     "si": "Si",
     "no": "No",
     "buscar": "Buscar",
@@ -241,12 +274,14 @@
     "tituloModalBorrado": "Vas a eliminar un elemento del sistema",
     "tituloModalAceptado": "Vas a aceptar la solicitud del usuario",
     "tituloModalSeguido": "Vas a seguir a un gerente",
+    "tituloModalInscrito": "Vas a inscribirte en el evento: ",
     "preguntaModalBorrado": "¿Seguro que quiere eliminar a ",
     "preguntaModalBorradoNoticia": "¿Seguro que quiere eliminar la noticia?",
     "preguntaModalBorradoSuscripcion": "¿Seguro que quiere eliminar la suscripcion?",
     "preguntaModalBorradoSolicitud": "¿Seguro que quiere eliminar la solicitud?",
     "preguntaModalBorradoAmistad": "¿Seguro que quiere eliminar la amistad?",
     "preguntaModalSeguido": "¿Seguro que quiere seguir a ",
+    "preguntaModalInscrito": "¿Seguro que quiere inscribirte a ",
     "preguntaModalReactivar": "¿Quieres reactivar a",
     "preguntaModalAceptadoSolicitud": "¿Quieres aceptar la solicitud a ",
     "tituloModalEditarPassword": "Cambiar la contraseña del usuario",
@@ -299,19 +334,17 @@
   },
 
   "ERROR_INESPERADO": "Error inesperado",
-
   "LOGIN_VACIO": "El login de usuario no puede ser vacío",
   "PASSWORD_VACIO": "La password de usuario no puede ser vacía",
   "LOGIN_ALFANUMERICO": "El login solo puede contener caracteres alfanuméricos",
-  "LOGIN_TAMANHO_MAXIMO": "El login no puede tener menos de 3 caracteres",
+  "LOGIN_TAMANHO_MINIMO": "El login no puede tener menos de 3 caracteres",
   "LOGIN_TAMANHO_MAXIMO": "El login no puede tener más de 15 caracteres",
-  "PASSWORD_ALFANUMERICO": "La contraseña solo puede contener caracteres alfanuméricos y especiales",
-  "PASSWORD_TAMANHO_MAXIMO": "La contraseña no puede tener menos de 3 caracteres",
+  "PASSWORD_FORMATO": "La contraseña solo puede contener caracteres alfanuméricos y especiales",
+  "PASSWORD_TAMANHO_MINIMO": "La contraseña no puede tener menos de 3 caracteres",
   "PASSWORD_TAMANHO_MAXIMO": "La contraseña no puede tener más de 16 caracteres",
-
   "LOGIN_NO_EXISTE": "No existe un usuario con ese login en el sistema",
   "LOGIN_PASSWORD_NO_COINCIDEN": "El login y la password no coinciden",
-
+  "USUARIO_BORRADO_LOGICO": "El usuario está eliminado en el sistema, por favor, si es un error póngase en contacto con el administrador en admin@admin.com",
   "NOMBRE_VACIO": "El nombre de usuario no puede ser vacío",
   "EMAIL_VACIO": "El email de usuario no puede ser vacío",
   "ROL_VACIO": "El rol de usuario no puede ser vacío",
@@ -333,33 +366,30 @@
   "PAIS_ALFABETICO": "El país solo puede contener caracteres alfabéticos",
   "PAIS_TAMANHO_MINIMO": "El país no puede tener menos de 3 caracteres",
   "PAIS_TAMANHO_MAXIMO": "El país no puede tener más de 15 caracteres",
-
   "LOGIN_YA_EXISTE": "Ya existe un usuario con ese login en el sistema",
   "EMAIL_YA_EXISTE": "Ya existe un usuario con ese email en el sistema",
+  "NO_CREAR_ADMINISTRADOR": "No se puede crear un administrador en el sistema",
   "DNI_YA_EXISTE": "Ya existe un usuario con ese DNI en el sistema",
   "USUARIO_REGISTRO_OK": "Usuario registrado con éxito",
   "RECUPERAR_PASS_OK": "Se ha enviado una nueva contraseña a su email",
-
   "USUARIO_NO_ENCONTRADO": "No se ha encontrado el usuario en el sistema",
   "EMAIL_NO_ENCONTRADO": "No se ha encontrado el email en el sistema",
   "MAIL_NO_ENVIADO": "Se ha producido un error al enviar el email",
   "ENVIO_EMAIL_EXCEPTION": "Ha ocurrido un errror al enviar el email",
-
   "USUARIO_NO_EXISTE": "El usuario no existe en el sistema",
-  "NO_EDIRTAR_ROL_ADMINISTRADOR": "No puedes editar el rol a administrador",
+  "NO_EDIRTAR_ROL": "No se puede editar el rol",
   "NO_ELIMINAR_ADMINISTRADOR": "No puedes eliminar el administrador del sistema",
   "PERMISO_DENEGADO": "Usted no puede realizar esta acción",
   "ARCHIVO_SUBIDO_OK": "Archivo subido al sistema",
   "ARCHIVO_VACIO": "No se puede subir un archivo vacío",
   "NOMBRE_CATEGORIA_VACIO": "El nombre de la categoría no puede ser vacío",
   "NOMBRE_CATEGORIA_ALFANUMERICO": "El nombre de la categoría solo puede contener caracteres alfanuméricos",
-  "NOMBRE_CATEGORIA_TAMANHO_MINIMO": "El  nombre de la categoría no puede tener menos de 3 caracteres",
-  "NOMBRE_CATEGORIA_TAMANHO_MAXIMO": "El  nombre de la categoría no puede superar los 15 caracteres",
+  "NOMBRE_CATEGORIA_TAMANHO_MINIMO": "El nombre de la categoría no puede tener menos de 3 caracteres",
+  "NOMBRE_CATEGORIA_TAMANHO_MAXIMO": "El nombre de la categoría no puede superar los 15 caracteres",
   "DESCRIPCION_CATEGORIA_VACIO": "La descripción de la categoría no puede ser vacío",
   "DESCRIPCION_CATEGORIA_ALFANUMERICO": "La descripción de la categoría solo puede contener caracteres alfanuméricos",
   "DESCRIPCION_CATEGORIA_TAMANHO_MINIMO": "La descripción de la categoría no puede tener menos de 3 caracteres",
-  "DESCRIPCION_CATEGORIA_TAMANHO_MAXIMO": " La descripción no puede superar los 255 caracteres",
-
+  "DESCRIPCION_CATEGORIA_TAMANHO_MAXIMO": "La descripción no puede superar los 255 caracteres",
   "NOMBRE_CATEGORIA_YA_EXISTE": " Ya existe una categoría con este nombre en el sistema",
   "CATEGORIA_NO_EXISTE": "No existe la categoría en el sistema",
   "NOMBRE_EVENTO_VACIO": "El nombre del evento no puede ser vacío",
@@ -369,7 +399,7 @@
   "DESCRIPCION_EVENTO_VACIO": "La descripción del evento no puede ser vacía",
   "DESCRIPCION_EVENTO_ALFANUMERICO": "La descripción del evento solo puede contener caracteres alfanuméricos",
   "DESCRIPCION_EVENTO_TAMANHO_MINIMO": "La descripción del evento no puede tener menos de 3 caracteres",
-  "DESCRIPCION_EVENTO_TAMANHO_MAXIMO": "La descripción no puede superar los 255 caracteres",
+  "DESCRIPCION_EVENTO_TAMANHO_MAXIMO": "La descripción de la noticia no puede superar los 255 caracteres",
   "TIPO_ASISTENCIA_EVENTO_VACIO": "El tipo de asistencia del evento no puede ser vacío",
   "TIPO_ASISTENCIA_EVENTO_INVALIDO": "El tipo de asistencia de un evento ha de ser PUBLICO o PRIVADO",
   "NUM_ASISTENTES_EVENTO_VACIO": "El número de asistentes del evento no puede ser vacío",
@@ -382,8 +412,31 @@
   "DIRECCION_EVENTO_TAMANHO_MINIMO": "La dirección del evento no puede tener menos de 5 caracteres",
   "DIRECCION_EVENTO_TAMANHO_MAXIMO": "La dirección del evento no puede tener más de 50 caracteres",
   "URL_FORMATO": "La URL tiene un formato incorrecto.",
-
   "NOMBRE_EVENTO_YA_EXISTE": " Ya existe un evento con este nombre en el sistema",
   "EVENTO_NO_EXISTE": "No existe este evento en el sistema",
+  "SOLICITUD_ACEPTADA": "Se ha aceptado la solicitud y se ha creado una suscripción al evento",
+  "EXISTE_SUSCRIPCION": "Ya existe una suscripción para este evento",
+  "EVENTO_CERRADO": "No te puedes inscribir en un evento cerrado por el responsable del evento",
+  "PLAZAS_CUBIERTAS": "No te puedes inscribir a un evento con todas las plazas ya cubiertas",
+  "SUSCRIPCION_NO_EXISTE": "No existe la suscripción en el sistema",
+  "COMENTARIO_VACIO": "El comentario del evento no puede ser vacío",
+  "COMENTARIO_ALFANUMERICO": "El comentario del evento solo puede contener caracteres alfanuméricos",
+  "COMENTARIO_TAMANHO_MINIMO": "El comentario del evento no puede tener menos de 3 caracteres",
+  "COMENTARIO_TAMANHO_MAXIMO": "El comentario del evento no puede superar los 255 caracteres",
+  "COMENTARIO_NO_EXISTE": "No existe un comentario del usuario para este evento",
+  "COMENTARIO_YA_EXISTE": "Ya existe un comentario del usuario para este evento",
+  "GERENTE_NO_EXISTE": "No existe el gerente de eventos",
+  "SEGUIDOR_NO_EXISTE": "No existe el seguidor en el sistema",
+  "AMISTAD_YA_EXISTE": "Ya existe la amistad entre el gerente de eventos y el seguidor en el sistema",
+  "AMISTAD_NO_EXISTE": "No existe la amistad entre el gerente de eventos y el seguidor en el sistema",
+  "TITULO_NOTICIA_VACIO": "El título de la noticia no puede ser vacío",
+  "TITULO_NOTICIA_ALFANUMERICO": "El título de la noticia solo puede contener caracteres alfanuméricos",
+  "TITULO_NOTICIA_TAMANHO_MINIMO": "El título de la noticia no puede tener menos de 3 caracteres",
+  "TITULO_NOTICIA_TAMANHO_MAXIMO": "El título de la noticia no puede superar los 30 caracteres",
+  "DESCRIPCION_NOTICIA_VACIO": "La descripción de la noticia no puede ser vacía",
+  "DESCRIPCION_TITULO_ALFANUMERICO": "La descripción de la noticia solo puede contener caracteres alfanuméricos",
+  "DESCRIPCION_TITULO_TAMANHO_MINIMO": "La descripción de la noticia no puede tener menos de 3 caracteres",
+  "DESCRIPCION_TITULO_TAMANHO_MAXIMO": "La descripción de la noticia no puede superar los 255 caracteres",
+  "NOTICIA_NO_EXISTE": "No existe la noticia en el sistema",
   "ID_FORMATO": "El id no es numérico"
 }

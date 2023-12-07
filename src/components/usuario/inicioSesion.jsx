@@ -103,9 +103,15 @@ export default function InicioSesion() {
   const onSubmit = (data, form) => {
     autenticacionService.login(data).then(
       () => {
+        const rol = localStorage.getItem("rol");
         form.restart();
-        navigate("/categoria/categoriaLayout/");
-        window.location.reload();
+        if (rol === "ROLE_ADMINISTRADOR") {
+          navigate("/categoria/categoriaShowAll/");
+          window.location.reload();
+        } else {
+          navigate("/categoria/categoriaLayout/");
+          window.location.reload();
+        }
       },
       (error) => {
         const resMessage =

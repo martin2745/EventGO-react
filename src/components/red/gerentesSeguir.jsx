@@ -256,6 +256,12 @@ export default function GerentesSeguir() {
   const pieDialogoSeguido = (
     <div style={{ display: "flex", justifyContent: "center" }}>
       <Button
+        label={t("mensajes.no")}
+        icon="pi pi-times"
+        className="p-button-text"
+        onClick={ocultarDialogoSeguido}
+      />
+      <Button
         label={t("mensajes.si")}
         icon="pi pi-check"
         className="p-button-text"
@@ -277,14 +283,23 @@ export default function GerentesSeguir() {
 
   return (
     <div className="card">
-      <DataView
-        value={gerentes}
-        itemTemplate={itemTemplate}
-        layout={layout}
-        header={header()}
-        paginator
-        rows={6}
-      />
+      {gerentes.length > 0 ? (
+        <div>
+          <h2 className="tituloTablas">{t("main.gerentesSeguir")}</h2>
+          <DataView
+            value={gerentes}
+            itemTemplate={itemTemplate}
+            layout={layout}
+            header={header()}
+            paginator
+            rows={6}
+          />
+        </div>
+      ) : (
+        <div className="col text-900 py-3">
+          <h1>{t("evento.noExistenGerentes")}</h1>
+        </div>
+      )}
       <Dialog
         visible={visibleDialogoBuscar}
         style={{ width: "450px" }}
@@ -356,7 +371,6 @@ export default function GerentesSeguir() {
           )}
         </div>
       </Dialog>
-
       <Dialog
         visible={showMessageSeguir}
         onHide={() => setShowMessageSeguir(false)}

@@ -24,75 +24,63 @@ export default function ComentariosEvento() {
 
   //Carga de comentarios
   useEffect(() => {
-    if (JSON.parse(localStorage.getItem("user")).rol === "ROLE_GERENTE") {
-      comentarioService.buscarTodos(idEvento).then((res) => {
-        setComentarios(res.data);
-        if (res.data[0].evento.imagenEvento != "") {
-          setImagenEvento(res.data[0].evento.imagenEvento);
-        } else {
-          setImagenEvento(avatar);
-        }
-      });
-    } else {
-      autenticacionService.logout();
-      navigate("/");
-      window.location.reload();
-    }
+    comentarioService.buscarTodos(idEvento).then((res) => {
+      setComentarios(res.data);
+      if (res.data[0].evento.imagenEvento != "") {
+        setImagenEvento(res.data[0].evento.imagenEvento);
+      } else {
+        setImagenEvento(avatar);
+      }
+    });
   }, []);
 
   //Gráfico
   useEffect(() => {
-    if (JSON.parse(localStorage.getItem("user")).rol === "ROLE_GERENTE") {
-      comentarioService.numEstrellasEvento(idEvento).then((res) => {
-        let labelsIdoma = ["1 pts", "2 pts", "3 pts", "4 pts", "5 pts"];
+    comentarioService.numEstrellasEvento(idEvento).then((res) => {
+      let labelsIdoma = ["1 pts", "2 pts", "3 pts", "4 pts", "5 pts"];
 
-        const data = {
-          labels: labelsIdoma,
-          datasets: [
-            {
-              label: "Rating",
-              data: [
-                res.data[0],
-                res.data[1],
-                res.data[2],
-                res.data[3],
-                res.data[4],
-              ],
-              backgroundColor: [
-                "rgba(255, 159, 64, 0.2)",
-                "rgba(75, 192, 192, 0.2)",
-                "rgba(54, 162, 235, 0.2)",
-                "rgba(153, 102, 255, 0.2)",
-                "rgba(95, 162, 192, 0.2)",
-              ],
-              borderColor: [
-                "rgb(255, 159, 64)",
-                "rgb(75, 192, 192)",
-                "rgb(54, 162, 235)",
-                "rgb(153, 102, 255)",
-                "rgb(35, 122, 212)",
-              ],
-              borderWidth: 1,
-            },
-          ],
-        };
-
-        const options = {
-          scales: {
-            y: {
-              beginAtZero: true,
-            },
+      const data = {
+        labels: labelsIdoma,
+        datasets: [
+          {
+            label: "Rating",
+            data: [
+              res.data[0],
+              res.data[1],
+              res.data[2],
+              res.data[3],
+              res.data[4],
+            ],
+            backgroundColor: [
+              "rgba(255, 159, 64, 0.2)",
+              "rgba(75, 192, 192, 0.2)",
+              "rgba(54, 162, 235, 0.2)",
+              "rgba(153, 102, 255, 0.2)",
+              "rgba(95, 162, 192, 0.2)",
+            ],
+            borderColor: [
+              "rgb(255, 159, 64)",
+              "rgb(75, 192, 192)",
+              "rgb(54, 162, 235)",
+              "rgb(153, 102, 255)",
+              "rgb(35, 122, 212)",
+            ],
+            borderWidth: 1,
           },
-        };
+        ],
+      };
 
-        setChartData(data);
-        setChartOptions(options);
-      });
-    } else {
-      autenticacionService.logout();
-      navigate("/");
-      window.location.reload();
-    }
+      const options = {
+        scales: {
+          y: {
+            beginAtZero: true,
+          },
+        },
+      };
+
+      setChartData(data);
+      setChartOptions(options);
+    });
   }, []);
 
   const imagenUsuario = (comentario) => {
@@ -111,10 +99,6 @@ export default function ComentariosEvento() {
         )}
       </>
     );
-  };
-
-  const volverGestionEventos = () => {
-    navigate("/evento/misEventosGestor/");
   };
 
   const itemTemplate = (comentario) => {
@@ -144,36 +128,41 @@ export default function ComentariosEvento() {
 
   return (
     <div>
-      <div className="card">
-        <Button
-          icon="pi pi-arrow-left"
-          className="p-button-rounded mr-2"
-          tooltip={t("botones.volverGestionEventos")}
-          onClick={volverGestionEventos}
-        />
-        <div className="card flex justify-content-center">
-          <img
-            className="mx-auto border-round"
-            style={{ width: "250px", height: "200px" }}
-            src={imagenEvento}
-          ></img>
-          <Divider layout="vertical" />
-          <Chart
-            type="bar"
-            data={chartData}
-            options={chartOptions}
-            style={{ width: "500px", height: "200px" }}
-          />
+      {comentarios.length > 0 ? (
+        <div className="card">
+          <h2 className="tituloTablas">{t("main.comentariosValoraciones")}</h2>
+          <div className="card flex justify-content-center">
+            <img
+              className="mx-auto border-round"
+              style={{ width: "250px", height: "200px" }}
+              src={imagenEvento}
+            ></img>
+            <Divider layout="vertical" />
+            <Chart
+              type="bar"
+              data={chartData}
+              options={chartOptions}
+              style={{ width: "500px", height: "200px" }}
+            />
+          </div>
         </div>
-      </div>
-      <DataScroller
-        value={comentarios}
-        itemTemplate={itemTemplate}
-        rows={comentarios.length}
-        inline
-        scrollHeight="600px"
-        header={t("comentarios.titulo")}
-      />
+      ) : (
+        <div className="col text-900 py-3">
+          <h1>{t("evento.noExistenComentarios")}</h1>
+        </div>
+      )}
+      {comentarios.length > 0 ? (
+        <DataScroller
+          value={comentarios}
+          itemTemplate={itemTemplate}
+          rows={comentarios.length}
+          inline
+          scrollHeight="600px"
+          header={t("comentarios.titulo")}
+        />
+      ) : (
+        <div />
+      )}
     </div>
   );
 }
