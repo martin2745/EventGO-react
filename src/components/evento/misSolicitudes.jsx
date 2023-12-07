@@ -173,8 +173,6 @@ export default function MisSolicitudes() {
     return fechaFormateada;
   };
 
-  const validateBuscar = (data) => {};
-
   const buscarSolicitud = () => {
     setFechaSolicitud("");
     setEvento("");
@@ -395,10 +393,11 @@ export default function MisSolicitudes() {
   return (
     <div className="card">
       <div>
+        <h2 className="tituloTablas">{t("main.gestionSolicitudes")}</h2>
         <DataTable
           value={solicitudes}
           paginator
-          rows={2}
+          rows={5}
           header={header}
           filters={filters}
           onFilter={(e) => setFilters(e.filters)}
@@ -455,7 +454,6 @@ export default function MisSolicitudes() {
           <Form
             onSubmit={onSubmitBuscar}
             initialValues={solicitudVacio}
-            validate={validateBuscar}
             render={({ handleSubmit }) => (
               <form
                 className=" text-xl p-fluid formGestion"

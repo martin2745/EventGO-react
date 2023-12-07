@@ -49,11 +49,14 @@ import MisSuscripciones from "./components/evento/misSuscripciones";
 import MisSolicitudes from "./components/evento/misSolicitudes";
 import SuscripcionesEvento from "./components/evento/suscripcionesEvento";
 import SolicitudesEvento from "./components/evento/solicitudesEvento";
+import SolicitudesUsuario from "./components/evento/solicitudesUsuario";
+import SuscripcionesUsuario from "./components/evento/suscripcionesUsuario";
 import CategoriaLayout from "./components/categoria/categoriaLayout";
 import ComentariosEvento from "./components/comentario/comentariosEvento";
 import GerentesSeguir from "./components/red/gerentesSeguir";
 import GerentesSeguidos from "./components/red/gerentesSeguidos";
 import NoticiaShowAll from "./components/red/noticiaShowAll";
+import EventGO from "./components/eventGO";
 
 function Main() {
   //constantes
@@ -249,6 +252,10 @@ function Main() {
     window.location.reload();
   }
 
+  function landing() {
+    navigate("/eventGO");
+  }
+
   return (
     <div>
       <nav className="card">
@@ -260,7 +267,7 @@ function Main() {
               start={
                 <div className="grid">
                   <div className="col text-900 py-3">
-                    <h1> EventGO</h1>
+                    <h1 onClick={landing}> EventGO</h1>
                   </div>
                 </div>
               }
@@ -402,6 +409,10 @@ function Main() {
                 element={<InicioSesion mensaje="Inicio de sesión" />}
               />
               <Route
+                path="/eventGO"
+                element={<EventGO mensaje="Landing de la web" />}
+              />
+              <Route
                 path="/registro"
                 element={<Registro mensaje="Registro" />}
               />
@@ -465,6 +476,12 @@ function Main() {
                 <Route path="comentarios">
                   <Route path=":id" element={<ComentariosEvento />} />
                 </Route>
+                <Route path="suscripcionesUsuario">
+                  <Route path=":id" element={<SuscripcionesUsuario />} />
+                </Route>
+                <Route path="solicitudesUsuario">
+                  <Route path=":id" element={<SolicitudesUsuario />} />
+                </Route>
               </Route>
               {/* red */}
               <Route path="red" element={<GerentesSeguir />}></Route>
@@ -491,6 +508,10 @@ function Main() {
               <Route
                 path="/"
                 element={<InicioSesion mensaje="Inicio de sesión" />}
+              />
+              <Route
+                path="/eventGO"
+                element={<EventGO mensaje="Landing de la web" />}
               />
               <Route
                 path="/registro"

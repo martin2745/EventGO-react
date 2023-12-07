@@ -377,59 +377,6 @@ export default function UsuarioShowAll() {
     return errors;
   };
 
-  const validateBuscar = (data) => {
-    /*let errors = {};
-
-    // Funciones de validación compartidas
-    const isAlphabetic = (str) => /^[a-zA-ZÀ-ÿ\u00f1\u00d1\ ]*$/.test(str);
-    const isAlphanumeric = (str) =>
-      /^[a-zA-ZÀ-ÿ0-9@\u00f1\u00d1\ ]*$/.test(str);
-
-    if (data.login != undefined) {
-      if (!isAlphabetic(data.login)) {
-        errors.login = (
-          <p>{t("usuario.validaciones.nombreInvalidoAlfabetico")}</p>
-        );
-      } else if (data.login.length > 15) {
-        errors.login = (
-          <p>{t("usuario.validaciones.loginInvalidoTamañoMax")}</p>
-        );
-      }
-    }
-
-    if (data.nombre != undefined) {
-      if (!isAlphabetic(data.nombre)) {
-        errors.nombre = (
-          <p>{t("usuario.validaciones.nombreInvalidoAlfabetico")}</p>
-        );
-      } else if (data.nombre.length > 40) {
-        errors.nombre = (
-          <p>{t("usuario.validaciones.nombreInvalidoTamañoMax")}</p>
-        );
-      }
-    }
-
-    if (data.email != undefined) {
-      if (!isAlphanumeric(data.email)) {
-        errors.email = <p>{t("usuario.validaciones.emailInvalido")}</p>;
-      } else if (data.email.length > 40) {
-        errors.email = (
-          <p>{t("usuario.validaciones.emailInvalidoTamañoMax")}</p>
-        );
-      }
-    }
-
-    if (data.dni != undefined) {
-      if (!/^[a-zA-Z0-9]*$/.test(data.dni)) {
-        errors.dni = <p>{t("usuario.validaciones.dniInvalido")}</p>;
-      } else if (data.dni.length > 9) {
-        errors.dni = <p>{t("usuario.validaciones.dniInvalidoTamañoMax")}</p>;
-      }
-    }
-
-    return errors;*/
-  };
-
   const validateEditar = (data) => {
     let errors = {};
     var patron =
@@ -589,6 +536,14 @@ export default function UsuarioShowAll() {
     usuario.borradoLogico = "0";
     setUsuarioActual(usuario);
     setVisibleDialogoReactivarUsuario(true);
+  }
+
+  function solicitudesUsuario(usuario) {
+    navigate("/evento/solicitudesUsuario/" + usuario.id);
+  }
+
+  function suscripcionesUsuario(usuario) {
+    navigate("/evento/suscripcionesUsuario/" + usuario.id);
   }
 
   function confirmarVerEnDetalleUsuario(usuario) {
@@ -1028,12 +983,24 @@ export default function UsuarioShowAll() {
         />
         {rowData.borradoLogico === "1" && (
           <Button
-            icon="pi pi-check"
+            icon="pi pi-heart mr-2"
             className="p-button-rounded p-button-wrap"
             tooltip={t("botones.reactivar")}
             onClick={() => confirmarReactivarUsuario(rowData)}
           />
         )}
+        <Button
+          icon="pi pi-envelope"
+          className="p-button-rounded p-button-wrap mr-2"
+          tooltip={t("botones.solicitudesUsuario")}
+          onClick={() => solicitudesUsuario(rowData)}
+        />
+        <Button
+          icon="pi pi-check"
+          className="p-button-rounded p-button-wrap mr-2"
+          tooltip={t("botones.suscripcionesUsuario")}
+          onClick={() => suscripcionesUsuario(rowData)}
+        />
       </React.Fragment>
     );
   }
@@ -1041,10 +1008,11 @@ export default function UsuarioShowAll() {
   return (
     <div className="card">
       <div>
+        <h2 className="tituloTablas">{t("main.gestionUsuarios")}</h2>
         <DataTable
           value={usuarios}
           paginator
-          rows={2}
+          rows={5}
           header={header}
           filters={filters}
           onFilter={(e) => setFilters(e.filters)}
@@ -1314,7 +1282,6 @@ export default function UsuarioShowAll() {
           <Form
             onSubmit={onSubmitBuscar}
             initialValues={usuarioVacio}
-            validate={validateBuscar}
             render={({ handleSubmit }) => (
               <form
                 className=" text-xl p-fluid formGestion"

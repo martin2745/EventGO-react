@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { jsPDF } from "jspdf";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { Button } from "primereact/button";
@@ -7,27 +6,16 @@ import { Dropdown } from "primereact/dropdown";
 import { Calendar } from "primereact/calendar";
 import { FilterMatchMode, FilterOperator } from "primereact/api";
 import { InputText } from "primereact/inputtext";
-import { InputTextarea } from "primereact/inputtextarea";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { Dialog } from "primereact/dialog";
 import { Form, Field } from "react-final-form";
 import { classNames } from "primereact/utils";
 import eventoService from "../../services/eventoService";
-import comentarioService from "../../services/comentarioService";
 import suscripcionService from "../../services/suscripcionService";
 import avatar from "./../recursos/imagenes/avatar.png";
-import logo from "./../recursos/imagenes/logo.png";
-import { Rating } from "primereact/rating";
 
-export default function MisSuscripciones() {
-  const comentarioVacio = {
-    id: "",
-    comentario: "",
-    puntuacion: "",
-    evento: "",
-    usuario: "",
-  };
+export default function SuscripcionesUsuario() {
   const suscripcionVacio = {
     id: "",
     fechaSuscripcion: "",
@@ -47,10 +35,9 @@ export default function MisSuscripciones() {
   const [eventoOptions, setEventoOptions] = useState([" "]);
   const [evento, setEvento] = useState([" "]);
   const [visibleDialogoBorrado, setVisibleDialogoBorrado] = useState(false);
-  const [visibleDialogoComentar, setVisibleDialogoComentar] = useState(false);
-  const idUsuario = localStorage.getItem("idUsuario");
-  const [comentario, setComentario] = useState(null);
-  const [puntuacion, setPuntuacion] = useState(null);
+  const pathname = window.location.pathname;
+  const parts = pathname.split("/");
+  const idUsuario = parseInt(parts[parts.length - 1], 10);
 
   //Carga inicial de datos
   useEffect(() => {
@@ -185,43 +172,10 @@ export default function MisSuscripciones() {
     return fechaFormateada;
   };
 
-  const validateComentar = (data) => {
-    let errors = {};
-
-    var patronComentario = /^[A-Za-z0-9_áéíóúñÁÉÍÓÚÑ,. ]+$/;
-    //comentario
-    if (!comentario) {
-      errors.comentario = (
-        <p>{t("comentarios.validaciones.comentarioVacio")}</p>
-      );
-    } else if (!patronComentario.test(comentario)) {
-      errors.comentario = (
-        <p>{t("comentarios.validaciones.comentarioInvalidoAlfanumerico")}</p>
-      );
-    } else if (comentario.length > 30) {
-      errors.comentario = (
-        <p>{t("comentarios.validaciones.comentarioEventoInvalidoTamañoMax")}</p>
-      );
-    } else if (comentario.length < 3) {
-      errors.comentario = (
-        <p>{t("comentarios.validaciones.comentarioEventoInvalidoTamañoMin")}</p>
-      );
-    }
-
-    return errors;
-  };
-
   const buscarSuscripcion = () => {
     setFechaSuscripcion("");
     setEvento("");
     setVisibleDialogoBuscar(true);
-  };
-
-  const comentarSuscripcion = (suscripcion) => {
-    setPuntuacion(1);
-    setComentario("");
-    setSuscripcionActual(suscripcion);
-    setVisibleDialogoComentar(true);
   };
 
   const confirmarEliminarSuscripcion = (suscripcion) => {
@@ -233,17 +187,13 @@ export default function MisSuscripciones() {
     setVisibleDialogoBuscar(false);
   };
 
-  const ocultarDialogoComentar = () => {
-    setVisibleDialogoComentar(false);
-  };
-
   const ocultarDialogoBorrado = () => {
     setSuscripcionActual(suscripcionVacio);
     setVisibleDialogoBorrado(false);
   };
 
-  const volverMisEventos = () => {
-    navigate("/evento/evetosLayout");
+  const gestionUsuarios = () => {
+    navigate("/usuario/usuarioShowAll");
   };
 
   //Recarga de página
@@ -280,7 +230,7 @@ export default function MisSuscripciones() {
               icon="pi pi-arrow-left"
               className="p-button-rounded mr-2"
               tooltip={t("botones.volverMisEventos")}
-              onClick={volverMisEventos}
+              onClick={gestionUsuarios}
             />
             <Button
               icon="pi pi-search"
@@ -352,37 +302,6 @@ export default function MisSuscripciones() {
     );
   };
 
-  const onSubmitComentar = (data, form) => {
-    const datos = {
-      comentario: comentario,
-      puntuacion: puntuacion,
-      usuario: {
-        id: suscripcionActual.usuario.id,
-      },
-      evento: {
-        id: suscripcionActual.evento.id,
-      },
-    };
-
-    comentarioService.crear(datos).then(
-      (res) => {
-        setShowMessageCrear(true);
-        form.restart();
-        ocultarDialogoComentar();
-      },
-      (error) => {
-        const resMessage =
-          (error.response &&
-            error.response.data &&
-            error.response.data.codigo) ||
-          error.message ||
-          error.toString();
-        setResMessage(resMessage);
-        setDialogoError(true);
-      }
-    );
-  };
-
   const onSubmitEliminarSuscripcion = () => {
     suscripcionService.eliminar(suscripcionActual.id.toString()).then(
       () => {
@@ -407,209 +326,9 @@ export default function MisSuscripciones() {
     ocultarDialogoBorrado();
   };
 
-  const generarPDF = (rowData) => {
-    let doc;
-    const login = localStorage.getItem("login");
-    const idioma = localStorage.getItem("idioma");
-    const arrayDescripcion = dividirDescripcionEnArray(
-      rowData.evento.descripcion
-    );
-
-    switch (idioma) {
-      case "es":
-        doc = new jsPDF();
-        doc.setFont("italic");
-        doc.setFontSize(25);
-        doc.setTextColor(86, 189, 255);
-        doc.text("Datos del evento", 30, 18);
-
-        doc.setFontSize(15);
-        doc.setTextColor(0, 0, 0);
-        doc.line(10, 20, 140, 20);
-        doc.addImage(logo, 140, 10, 50, 10);
-
-        doc.text(`- Usuario inscrito: ${login}`, 20, 35);
-        doc.setTextColor(100, 100, 100);
-        doc.text(
-          `- Nombre de la categoría: ${rowData.evento.categoria.nombre}`,
-          20,
-          45
-        );
-        doc.setTextColor(0, 0, 0);
-        doc.text(`- Nombre del evento: ${rowData.evento.nombre}`, 20, 55);
-        doc.setTextColor(100, 100, 100);
-        doc.text(
-          `- Plazas del evento: ${rowData.evento.numAsistentes}`,
-          20,
-          65
-        );
-        doc.setTextColor(0, 0, 0);
-        doc.text(
-          `- Número de inscritos: ${rowData.evento.numInscritos}`,
-          20,
-          75
-        );
-        doc.setTextColor(100, 100, 100);
-        doc.text(
-          `- Teléfono de contacto: ${rowData.evento.telefonoContacto}`,
-          20,
-          85
-        );
-        doc.setTextColor(0, 0, 0);
-        doc.text(
-          `- Email de contacto: ${rowData.evento.emailContacto}`,
-          20,
-          95
-        );
-        doc.setTextColor(100, 100, 100);
-        doc.text(
-          `- Tipo de asistencia: ${rowData.evento.tipoAsistencia}`,
-          20,
-          105
-        );
-        doc.setTextColor(0, 0, 0);
-        doc.text(`- Descripción del evento:`, 20, 115, 0, 30);
-
-        // Ejecutar el código para cada elemento del array
-        arrayDescripcion.forEach((elemento, index) => {
-          doc.text(elemento, 30, 125 + 10 * index, 0, 30);
-        });
-
-        doc.addImage(rowData.evento.imagenEvento, 140, 30, 50, 50);
-        doc.line(10, 280, 200, 280);
-        doc.text("Copyright 2023 Martín Gil Blanco - MEI", 60, 290);
-        doc.save(`factura_${rowData.evento.nombre}_${login}.pdf`);
-        break;
-      case "ga":
-        doc = new jsPDF();
-        doc.setFont("italic");
-        doc.setFontSize(25);
-        doc.setTextColor(86, 189, 255);
-        doc.text("Datos do evento", 30, 18);
-
-        doc.setFontSize(15);
-        doc.setTextColor(0, 0, 0);
-        doc.line(10, 20, 140, 20);
-        doc.addImage(logo, 140, 10, 50, 10);
-
-        doc.text(`- Usuario inscrito: ${login}`, 20, 35);
-        doc.setTextColor(100, 100, 100);
-        doc.text(
-          `- Nome da categoría: ${rowData.evento.categoria.nombre}`,
-          20,
-          45
-        );
-        doc.setTextColor(0, 0, 0);
-        doc.text(`- Nome do evento: ${rowData.evento.nombre}`, 20, 55);
-        doc.setTextColor(100, 100, 100);
-        doc.text(`- Plazas do evento: ${rowData.evento.numAsistentes}`, 20, 65);
-        doc.setTextColor(0, 0, 0);
-        doc.text(
-          `- Número de inscritos: ${rowData.evento.numInscritos}`,
-          20,
-          75
-        );
-        doc.setTextColor(100, 100, 100);
-        doc.text(
-          `- Teléfono de contacto: ${rowData.evento.telefonoContacto}`,
-          20,
-          85
-        );
-        doc.setTextColor(0, 0, 0);
-        doc.text(
-          `- Email de contacto: ${rowData.evento.emailContacto}`,
-          20,
-          95
-        );
-        doc.setTextColor(100, 100, 100);
-        doc.text(
-          `- Tipo de asistencia: ${rowData.evento.tipoAsistencia}`,
-          20,
-          105
-        );
-        doc.setTextColor(0, 0, 0);
-        doc.text(`- Descripción do evento:`, 20, 115, 0, 30);
-
-        // Ejecutar el código para cada elemento del array
-        arrayDescripcion.forEach((elemento, index) => {
-          doc.text(elemento, 30, 125 + 10 * index, 0, 30);
-        });
-
-        doc.addImage(rowData.evento.imagenEvento, 140, 30, 50, 50);
-        doc.line(10, 280, 200, 280);
-        doc.text("Copyright 2023 Martín Gil Blanco - MEI", 60, 290);
-        doc.save(`factura_${rowData.evento.nombre}_${login}.pdf`);
-        break;
-      case "en":
-        doc = new jsPDF();
-        doc.setFont("italic");
-        doc.setFontSize(25);
-        doc.setTextColor(86, 189, 255);
-        doc.text("Event details", 30, 18);
-
-        doc.setFontSize(15);
-        doc.setTextColor(0, 0, 0);
-        doc.line(10, 20, 140, 20);
-        doc.addImage(logo, 140, 10, 50, 10);
-
-        doc.text(`- Registered user: ${login}`, 20, 35);
-        doc.setTextColor(100, 100, 100);
-        doc.text(`- Event name: ${rowData.evento.nombre}`, 20, 45);
-        doc.setTextColor(0, 0, 0);
-        doc.text(
-          `- Number of participants: ${rowData.evento.numInscritos}`,
-          20,
-          55
-        );
-        doc.setTextColor(100, 100, 100);
-        doc.text(`- Category name: ${rowData.evento.categoria.nombre}`, 20, 65);
-        doc.setTextColor(0, 0, 0);
-        doc.text(`- Contact email: ${rowData.evento.emailContacto}`, 20, 75);
-        doc.setTextColor(100, 100, 100);
-        doc.text(`- Event capacity: ${rowData.evento.numAsistentes}`, 20, 85);
-        doc.setTextColor(0, 0, 0);
-        doc.text(`- Attendance type: ${rowData.evento.tipoAsistencia}`, 20, 95);
-        doc.setTextColor(100, 100, 100);
-        doc.text(
-          `- Contact phone: ${rowData.evento.telefonoContacto}`,
-          20,
-          105
-        );
-        doc.setTextColor(0, 0, 0);
-        doc.text(`- Event description:`, 20, 115, 0, 30);
-
-        // Ejecutar el código para cada elemento del array
-        arrayDescripcion.forEach((elemento, index) => {
-          doc.text(elemento, 30, 125 + 10 * index, 0, 30);
-        });
-
-        doc.addImage(rowData.evento.imagenEvento, 140, 30, 50, 50);
-        doc.line(10, 280, 200, 280);
-        doc.text("Copyright 2023 Martín Gil Blanco - MEI", 60, 290);
-        doc.save(`factura_${rowData.evento.nombre}_${login}.pdf`);
-        break;
-      default:
-        doc.save(`IDIOMA_NO_DISPONIBLE.pdf`);
-    }
-  };
-
-  const dividirDescripcionEnArray = (descripcion) => {
-    const palabras = descripcion.split(" ");
-    const arrayResultado = [];
-    while (palabras.length > 0) {
-      const elementoArray = palabras.splice(0, 12).join(" ");
-      arrayResultado.push(elementoArray);
-    }
-    return arrayResultado;
-  };
-
   //Funciones de modal
   const ocultarDialogo = () => {
     setDialogoError(false);
-  };
-
-  const okeyMensajeCrear = () => {
-    setShowMessageCrear(false);
   };
 
   const okeyMensajeEliminar = () => {
@@ -621,22 +340,10 @@ export default function MisSuscripciones() {
     return (
       <React.Fragment>
         <Button
-          icon="pi pi-comment"
-          className="p-button-rounded p-button-wrap mr-2"
-          tooltip={t("botones.comentar")}
-          onClick={() => comentarSuscripcion(rowData)}
-        />
-        <Button
           icon="pi pi-trash"
           className="p-button-rounded p-button-wrap mr-2"
           tooltip={t("botones.eliminar")}
           onClick={() => confirmarEliminarSuscripcion(rowData)}
-        />
-        <Button
-          icon="pi pi-file-pdf"
-          className="p-button-rounded p-button-wrap"
-          tooltip={t("botones.generarSuscripciónPDF")}
-          onClick={() => generarPDF(rowData)}
         />
       </React.Fragment>
     );
@@ -656,17 +363,6 @@ export default function MisSuscripciones() {
         icon="pi pi-check"
         className="p-button-text"
         onClick={onSubmitEliminarSuscripcion}
-      />
-    </div>
-  );
-
-  const dialogFooterCrear = (
-    <div className="flex justify-content-center">
-      <Button
-        label="OK"
-        className="p-button-text"
-        autoFocus
-        onClick={okeyMensajeCrear}
       />
     </div>
   );
@@ -695,8 +391,8 @@ export default function MisSuscripciones() {
 
   return (
     <div className="card">
-      <h2 className="tituloTablas">{t("main.gestionSuscripciones")}</h2>
       <div>
+        <h2 className="tituloTablas">{t("main.gestionSuscripciones")}</h2>
         <DataTable
           value={suscripciones}
           paginator
@@ -806,6 +502,7 @@ export default function MisSuscripciones() {
                             name="evento"
                             options={eventoOptions}
                             onChange={(e) => setEvento(e.value)}
+                            filter
                           />
                         </div>
                       </span>
@@ -819,67 +516,6 @@ export default function MisSuscripciones() {
                     type="submit"
                     label={t("botones.buscar")}
                     icon="pi pi-search"
-                    className="p-button-outlined mr-2"
-                  />
-                </div>
-              </form>
-            )}
-          />
-        </div>
-      </Dialog>
-      <Dialog
-        visible={visibleDialogoComentar}
-        style={{ width: "450px" }}
-        header={t("mensajes.tituloModalComentar")}
-        modal
-        onHide={ocultarDialogoComentar}
-      >
-        <div className="flex align-items-center justify-content-center">
-          <Form
-            onSubmit={onSubmitComentar}
-            initialValues={comentarioVacio}
-            validate={validateComentar}
-            render={({ handleSubmit }) => (
-              <form
-                className=" text-xl p-fluid formGestion"
-                onSubmit={handleSubmit}
-              >
-                <Field
-                  name="comentario"
-                  render={({ input, meta }) => (
-                    <div className="field ">
-                      <span className="p-float-label">
-                        <div className="p-field px-5 text-900 ">
-                          <InputTextarea
-                            id="comentario"
-                            {...input}
-                            value={comentario}
-                            onChange={(e) => setComentario(e.target.value)}
-                            placeholder={t("comentarios.comentarioTexto")}
-                            required
-                            className={classNames(
-                              { "p-invalid": isFormFieldValid(meta) },
-                              { "p-error": isFormFieldValid(meta) }
-                            )}
-                          />
-                        </div>
-                      </span>
-                      {getFormErrorMessage(meta)}
-                    </div>
-                  )}
-                />
-                <Rating
-                  value={puntuacion}
-                  onChange={(e) => setPuntuacion(e.value)}
-                  cancel={false}
-                  required
-                  className="mb-2 ml-2"
-                />
-                <div className="col">
-                  <Button
-                    type="submit"
-                    label={t("botones.comentar")}
-                    icon="pi pi-comment"
                     className="p-button-outlined mr-2"
                   />
                 </div>
@@ -904,24 +540,6 @@ export default function MisSuscripciones() {
           {suscripcionActual && (
             <span>{t("mensajes.preguntaModalBorradoSuscripcion")}</span>
           )}
-        </div>
-      </Dialog>
-
-      <Dialog
-        visible={showMessageCrear}
-        onHide={() => setShowMessageCrear(false)}
-        position="center"
-        footer={dialogFooterCrear}
-        showHeader={false}
-        breakpoints={{ "960px": "80vw" }}
-        style={{ width: "30vw" }}
-      >
-        <div className="flex align-items-center flex-column pt-6 px-3">
-          <i
-            className="pi pi-check-circle"
-            style={{ fontSize: "5rem", color: "var(--green-500)" }}
-          ></i>
-          <h4>{t("mensajes.creacionComentario")}</h4>
         </div>
       </Dialog>
 

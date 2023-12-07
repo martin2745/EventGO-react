@@ -160,8 +160,6 @@ export default function SolicitudesEvento() {
     return fechaFormateada;
   };
 
-  const validateBuscar = (data) => {};
-
   const buscarSolicitud = () => {
     setFechaSolicitud("");
     setUsuario("");
@@ -456,10 +454,11 @@ export default function SolicitudesEvento() {
   return (
     <div className="card">
       <div>
+        <h2 className="tituloTablas">{t("main.gestionSolicitudes")}</h2>
         <DataTable
           value={solicitudes}
           paginator
-          rows={2}
+          rows={5}
           header={header}
           filters={filters}
           onFilter={(e) => setFilters(e.filters)}
@@ -506,7 +505,6 @@ export default function SolicitudesEvento() {
           <Form
             onSubmit={onSubmitBuscar}
             initialValues={solicitudVacio}
-            validate={validateBuscar}
             render={({ handleSubmit }) => (
               <form
                 className=" text-xl p-fluid formGestion"
@@ -556,6 +554,7 @@ export default function SolicitudesEvento() {
                             name="usuario"
                             options={usuarioOptions}
                             onChange={(e) => setUsuario(e.value)}
+                            filter
                           />
                         </div>
                       </span>

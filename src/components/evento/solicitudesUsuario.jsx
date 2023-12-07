@@ -11,38 +11,55 @@ import { useNavigate } from "react-router-dom";
 import { Dialog } from "primereact/dialog";
 import { Form, Field } from "react-final-form";
 import { classNames } from "primereact/utils";
-import amistadService from "../../services/amistadService";
+import eventoService from "../../services/eventoService";
+import solicitudService from "../../services/solicitudService";
 import avatar from "./../recursos/imagenes/avatar.png";
 
-export default function GerentesSeguidos() {
-  const amistadVacio = {
+export default function SolicitudesUsuario() {
+  const solicitudVacio = {
     id: "",
-    gerente: {
-      id: "",
-    },
-    seguidor: {
-      id: "",
-    },
+    fechaSolicitud: "",
+    evento: "",
+    usuario: "",
   };
-  const [amistades, setAmistades] = useState([]);
+  const [solicitudes, setSolicitudes] = useState([]);
   const [t, i18n] = useTranslation("global");
+  const [fechaSolicitud, setFechaSolicitud] = useState(new Date());
   const navigate = useNavigate();
+  const [showMessageCrear, setShowMessageCrear] = useState(false);
   const [showMessageEliminar, setShowMessageEliminar] = useState(false);
   const [dialogoError, setDialogoError] = useState(false);
   const [resMessage, setResMessage] = useState("");
-  const [amistadActual, setAmistadActual] = useState(amistadVacio);
+  const [solicitudActual, setSolicitudActual] = useState(solicitudVacio);
   const [visibleDialogoBuscar, setVisibleDialogoBuscar] = useState(false);
-  const [gerente, setGerente] = useState([" "]);
+  const [eventoOptions, setEventoOptions] = useState([" "]);
+  const [evento, setEvento] = useState([" "]);
   const [visibleDialogoBorrado, setVisibleDialogoBorrado] = useState(false);
-  const idUsuario = localStorage.getItem("idUsuario");
+  const pathname = window.location.pathname;
+  const parts = pathname.split("/");
+  const idUsuario = parseInt(parts[parts.length - 1], 10);
 
   //Carga inicial de datos
   useEffect(() => {
     const datos = {
-      idSeguidor: idUsuario,
+      idUsuario: idUsuario,
     };
-    amistadService.buscarTodosParametros(datos).then((res) => {
-      setAmistades(res.data);
+    solicitudService.buscarTodosParametros(datos).then((res) => {
+      setSolicitudes(res.data);
+    });
+  }, []);
+
+  useEffect(() => {
+    const datos = {
+      idUsuario: idUsuario,
+    };
+    eventoService.eventosSuscritos(datos).then((res) => {
+      for (var i = 0; i < res.data.length; i++) {
+        eventoOptions[i] = {
+          label: res.data[i][`nombre`],
+          value: res.data[i][`id`],
+        };
+      }
     });
   }, []);
 
@@ -75,37 +92,94 @@ export default function GerentesSeguidos() {
     setFilters(_filters);
   };
 
-  const nombreGerente = (rowData) => {
-    return rowData.gerente.nombre;
+  const formatoFechaSolicitud = (rowData) => {
+    const fechaOriginal = rowData.fechaSolicitud; // Supongamos que la fecha está en el formato 'YYYY-MM-DD'
+    const fecha = new Date(fechaOriginal);
+
+    const dia = fecha.getDate();
+    const mes = fecha.getMonth() + 1; // Los meses en JavaScript se cuentan desde 0, así que sumamos 1
+    const anio = fecha.getFullYear();
+
+    // Formateamos la fecha en el formato 'DD/MM/YYYY'
+    const fechaFormateada = `${dia}/${mes}/${anio}`;
+
+    return fechaFormateada;
   };
 
-  const emailGerente = (rowData) => {
-    return rowData.gerente.email;
+  const formatoFechaEvento = (rowData) => {
+    const fechaOriginal = rowData.evento.fechaEvento; // Supongamos que la fecha está en el formato 'YYYY-MM-DD'
+    const fecha = new Date(fechaOriginal);
+    const dia = fecha.getDate();
+    const mes = fecha.getMonth() + 1; // Los meses en JavaScript se cuentan desde 0, así que sumamos 1
+    const anio = fecha.getFullYear();
+    const fechaFormateada = `${dia}/${mes}/${anio}`;
+    return fechaFormateada;
   };
 
-  const imagenGerente = (rowData) => {
-    const gerente = rowData.gerente;
+  const direccionEvento = (rowData) => {
+    return rowData.evento.direccion;
+  };
+
+  const emailEvento = (rowData) => {
+    return rowData.evento.emailContacto;
+  };
+
+  const telefonoEvento = (rowData) => {
+    return rowData.evento.telefonoContacto;
+  };
+
+  const nombreEvento = (rowData) => {
+    return rowData.evento.nombre;
+  };
+
+  const imagenEvento = (rowData) => {
+    const evento = rowData.evento;
     return (
       <>
-        {gerente.imagenUsuario ? (
-          <img
-            src={gerente.imagenUsuario}
-            className="w-4rem shadow-2 border-round"
-          />
+        {evento.imagenEvento ? (
+          <a
+            onClick={() => enlaceImagen(evento.url)}
+            style={{ cursor: "pointer" }}
+          >
+            <img
+              src={evento.imagenEvento}
+              className="w-4rem shadow-2 border-round"
+            />
+          </a>
         ) : (
-          <img src={avatar} className="w-4rem shadow-2 border-round" />
+          <a
+            onClick={() => enlaceImagen(evento.url)}
+            style={{ cursor: "pointer" }}
+          >
+            <img src={avatar} className="w-4rem shadow-2 border-round" />
+          </a>
         )}
       </>
     );
   };
 
-  const buscarAmistad = () => {
-    setGerente("");
+  const enlaceImagen = (url) => {
+    window.open(url, "_blank");
+  };
+
+  //Funciones de formato
+  const convertirFechaGuiones = (fechaTexto) => {
+    let fecha = new Date(fechaTexto);
+    let año = fecha.getFullYear();
+    let mes = String(fecha.getMonth() + 1).padStart(2, "0");
+    let dia = String(fecha.getDate()).padStart(2, "0");
+    let fechaFormateada = `${año}-${mes}-${dia}`;
+    return fechaFormateada;
+  };
+
+  const buscarSolicitudes = () => {
+    setFechaSolicitud("");
+    setEvento("");
     setVisibleDialogoBuscar(true);
   };
 
-  const confirmarEliminarAmistad = (amistad) => {
-    setAmistadActual(amistad);
+  const confirmarEliminarSolicitud = (solicitud) => {
+    setSolicitudActual(solicitud);
     setVisibleDialogoBorrado(true);
   };
 
@@ -114,18 +188,22 @@ export default function GerentesSeguidos() {
   };
 
   const ocultarDialogoBorrado = () => {
-    setAmistadActual(amistadVacio);
+    setSolicitudActual(solicitudVacio);
     setVisibleDialogoBorrado(false);
+  };
+
+  const gestionUsuarios = () => {
+    navigate("/usuario/usuarioShowAll");
   };
 
   //Recarga de página
   const reloadPage = () => {
     const datos = {
-      idSeguidor: idUsuario,
+      idUsuario: idUsuario,
     };
-    amistadService.buscarTodosParametros(datos).then(
+    solicitudService.buscarTodosParametros(datos).then(
       (res) => {
-        setAmistades(res.data);
+        setSolicitudes(res.data);
       },
       (error) => {
         const resMessage =
@@ -149,10 +227,16 @@ export default function GerentesSeguidos() {
         <div className="flex flex-wrap gap-2">
           <React.Fragment>
             <Button
+              icon="pi pi-arrow-left"
+              className="p-button-rounded mr-2"
+              tooltip={t("botones.volverMisEventos")}
+              onClick={gestionUsuarios}
+            />
+            <Button
               icon="pi pi-search"
               className="p-button-rounded"
               tooltip={t("botones.buscar")}
-              onClick={buscarAmistad}
+              onClick={buscarSolicitudes}
             />
           </React.Fragment>
         </div>
@@ -179,24 +263,28 @@ export default function GerentesSeguidos() {
   };
 
   const header = renderHeader();
-  const footer = `${amistades ? amistades.length : 0}${t(
-    "footer.gestoresSeguidos"
+  const footer = `${solicitudes ? solicitudes.length : 0}${t(
+    "footer.solicitudes"
   )}`;
 
   const onSubmitBuscar = (data, form) => {
+    let fechaBuscar = "";
+    if (fechaSolicitud != "" && fechaSolicitud != undefined) {
+      fechaBuscar = convertirFechaGuiones(fechaSolicitud);
+    }
+
     const datos = {
-      id: "",
-      nombreGerente: data.nombre,
-      seguidor: {
-        idSeguidor: idUsuario,
-      },
+      fechaSolicitud: fechaBuscar,
+      idEvento: evento,
+      idUsuario: idUsuario,
     };
-    amistadService.buscarTodosParametros(datos).then(
+
+    solicitudService.buscarTodosParametros(datos).then(
       (res) => {
         if (res.data && Array.isArray(res.data)) {
-          setAmistades(res.data);
+          setSolicitudes(res.data);
         } else {
-          setAmistades([]);
+          setSolicitudes([]);
         }
         form.restart();
         ocultarDialogoBuscar();
@@ -214,13 +302,13 @@ export default function GerentesSeguidos() {
     );
   };
 
-  const onSubmitEliminarAmistad = () => {
-    amistadService.eliminar(amistadActual.id.toString()).then(
-      (res) => {
-        const amistadesActualizados = amistades.filter(
-          (amistad) => amistad.id !== amistadActual.id
+  const onSubmitEliminarSolicitud = () => {
+    solicitudService.eliminar(solicitudActual.id.toString()).then(
+      () => {
+        const solicitudesActualizados = solicitudes.filter(
+          (evento) => evento.id !== solicitudActual.id
         );
-        setAmistades(amistadesActualizados);
+        setSolicitudes(solicitudesActualizados);
         setShowMessageEliminar(true);
       },
       (error) => {
@@ -255,7 +343,7 @@ export default function GerentesSeguidos() {
           icon="pi pi-trash"
           className="p-button-rounded p-button-wrap mr-2"
           tooltip={t("botones.eliminar")}
-          onClick={() => confirmarEliminarAmistad(rowData)}
+          onClick={() => confirmarEliminarSolicitud(rowData)}
         />
       </React.Fragment>
     );
@@ -274,7 +362,7 @@ export default function GerentesSeguidos() {
         label={t("mensajes.si")}
         icon="pi pi-check"
         className="p-button-text"
-        onClick={onSubmitEliminarAmistad}
+        onClick={onSubmitEliminarSolicitud}
       />
     </div>
   );
@@ -304,9 +392,9 @@ export default function GerentesSeguidos() {
   return (
     <div className="card">
       <div>
-        <h2 className="tituloTablas">{t("main.gestionGerentesSeguidos")}</h2>
+        <h2 className="tituloTablas">{t("main.gestionSolicitudes")}</h2>
         <DataTable
-          value={amistades}
+          value={solicitudes}
           paginator
           rows={5}
           header={header}
@@ -316,18 +404,38 @@ export default function GerentesSeguidos() {
           tableStyle={{ minWidth: "60rem" }}
         >
           <Column
-            field="imagenGerente"
+            field="imagenEvento"
             header={t("columnas.imagenEnlace")}
-            body={imagenGerente}
+            body={imagenEvento}
           ></Column>
           <Column
-            field={nombreGerente}
+            field={nombreEvento}
             header={t("columnas.evento")}
             sortable
           ></Column>
           <Column
-            field={emailGerente}
+            field={formatoFechaSolicitud}
+            header={t("columnas.fechaSolicitud")}
+            sortable
+          ></Column>
+          <Column
+            field={formatoFechaEvento}
+            header={t("columnas.fechaEvento")}
+            sortable
+          ></Column>
+          <Column
+            field={direccionEvento}
+            header={t("columnas.direccion")}
+            sortable
+          ></Column>
+          <Column
+            field={emailEvento}
             header={t("columnas.email")}
+            sortable
+          ></Column>
+          <Column
+            field={telefonoEvento}
+            header={t("columnas.telefono")}
             sortable
           ></Column>
           <Column header={t("columnas.acciones")} body={accionesSolicitud} />
@@ -344,26 +452,57 @@ export default function GerentesSeguidos() {
         <div className="flex align-items-center justify-content-center">
           <Form
             onSubmit={onSubmitBuscar}
-            initialValues={amistadVacio}
+            initialValues={solicitudVacio}
             render={({ handleSubmit }) => (
               <form
                 className=" text-xl p-fluid formGestion"
                 onSubmit={handleSubmit}
               >
                 <Field
-                  name="nombre"
+                  name="fechaSolicitud"
                   render={({ input, meta }) => (
                     <div className="field ">
                       <span className="p-float-label">
                         <div className="p-field px-5 text-900 ">
-                          <InputText
-                            id="nombre"
-                            {...input}
-                            placeholder={t("usuario.nombre")}
+                          <Calendar
+                            id="fechaSolicitud"
+                            value={fechaSolicitud}
+                            name="fechaSolicitud"
+                            placeholder={t("solicitud.fechaSolicitud")}
+                            dateFormat="dd/mm/yy"
+                            mask="99/99/9999"
+                            monthNavigator
+                            yearNavigator
+                            yearRange="1900:2030"
                             className={classNames(
                               { "p-invalid": isFormFieldValid(meta) },
                               { "p-error": isFormFieldValid(meta) }
                             )}
+                            showIcon
+                            onChange={(e) => setFechaSolicitud(e.value)}
+                          />
+                        </div>
+                      </span>
+                      {getFormErrorMessage(meta)}
+                    </div>
+                  )}
+                />
+
+                <Field
+                  name="evento"
+                  render={({ input, meta }) => (
+                    <div className="field ">
+                      <span className="p-float-label">
+                        <div className="p-field px-5 text-900 ">
+                          <Dropdown
+                            id="evento"
+                            value={evento}
+                            placeholder={t("solicitud.nombreEvento")}
+                            showClear
+                            name="evento"
+                            options={eventoOptions}
+                            onChange={(e) => setEvento(e.value)}
+                            filter
                           />
                         </div>
                       </span>
@@ -398,8 +537,8 @@ export default function GerentesSeguidos() {
             className="pi pi-exclamation-triangle mr-3"
             style={{ fontSize: "2rem" }}
           />
-          {amistadActual && (
-            <span>{t("mensajes.preguntaModalBorradoAmistad")}</span>
+          {solicitudActual && (
+            <span>{t("mensajes.preguntaModalBorradoSolicitud")}</span>
           )}
         </div>
       </Dialog>

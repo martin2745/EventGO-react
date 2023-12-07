@@ -371,8 +371,6 @@ export default function MisEventosGestor() {
     return errors;
   };
 
-  const validateBuscar = (data) => {};
-
   const validateEditar = (data) => {
     let errors = {};
     var patronNombre = /^[A-Za-z0-9_áéíóúñÁÉÍÓÚÑ. ]+$/;
@@ -993,10 +991,11 @@ export default function MisEventosGestor() {
   return (
     <div className="card">
       <div>
+        <h2 className="tituloTablas">{t("main.gestionEventosTabla")}</h2>
         <DataTable
           value={eventos}
           paginator
-          rows={2}
+          rows={5}
           header={header}
           filters={filters}
           onFilter={(e) => setFilters(e.filters)}
@@ -1321,7 +1320,6 @@ export default function MisEventosGestor() {
           <Form
             onSubmit={onSubmitBuscar}
             initialValues={eventoVacio}
-            validate={validateBuscar}
             render={({ handleSubmit }) => (
               <form
                 className=" text-xl p-fluid formGestion"
