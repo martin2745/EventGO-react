@@ -62,23 +62,45 @@ export default function Eventosevento() {
   };
 
   useEffect(() => {
-    eventoService.buscarEventosCategoriaValidos(numero).then((res) => {
-      setEventos(res.data);
-    });
+    const user = JSON.parse(localStorage.getItem("user"));
+    if (user) {
+      eventoService.buscarEventosCategoriaValidos(numero).then((res) => {
+        setEventos(res.data);
+      });
+    } else {
+      eventoService.buscarEventosCategoriaValidosAbierto(numero).then((res) => {
+        setEventos(res.data);
+      });
+    }
   }, []);
 
   useEffect(() => {
-    usuarioService.buscarTodos().then((res) => {
-      setGerente(res.data);
-      for (var i = 0; i < res.data.length; i++) {
-        if (res.data[i].rol == "ROLE_GERENTE") {
-          gerenteOptions[i] = {
-            label: res.data[i][`login`],
-            value: res.data[i][`id`],
-          };
+    const user = JSON.parse(localStorage.getItem("user"));
+    if (user) {
+      usuarioService.buscarTodos().then((res) => {
+        setGerente(res.data);
+        for (var i = 0; i < res.data.length; i++) {
+          if (res.data[i].rol == "ROLE_GERENTE") {
+            gerenteOptions[i] = {
+              label: res.data[i][`login`],
+              value: res.data[i][`id`],
+            };
+          }
         }
-      }
-    });
+      });
+    } else {
+      usuarioService.buscarTodosAbierto().then((res) => {
+        setGerente(res.data);
+        for (var i = 0; i < res.data.length; i++) {
+          if (res.data[i].rol == "ROLE_GERENTE") {
+            gerenteOptions[i] = {
+              label: res.data[i][`login`],
+              value: res.data[i][`id`],
+            };
+          }
+        }
+      });
+    }
   }, [gerente]);
 
   const isFormFieldValid = (meta) => !!(meta.touched && meta.error);
@@ -186,6 +208,7 @@ export default function Eventosevento() {
             >
               {t("evento.informacion")}
             </Button>
+
             <Button
               icon="pi "
               className="p-button p-component"
@@ -273,25 +296,48 @@ export default function Eventosevento() {
   };
 
   const reloadPage = () => {
-    eventoService.buscarEventosCategoria(numero).then(
-      (res) => {
-        if (res.data && Array.isArray(res.data)) {
-          setEventos(res.data);
-        } else {
-          setEventos([]);
+    const user = JSON.parse(localStorage.getItem("user"));
+    if (user) {
+      eventoService.buscarEventosCategoria(numero).then(
+        (res) => {
+          if (res.data && Array.isArray(res.data)) {
+            setEventos(res.data);
+          } else {
+            setEventos([]);
+          }
+        },
+        (error) => {
+          const resMessage =
+            (error.response &&
+              error.response.data &&
+              error.response.data.codigo) ||
+            error.message ||
+            error.toString();
+          setResMessage(resMessage);
+          setDialogoError(true);
         }
-      },
-      (error) => {
-        const resMessage =
-          (error.response &&
-            error.response.data &&
-            error.response.data.codigo) ||
-          error.message ||
-          error.toString();
-        setResMessage(resMessage);
-        setDialogoError(true);
-      }
-    );
+      );
+    } else {
+      eventoService.buscarEventosCategoriaAbierto(numero).then(
+        (res) => {
+          if (res.data && Array.isArray(res.data)) {
+            setEventos(res.data);
+          } else {
+            setEventos([]);
+          }
+        },
+        (error) => {
+          const resMessage =
+            (error.response &&
+              error.response.data &&
+              error.response.data.codigo) ||
+            error.message ||
+            error.toString();
+          setResMessage(resMessage);
+          setDialogoError(true);
+        }
+      );
+    }
   };
 
   const cambiarFormatoFecha = (fecha) => {

@@ -96,6 +96,21 @@ export default function InicioSesion() {
   function onRegister(event) {
     navigate("/registro");
   }
+
+  function vistaPrevia() {
+    const div1 = document.getElementById("div1");
+    const div2 = document.getElementById("div2");
+
+    if (div1) {
+      div1.style.display = "none";
+    }
+
+    if (div2) {
+      div2.style.display = "none";
+    }
+    navigate("/categoria/categoriaLayout/");
+  }
+
   function onRecuperarPassword(event) {
     navigate("/recuperarPassword");
   }
@@ -103,9 +118,16 @@ export default function InicioSesion() {
   const onSubmit = (data, form) => {
     autenticacionService.login(data).then(
       () => {
-        form.restart();
-        navigate("/categoria/categoriaLayout/");
-        window.location.reload();
+        let rol = localStorage.getItem("rol");
+        if (rol === "ROLE_GERENTE" || rol == "ROLE_USUARIO") {
+          form.restart();
+          navigate("/categoria/categoriaLayout/");
+          window.location.reload();
+        } else if (rol === "ROLE_ADMINISTRADOR") {
+          form.restart();
+          navigate("/categoria/categoriaShowAll/");
+          window.location.reload();
+        }
       },
       (error) => {
         const resMessage =
@@ -187,9 +209,15 @@ export default function InicioSesion() {
                   icon="pi pi-sign-in"
                 />
                 <Button
+                  label={t("botones.verAplicacion")}
+                  icon="pi pi-eye"
+                  className="text-xl p-button-outlined mr-2"
+                  onClick={vistaPrevia}
+                />
+                <Button
                   label={t("botones.registrarse")}
                   icon="pi pi-user-plus"
-                  className="text-xl p-button-outlined mr-2"
+                  className="text-xl p-button-outlined mr-2  mt-4"
                   onClick={onRegister}
                 />
                 <Button

@@ -31,11 +31,18 @@ export default function BasicDemo() {
     nombre: "",
     descripcion: "",
   };
+  let user = JSON.parse(localStorage.getItem("user"));
 
   useEffect(() => {
-    categoriaService.buscarTodos().then((res) => {
-      setCategorias(res.data);
-    });
+    if (user) {
+      categoriaService.buscarTodos().then((res) => {
+        setCategorias(res.data);
+      });
+    } else {
+      categoriaService.buscarTodosAbierto().then((res) => {
+        setCategorias(res.data);
+      });
+    }
   }, []);
 
   const listItem = (categoria) => {
@@ -128,6 +135,14 @@ export default function BasicDemo() {
     return (
       <div className="flex justify-content-end">
         <React.Fragment>
+          {!user && (
+            <Button
+              icon="pi pi-home"
+              className="p-button-rounded mr-2"
+              tooltip={t("botones.home")}
+              onClick={volverInicio}
+            />
+          )}
           <Button
             icon="pi pi-search"
             className="p-button-rounded mr-2"
@@ -150,6 +165,12 @@ export default function BasicDemo() {
     );
   };
 
+  const volverInicio = (event) => {
+    event.preventDefault();
+    navigate("/");
+    window.location.reload();
+  };
+
   const eventos = (categoria) => {
     setCurrentCategoria(categoria);
     navigate("/categoria/eventosCategoria/" + categoria.id.toString());
@@ -164,49 +185,97 @@ export default function BasicDemo() {
   };
 
   const onSubmitBuscar = (data, form) => {
-    categoriaService.buscarTodosParametros(data).then(
-      (res) => {
-        if (res.data && Array.isArray(res.data)) {
-          setCategorias(res.data);
-        } else {
-          setCategorias([]);
+    const user = JSON.parse(localStorage.getItem("user"));
+    if (user) {
+      categoriaService.buscarTodosParametros(data).then(
+        (res) => {
+          if (res.data && Array.isArray(res.data)) {
+            setCategorias(res.data);
+          } else {
+            setCategorias([]);
+          }
+          form.restart();
+          ocultarDialogoBuscar();
+        },
+        (error) => {
+          const resMessage =
+            (error.response &&
+              error.response.data &&
+              error.response.data.codigo) ||
+            error.message ||
+            error.toString();
+          setResMessage(resMessage);
+          setDialogoError(true);
         }
-        form.restart();
-        ocultarDialogoBuscar();
-      },
-      (error) => {
-        const resMessage =
-          (error.response &&
-            error.response.data &&
-            error.response.data.codigo) ||
-          error.message ||
-          error.toString();
-        setResMessage(resMessage);
-        setDialogoError(true);
-      }
-    );
+      );
+    } else {
+      categoriaService.buscarTodosParametrosAbierto(data).then(
+        (res) => {
+          if (res.data && Array.isArray(res.data)) {
+            setCategorias(res.data);
+          } else {
+            setCategorias([]);
+          }
+          form.restart();
+          ocultarDialogoBuscar();
+        },
+        (error) => {
+          const resMessage =
+            (error.response &&
+              error.response.data &&
+              error.response.data.codigo) ||
+            error.message ||
+            error.toString();
+          setResMessage(resMessage);
+          setDialogoError(true);
+        }
+      );
+    }
   };
 
   const reloadPage = () => {
-    categoriaService.buscarTodos().then(
-      (res) => {
-        if (res.data && Array.isArray(res.data)) {
-          setCategorias(res.data);
-        } else {
-          setCategorias([]);
+    const user = JSON.parse(localStorage.getItem("user"));
+    if (user) {
+      categoriaService.buscarTodos().then(
+        (res) => {
+          if (res.data && Array.isArray(res.data)) {
+            setCategorias(res.data);
+          } else {
+            setCategorias([]);
+          }
+        },
+        (error) => {
+          const resMessage =
+            (error.response &&
+              error.response.data &&
+              error.response.data.codigo) ||
+            error.message ||
+            error.toString();
+          setResMessage(resMessage);
+          setDialogoError(true);
         }
-      },
-      (error) => {
-        const resMessage =
-          (error.response &&
-            error.response.data &&
-            error.response.data.codigo) ||
-          error.message ||
-          error.toString();
-        setResMessage(resMessage);
-        setDialogoError(true);
-      }
-    );
+      );
+    } else {
+      categoriaService.buscarTodosAbierto().then(
+        (res) => {
+          if (res.data && Array.isArray(res.data)) {
+            setCategorias(res.data);
+          } else {
+            setCategorias([]);
+          }
+        },
+        (error) => {
+          const resMessage =
+            (error.response &&
+              error.response.data &&
+              error.response.data.codigo) ||
+            error.message ||
+            error.toString();
+          setResMessage(resMessage);
+          setDialogoError(true);
+        }
+      );
+    }
   };
 
   return (

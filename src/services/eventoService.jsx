@@ -46,10 +46,18 @@ class EventoService {
     });
   }
 
+  buscarEventosCategoriaAbierto(id) {
+    return REST.get(`/abierto/evento/eventosCategoria/${id}`);
+  }
+
   buscarEventosCategoriaValidos(id) {
     return REST.get(`/evento/eventosCategoriaValidos/${id}`, {
       headers: authHeader(),
     });
+  }
+
+  buscarEventosCategoriaValidosAbierto(id) {
+    return REST.get(`/abierto/evento/eventosCategoriaValidos/${id}`);
   }
 
   crear(solicitud) {

@@ -16,6 +16,20 @@ class CategoriaService {
     return REST.get(url, { headers: authHeader() });
   }
 
+  buscarTodosAbierto() {
+    return REST.get("/abierto/categoria");
+  }
+
+  buscarTodosParametrosAbierto(data) {
+    const parametros = Object.keys(data)
+      .filter((key) => data[key] !== "")
+      .map((key) => `${key}=${encodeURIComponent(data[key])}`)
+      .join("&");
+
+    const url = `/abierto/categoria?${parametros}`;
+    return REST.get(url);
+  }
+
   buscarPorId(id) {
     return REST.get(`/categoria/${id}`, { headers: authHeader() });
   }

@@ -121,12 +121,6 @@ function Main() {
       disabled: true,
     });
     navs.push({
-      label: <a className="mr-3">{t("main.categorias")}</a>,
-      command: (e) => {
-        navigate("/categoria/categoriaLayout/");
-      },
-    });
-    navs.push({
       label: <a className="mr-3">{t("main.gestionCategorias")}</a>,
       command: (e) => {
         navigate("/categoria/categoriaShowAll/");
@@ -481,7 +475,18 @@ function Main() {
         </div>
       ) : (
         <div className="container">
-          <div className="div1">
+          <Routes>
+            {/* vista no suscritos */}
+            <Route path="categoria">
+              <Route path="categoriaLayout">
+                <Route index element={<CategoriaLayout />} />
+              </Route>
+              <Route path="eventosCategoria">
+                <Route path=":id" element={<EventosCategoria />} />
+              </Route>
+            </Route>
+          </Routes>
+          <div className="div1" id="div1">
             <Routes>
               <Route
                 path="/"
@@ -497,7 +502,7 @@ function Main() {
               />
             </Routes>
           </div>
-          <div className="div2">
+          <div className="div2" id="div2">
             <section>
               {idioma == "Español" ? (
                 <>

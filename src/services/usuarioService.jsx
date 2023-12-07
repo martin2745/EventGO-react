@@ -6,6 +6,10 @@ class UsuarioService {
     return REST.get("/usuario", { headers: authHeader() });
   }
 
+  buscarTodosAbierto() {
+    return REST.get("/abierto/usuario");
+  }
+
   buscarGerentes(id) {
     return REST.get(`/usuario/gerentes/${id}`, { headers: authHeader() });
   }
