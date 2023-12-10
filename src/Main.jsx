@@ -492,7 +492,18 @@ function Main() {
         </div>
       ) : (
         <div className="container">
-          <div className="div1">
+          <Routes>
+            {/* vista no suscritos */}
+            <Route path="categoria">
+              <Route path="categoriaLayout">
+                <Route index element={<CategoriaLayout />} />
+              </Route>
+              <Route path="eventosCategoria">
+                <Route path=":id" element={<EventosCategoria />} />
+              </Route>
+            </Route>
+          </Routes>
+          <div className="div1" id="div1">
             <Routes>
               <Route
                 path="/"
@@ -512,7 +523,7 @@ function Main() {
               />
             </Routes>
           </div>
-          <div className="div2">
+          <div className="div2" id="div2">
             <section>
               {idioma == "Español" ? (
                 <>
@@ -540,6 +551,12 @@ function Main() {
                 </>
               )}
             </section>
+
+            <Button
+              label={t("botones.verAplicacion")}
+              icon="pi pi-eye"
+              className="text-xl p-button-outlined mr-2"
+            />
           </div>
         </div>
       )}

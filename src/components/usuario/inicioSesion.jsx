@@ -96,6 +96,11 @@ export default function InicioSesion() {
   function onRegister(event) {
     navigate("/registro");
   }
+
+  function vistaPrevia() {
+    navigate("/categoria/categoriaLayout/");
+  }
+
   function onRecuperarPassword(event) {
     navigate("/recuperarPassword");
   }
@@ -103,13 +108,14 @@ export default function InicioSesion() {
   const onSubmit = (data, form) => {
     autenticacionService.login(data).then(
       () => {
-        const rol = localStorage.getItem("rol");
-        form.restart();
-        if (rol === "ROLE_ADMINISTRADOR") {
-          navigate("/categoria/categoriaShowAll/");
-          window.location.reload();
-        } else {
+        let rol = localStorage.getItem("rol");
+        if (rol === "ROLE_GERENTE" || rol == "ROLE_USUARIO") {
+          form.restart();
           navigate("/categoria/categoriaLayout/");
+          window.location.reload();
+        } else if (rol === "ROLE_ADMINISTRADOR") {
+          form.restart();
+          navigate("/categoria/categoriaShowAll/");
           window.location.reload();
         }
       },
@@ -193,9 +199,15 @@ export default function InicioSesion() {
                   icon="pi pi-sign-in"
                 />
                 <Button
+                  label={t("botones.verAplicacion")}
+                  icon="pi pi-eye"
+                  className="text-xl p-button-outlined mr-2"
+                  onClick={vistaPrevia}
+                />
+                <Button
                   label={t("botones.registrarse")}
                   icon="pi pi-user-plus"
-                  className="text-xl p-button-outlined mr-2"
+                  className="text-xl p-button-outlined mr-2  mt-4"
                   onClick={onRegister}
                 />
                 <Button

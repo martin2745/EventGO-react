@@ -261,7 +261,7 @@ export default function EventoShowAll() {
 
   const validateCrear = (data) => {
     let errors = {};
-    var patronNombre = /^[A-Za-z0-9_áéíóúñÁÉÍÓÚÑ ]+$/;
+    var patronNombre = /^[A-Za-z0-9_áéíóúñÁÉÍÓÚÑ., ]+$/;
     var patronDescripcion = /^[A-Za-z0-9_áéíóúñÁÉÍÓÚÑ., ]+$/;
     var patronNum = /^[0-9]+$/;
     var patronDireccion = /^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚüÜ/ºª,.;: ]+$/;
@@ -375,8 +375,8 @@ export default function EventoShowAll() {
 
   const validateEditar = (data) => {
     let errors = {};
-    var patronNombre = /^[A-Za-z0-9_áéíóúñÁÉÍÓÚÑ. ]+$/;
-    var patronDescripcion = /^[A-Za-z0-9_áéíóúñÁÉÍÓÚÑ/ºª,.;: ]+$/;
+    var patronNombre = /^[A-Za-z0-9_áéíóúñÁÉÍÓÚÑ., ]+$/;
+    var patronDescripcion = /^[A-Za-z0-9_áéíóúñÁÉÍÓÚÑ., ]+$/;
     var patronNum = /^[0-9]+$/;
     var patronDireccion = /^[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚüÜ/ºª,.;: ]+$/;
     var patronEmailContacto =
@@ -588,6 +588,7 @@ export default function EventoShowAll() {
       },
       imagenEvento: data.imagenEvento,
       url: data.url,
+      borradoLogico: "0",
     };
 
     eventoService.crear(datos).then(
@@ -688,6 +689,7 @@ export default function EventoShowAll() {
       },
       imagenEvento: data.imagenEvento,
       url: data.url,
+      borradoLogico: "0",
     };
 
     eventoService.modificar(datos.id.toString(), datos).then(
@@ -1029,7 +1031,7 @@ export default function EventoShowAll() {
           tooltip={t("botones.eliminar")}
           onClick={() => confirmarEliminarEvento(rowData)}
         />
-        {rowData.documentoEvento !== "" && (
+        {rowData.documentoEvento !== null && (
           <Button
             icon="pi pi-file-pdf"
             className="p-button-rounded p-button-wrap mr-2"
@@ -1039,8 +1041,8 @@ export default function EventoShowAll() {
         )}
         {rowData.borradoLogico === "1" && (
           <Button
-            icon="pi pi-heart mr-2"
-            className="p-button-rounded p-button-wrap"
+            icon="pi pi-heart"
+            className="p-button-rounded p-button-wrap mr-2"
             tooltip={t("botones.reactivar")}
             onClick={() => confirmarReactivarEvento(rowData)}
           />
@@ -1186,6 +1188,7 @@ export default function EventoShowAll() {
                             options={gerenteOptions}
                             onChange={(e) => setUsuario(e.value)}
                             required
+                            filter
                           />
                         </div>
                       </span>
@@ -1471,6 +1474,7 @@ export default function EventoShowAll() {
                             name="gerente"
                             options={gerenteOptions}
                             onChange={(e) => setUsuario(e.value)}
+                            filter
                           />
                         </div>
                       </span>

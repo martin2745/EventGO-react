@@ -30,12 +30,31 @@ export default function BasicDemo() {
     id: "",
     nombre: "",
     descripcion: "",
+    borradoLogico: "0",
   };
+  let user = JSON.parse(localStorage.getItem("user"));
 
   useEffect(() => {
-    categoriaService.buscarTodos().then((res) => {
-      setCategorias(res.data);
-    });
+    const div1 = document.getElementById("div1");
+    const div2 = document.getElementById("div2");
+    if (div1) {
+      div1.style.display = "none";
+    }
+    if (div2) {
+      div2.style.display = "none";
+    }
+
+    if (user) {
+      categoriaService.buscarTodosParametros(categoriaVacio).then((res) => {
+        setCategorias(res.data);
+      });
+    } else {
+      categoriaService
+        .buscarTodosParametrosAbierto(categoriaVacio)
+        .then((res) => {
+          setCategorias(res.data);
+        });
+    }
   }, []);
 
   const listItem = (categoria) => {
@@ -128,6 +147,14 @@ export default function BasicDemo() {
     return (
       <div className="flex justify-content-end">
         <React.Fragment>
+          {!user && (
+            <Button
+              icon="pi pi-home"
+              className="p-button-rounded mr-2"
+              tooltip={t("botones.home")}
+              onClick={volverInicio}
+            />
+          )}
           <Button
             icon="pi pi-search"
             className="p-button-rounded mr-2"
@@ -150,6 +177,12 @@ export default function BasicDemo() {
     );
   };
 
+  const volverInicio = (event) => {
+    event.preventDefault();
+    navigate("/");
+    window.location.reload();
+  };
+
   const eventos = (categoria) => {
     setCurrentCategoria(categoria);
     navigate("/categoria/eventosCategoria/" + categoria.id.toString());
@@ -164,49 +197,98 @@ export default function BasicDemo() {
   };
 
   const onSubmitBuscar = (data, form) => {
-    categoriaService.buscarTodosParametros(data).then(
-      (res) => {
-        if (res.data && Array.isArray(res.data)) {
-          setCategorias(res.data);
-        } else {
-          setCategorias([]);
+    const user = JSON.parse(localStorage.getItem("user"));
+    data["borradoLogico"] = "1";
+    if (user) {
+      categoriaService.buscarTodosParametros(data).then(
+        (res) => {
+          if (res.data && Array.isArray(res.data)) {
+            setCategorias(res.data);
+          } else {
+            setCategorias([]);
+          }
+          form.restart();
+          ocultarDialogoBuscar();
+        },
+        (error) => {
+          const resMessage =
+            (error.response &&
+              error.response.data &&
+              error.response.data.codigo) ||
+            error.message ||
+            error.toString();
+          setResMessage(resMessage);
+          setDialogoError(true);
         }
-        form.restart();
-        ocultarDialogoBuscar();
-      },
-      (error) => {
-        const resMessage =
-          (error.response &&
-            error.response.data &&
-            error.response.data.codigo) ||
-          error.message ||
-          error.toString();
-        setResMessage(resMessage);
-        setDialogoError(true);
-      }
-    );
+      );
+    } else {
+      categoriaService.buscarTodosParametrosAbierto(data).then(
+        (res) => {
+          if (res.data && Array.isArray(res.data)) {
+            setCategorias(res.data);
+          } else {
+            setCategorias([]);
+          }
+          form.restart();
+          ocultarDialogoBuscar();
+        },
+        (error) => {
+          const resMessage =
+            (error.response &&
+              error.response.data &&
+              error.response.data.codigo) ||
+            error.message ||
+            error.toString();
+          setResMessage(resMessage);
+          setDialogoError(true);
+        }
+      );
+    }
   };
 
   const reloadPage = () => {
-    categoriaService.buscarTodos().then(
-      (res) => {
-        if (res.data && Array.isArray(res.data)) {
-          setCategorias(res.data);
-        } else {
-          setCategorias([]);
+    const user = JSON.parse(localStorage.getItem("user"));
+    if (user) {
+      categoriaService.buscarTodosParametros(categoriaVacio).then(
+        (res) => {
+          if (res.data && Array.isArray(res.data)) {
+            setCategorias(res.data);
+          } else {
+            setCategorias([]);
+          }
+        },
+        (error) => {
+          const resMessage =
+            (error.response &&
+              error.response.data &&
+              error.response.data.codigo) ||
+            error.message ||
+            error.toString();
+          setResMessage(resMessage);
+          setDialogoError(true);
         }
-      },
-      (error) => {
-        const resMessage =
-          (error.response &&
-            error.response.data &&
-            error.response.data.codigo) ||
-          error.message ||
-          error.toString();
-        setResMessage(resMessage);
-        setDialogoError(true);
-      }
-    );
+      );
+    } else {
+      categoriaService.buscarTodosParametrosAbierto(categoriaVacio).then(
+        (res) => {
+          if (res.data && Array.isArray(res.data)) {
+            setCategorias(res.data);
+          } else {
+            setCategorias([]);
+          }
+        },
+        (error) => {
+          const resMessage =
+            (error.response &&
+              error.response.data &&
+              error.response.data.codigo) ||
+            error.message ||
+            error.toString();
+          setResMessage(resMessage);
+          setDialogoError(true);
+        }
+      );
+    }
   };
 
   return (

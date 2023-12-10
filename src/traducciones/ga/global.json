@@ -5,9 +5,9 @@
     "home": "Casa",
     "usuarios": "Usuarios",
     "gestionUsuarios": "Xestión de usuarios",
-    "gestionCategorias": "Xestión de categorias",
+    "gestionCategorias": "Xestión de categorías",
     "gestionEventos": "Eventos",
-    "categorias": "Categorias",
+    "categorias": "Categorías",
     "misEventos": "Meus Eventos",
     "red": "Rede",
     "miRed": "Noticias",
@@ -89,11 +89,11 @@
 
     "validacións": {
       "nombreVacio": "É necesario un nome",
-      "nomeInválidoAlfanumérico": "O nome da categoría só pode conter caracteres alfanuméricos.",
+      "nomeInválidoAlfanumérico": "O nome da categoría só pode conter caracteres alfanuméricos.,",
       "nomeCategoríaInválidoTamañoMax": "O nome da categoría non pode exceder os 15 caracteres.",
       "nomeCategoríaInválidoTamañoMin": "O nome da categoría debe ter un mínimo de 3 caracteres.",
       "descriciónVazía": "A descrición da categoría non pode estar baleira.",
-      "descriciónCategoríaInválidoAlfanumérico": "A descrición da categoría só pode conter caracteres alfanuméricos.",
+      "descriciónCategoríaInválidoAlfanumérico": "A descrición da categoría só pode conter caracteres alfanuméricos.,",
       "descriciónCategoríaInválidoTamañoMax": "A descrición da categoría non pode exceder os 255 caracteres.",
       "descriciónCategoríaInválidoTamañoMin": "A descrición da categoría debe ter un mínimo de 3 caracteres."
     }
@@ -137,11 +137,11 @@
 
     "validaciones": {
       "nombreVacio": "O nome do evento non pode estar baleiro",
-      "nombreInvalidoAlfanumerico": "O nome do evento só pode conter caracteres alfanuméricos.",
+      "nombreInvalidoAlfanumerico": "O nome do evento só pode conter caracteres alfanuméricos.,",
       "nombreEventoInvalidoTamañoMax": "O nome do evento non pode exceder 30 caracteres.",
       "nombreEventoInvalidoTamañoMin": "O nome do evento debe ter un mínimo de 3 caracteres.",
       "descripcionVacio": "A descrición do evento non pode estar baleira.",
-      "descripcionEventoInvalidoAlfanumerico": "A descrición do evento só pode conter caracteres alfanuméricos.",
+      "descripcionEventoInvalidoAlfanumerico": "A descrición do evento só pode conter caracteres alfanuméricos.,",
       "descripcionEventoInvalidoTamañoMax": "A descrición do evento non pode exceder os 255 caracteres.",
       "descripcionEventoInvalidoTamañoMin": "A descrición do evento debe ter un mínimo de 3 caracteres.",
       "numAsistentesVacio": "O número de asistentes non pode ser vacío",
@@ -204,6 +204,7 @@
   "botones": {
     "cancelar": "Cancelar",
     "modificarPerfil": "Teus datos persoais",
+    "verAplicacion": "Ver eventos",
     "registrarse": "Rexistrarse",
     "recuperarPassword": "Recuperar contrasinal",
     "iniciarSesion": "Iniciar sesión",
@@ -234,10 +235,11 @@
     "solicitudesEvento": "Solicitudes no evento",
     "suscripcionesEvento": "Suscripcións no evento",
     "comentariosEvento": "Comentarios do evento",
-    "volverCategorias": "Volver a categorias",
+    "volverCategorias": "Volver a categorías",
     "volverMisEventos": "Volver os meus eventos",
     "volverGestionEventos": "Volver a xestión de eventos",
-    "webEvento": "Web do evento"
+    "webEvento": "Web do evento",
+    "home": "Inicio"
   },
 
   "bandera": {
@@ -325,7 +327,7 @@
 
   "footer": {
     "usuarios": " usuarios",
-    "categorias": " categorias",
+    "categorias": " categorías",
     "eventos": " eventos",
     "suscripciones": " suscripcións",
     "solicitudes": " solicitudes",
@@ -383,21 +385,21 @@
   "ARCHIVO_SUBIDO_OK": "Arquivo subido ao sistema",
   "ARCHIVO_VACIO": "Non se pode subir un arquivo baleiro",
   "NOMBRE_CATEGORIA_VACIO": "O nome da categoría non pode estar baleiro",
-  "NOMBRE_CATEGORIA_ALFANUMERICO": "O nome da categoría só pode conter caracteres alfanuméricos",
+  "NOMBRE_CATEGORIA_ALFANUMERICO_PUNTO_COMA": "O nome da categoría só pode conter caracteres alfanuméricos.,",
   "NOMBRE_CATEGORIA_TAMANHO_MINIMO": "O nome da categoría non pode ter menos de 3 caracteres",
   "NOMBRE_CATEGORIA_TAMANHO_MAXIMO": "O nome da categoría non pode superar os 15 caracteres",
   "DESCRIPCION_CATEGORIA_VACIO": "A descrición da categoría non pode estar baleira",
-  "DESCRIPCION_CATEGORIA_ALFANUMERICO": "A descrición da categoría só pode conter caracteres alfanuméricos",
+  "DESCRIPCION_CATEGORIA_ALFANUMERICO_PUNTO_COMA": "A descrición da categoría só pode conter caracteres alfanuméricos.,",
   "DESCRIPCION_CATEGORIA_TAMANHO_MINIMO": "A descrición da categoría non pode ter menos de 3 caracteres",
   "DESCRIPCION_CATEGORIA_TAMANHO_MAXIMO": "A descrición non pode superar os 255 caracteres",
   "NOMBRE_CATEGORIA_YA_EXISTE": " Xa existe unha categoría con este nome no sistema",
   "CATEGORIA_NO_EXISTE": "Non existe a categoría no sistema",
   "NOMBRE_EVENTO_VACIO": "O nome do evento non pode estar baleiro",
-  "NOMBRE_EVENTO_ALFANUMERICO": "O nome do evento só pode conter caracteres alfanuméricos",
+  "NOMBRE_EVENTO_ALFANUMERICO_PUNTO_COMA": "O nome do evento só pode conter caracteres alfanuméricos.,",
   "NOMBRE_EVENTO_TAMANHO_MINIMO": "O nome do evento non pode ter menos de 3 caracteres",
   "NOMBRE_EVENTO_TAMANHO_MAXIMO": "O nome do evento non pode superar os 30 caracteres",
   "DESCRIPCION_EVENTO_VACIO": "A descrición do evento non pode estar baleira",
-  "DESCRIPCION_EVENTO_ALFANUMERICO": "A descrición do evento só pode conter caracteres alfanuméricos",
+  "DESCRIPCION_EVENTO_ALFANUMERICO_PUNTO_COMA": "A descrición do evento só pode conter caracteres alfanuméricos.,",
   "DESCRIPCION_EVENTO_TAMANHO_MINIMO": "A descrición do evento non pode ter menos de 3 caracteres",
   "DESCRIPCION_EVENTO_TAMANHO_MAXIMO": "A descrición da noticia non pode superar os 255 caracteres",
   "TIPO_ASISTENCIA_EVENTO_VACIO": "O tipo de asistencia do evento non pode estar baleiro",

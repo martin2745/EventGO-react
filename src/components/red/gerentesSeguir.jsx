@@ -208,6 +208,8 @@ export default function GerentesSeguir() {
   };
 
   const onSubmitBuscar = (data, form) => {
+    data["rol"] = "ROLE_GERENTE";
+    data["borradoLogico"] = "0";
     usuarioService.buscarTodosParametros(data).then(
       (res) => {
         if (res.data && Array.isArray(res.data)) {
@@ -283,23 +285,17 @@ export default function GerentesSeguir() {
 
   return (
     <div className="card">
-      {gerentes.length > 0 ? (
-        <div>
-          <h2 className="tituloTablas">{t("main.gerentesSeguir")}</h2>
-          <DataView
-            value={gerentes}
-            itemTemplate={itemTemplate}
-            layout={layout}
-            header={header()}
-            paginator
-            rows={6}
-          />
-        </div>
-      ) : (
-        <div className="col text-900 py-3">
-          <h1>{t("evento.noExistenGerentes")}</h1>
-        </div>
-      )}
+      <div>
+        <h2 className="tituloTablas">{t("main.gerentesSeguir")}</h2>
+        <DataView
+          value={gerentes}
+          itemTemplate={itemTemplate}
+          layout={layout}
+          header={header()}
+          paginator
+          rows={6}
+        />
+      </div>
       <Dialog
         visible={visibleDialogoBuscar}
         style={{ width: "450px" }}
