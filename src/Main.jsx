@@ -551,6 +551,12 @@ function Main() {
                 </>
               )}
             </section>
+
+            <Button
+              label={t("botones.verAplicacion")}
+              icon="pi pi-eye"
+              className="text-xl p-button-outlined mr-2"
+            />
           </div>
         </div>
       )}

@@ -42,6 +42,7 @@ export default function Eventosevento() {
   ];
   const [gerenteDetalle, setGerenteDetalle] = useState("");
   const idUsuario = localStorage.getItem("idUsuario");
+  let user = JSON.parse(localStorage.getItem("user"));
 
   const eventoVacio = {
     id: "",
@@ -62,7 +63,7 @@ export default function Eventosevento() {
   };
 
   useEffect(() => {
-    const user = JSON.parse(localStorage.getItem("user"));
+    let user = JSON.parse(localStorage.getItem("user"));
     if (user) {
       eventoService.buscarEventosCategoriaValidos(numero).then((res) => {
         setEventos(res.data);
@@ -75,7 +76,7 @@ export default function Eventosevento() {
   }, []);
 
   useEffect(() => {
-    const user = JSON.parse(localStorage.getItem("user"));
+    let user = JSON.parse(localStorage.getItem("user"));
     if (user) {
       usuarioService.buscarTodos().then((res) => {
         setGerente(res.data);
@@ -159,15 +160,18 @@ export default function Eventosevento() {
               >
                 {t("evento.informacion")}
               </Button>
-              <Button
-                icon="pi "
-                className="p-button p-component mt-3"
-                tooltip={t("botones.inscribirse")}
-                style={{ width: "100%" }}
-                onClick={() => inscribirse(evento)}
-              >
-                {t("evento.inscribirse")}
-              </Button>
+
+              {user && (
+                <Button
+                  icon="pi "
+                  className="p-button p-component mt-3"
+                  tooltip={t("botones.inscribirse")}
+                  style={{ width: "100%" }}
+                  onClick={() => inscribirse(evento)}
+                >
+                  {t("evento.inscribirse")}
+                </Button>
+              )}
             </div>
           </div>
         </div>
@@ -201,12 +205,15 @@ export default function Eventosevento() {
             >
               {t("botones.webEvento")}
             </a>
-            <a
-              onClick={() => comentariosEvento(evento)}
-              style={{ cursor: "pointer" }}
-            >
-              {t("botones.comentariosEvento")}
-            </a>
+
+            {user && (
+              <a
+                onClick={() => comentariosEvento(evento)}
+                style={{ cursor: "pointer" }}
+              >
+                {t("botones.comentariosEvento")}
+              </a>
+            )}
           </div>
           <div className="card flex justify-content-center">
             <Button
@@ -219,15 +226,17 @@ export default function Eventosevento() {
               {t("evento.informacion")}
             </Button>
 
-            <Button
-              icon="pi "
-              className="p-button p-component"
-              tooltip={t("botones.inscribirse")}
-              style={{ width: "100%" }}
-              onClick={() => inscribirse(evento)}
-            >
-              {t("evento.inscribirse")}
-            </Button>
+            {user && (
+              <Button
+                icon="pi "
+                className="p-button p-component"
+                tooltip={t("botones.inscribirse")}
+                style={{ width: "100%" }}
+                onClick={() => inscribirse(evento)}
+              >
+                {t("evento.inscribirse")}
+              </Button>
+            )}
           </div>
         </div>
       </div>
@@ -321,9 +330,9 @@ export default function Eventosevento() {
   };
 
   const reloadPage = () => {
-    const user = JSON.parse(localStorage.getItem("user"));
+    let user = JSON.parse(localStorage.getItem("user"));
     if (user) {
-      eventoService.buscarEventosCategoria(numero).then(
+      eventoService.buscarEventosCategoriaValidos(numero).then(
         (res) => {
           if (res.data && Array.isArray(res.data)) {
             setEventos(res.data);
@@ -343,7 +352,7 @@ export default function Eventosevento() {
         }
       );
     } else {
-      eventoService.buscarEventosCategoriaAbierto(numero).then(
+      eventoService.buscarEventosCategoriaValidosAbierto(numero).then(
         (res) => {
           if (res.data && Array.isArray(res.data)) {
             setEventos(res.data);
@@ -515,27 +524,52 @@ export default function Eventosevento() {
       idUsuario: usuario,
     };
 
-    eventoService.buscarTodosParametros(datos).then(
-      (res) => {
-        if (res.data && Array.isArray(res.data)) {
-          setEventos(res.data);
-        } else {
-          setEventos([]);
+    let user = JSON.parse(localStorage.getItem("user"));
+    if (user) {
+      eventoService.buscarTodosParametrosValidos(datos).then(
+        (res) => {
+          if (res.data && Array.isArray(res.data)) {
+            setEventos(res.data);
+          } else {
+            setEventos([]);
+          }
+          form.restart();
+          ocultarDialogoBuscar();
+        },
+        (error) => {
+          const resMessage =
+            (error.response &&
+              error.response.data &&
+              error.response.data.codigo) ||
+            error.message ||
+            error.toString();
+          setResMessage(resMessage);
+          setDialogoError(true);
         }
-        form.restart();
-        ocultarDialogoBuscar();
-      },
-      (error) => {
-        const resMessage =
-          (error.response &&
-            error.response.data &&
-            error.response.data.codigo) ||
-          error.message ||
-          error.toString();
-        setResMessage(resMessage);
-        setDialogoError(true);
-      }
-    );
+      );
+    } else {
+      eventoService.buscarTodosParametrosValidosAbierto(datos).then(
+        (res) => {
+          if (res.data && Array.isArray(res.data)) {
+            setEventos(res.data);
+          } else {
+            setEventos([]);
+          }
+          form.restart();
+          ocultarDialogoBuscar();
+        },
+        (error) => {
+          const resMessage =
+            (error.response &&
+              error.response.data &&
+              error.response.data.codigo) ||
+            error.message ||
+            error.toString();
+          setResMessage(resMessage);
+          setDialogoError(true);
+        }
+      );
+    }
   };
 
   return (
@@ -671,38 +705,32 @@ export default function Eventosevento() {
             </div>
           </div>
           <div className="card flex justify-content-center">
-            {eventoActual.documentoEvento ? (
+            <div className="card flex justify-content-center">
               <React.Fragment>
-                <Button
-                  icon="pi"
-                  className="p-button p-component mr-2"
-                  tooltip={t("botones.documentoInformativo")}
-                  style={{ width: "100%" }}
-                  onClick={() => documentoInformativo()}
-                >
-                  {t("evento.documentoInformativo")}
-                </Button>
-                <Button
-                  icon="pi"
-                  className="p-button p-component"
-                  tooltip={t("botones.inscribirse")}
-                  style={{ width: "100%" }}
-                  onClick={() => inscribirseEvento()}
-                >
-                  {t("evento.inscribirse")}
-                </Button>
+                {eventoActual.documentoEvento && (
+                  <Button
+                    icon="pi"
+                    className="p-button p-component mr-2"
+                    tooltip={t("botones.documentoInformativo")}
+                    style={{ width: "100%" }}
+                    onClick={() => documentoInformativo()}
+                  >
+                    {t("evento.documentoInformativo")}
+                  </Button>
+                )}
+                {user && (
+                  <Button
+                    icon="pi"
+                    className="p-button p-component"
+                    tooltip={t("botones.inscribirse")}
+                    style={{ width: "100%" }}
+                    onClick={() => inscribirseEvento()}
+                  >
+                    {t("evento.inscribirse")}
+                  </Button>
+                )}
               </React.Fragment>
-            ) : (
-              <Button
-                icon="pi"
-                className="p-button p-component"
-                tooltip={t("botones.inscribirse")}
-                style={{ width: "100%" }}
-                onClick={() => inscribirseEvento()}
-              >
-                {t("evento.inscribirse")}
-              </Button>
-            )}
+            </div>
           </div>
         </div>
       </Dialog>

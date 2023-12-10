@@ -5,6 +5,7 @@ import { Column } from "primereact/column";
 import { Button } from "primereact/button";
 import { FilterMatchMode, FilterOperator } from "primereact/api";
 import { InputText } from "primereact/inputtext";
+import { InputTextarea } from "primereact/inputtextarea";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { Dialog } from "primereact/dialog";
@@ -182,8 +183,8 @@ export default function CategoriaShowAll() {
 
   const validateCrear = (data) => {
     let errors = {};
-    var patronNombre = /^[A-Za-z0-9_áéíóúñÁÉÍÓÚÑ ]+$/;
-    var patronDescripcion = /^[A-Za-z0-9_áéíóúñÁÉÍÓÚÑ ]+$/;
+    var patronNombre = /^[A-Za-z0-9_áéíóúñÁÉÍÓÚÑ., ]+$/;
+    var patronDescripcion = /^[A-Za-z0-9_áéíóúñÁÉÍÓÚÑ., ]+$/;
 
     //nombre
     if (!data.nombre) {
@@ -233,7 +234,7 @@ export default function CategoriaShowAll() {
   const validateEditar = (data) => {
     let errors = {};
     var patronNombre = /^[A-Za-z0-9_áéíóúñÁÉÍÓÚÑ ]+$/;
-    var patronDescripcion = /^[A-Za-z0-9_áéíóúñÁÉÍÓÚÑ ]+$/;
+    var patronDescripcion = /^[A-Za-z0-9_áéíóúñÁÉÍÓÚÑ., ]+$/;
 
     //nombre
     if (!data.nombre) {
@@ -651,7 +652,7 @@ export default function CategoriaShowAll() {
         />
         {rowData.borradoLogico === "1" && (
           <Button
-            icon="pi pi-heart mr-2"
+            icon="pi pi-heart"
             className="p-button-rounded p-button-wrap"
             tooltip={t("botones.reactivar")}
             onClick={() => confirmarReactivarCategoria(rowData)}
@@ -745,7 +746,7 @@ export default function CategoriaShowAll() {
                     <div className="field ">
                       <span className="p-float-label">
                         <div className="p-field px-5 text-900 ">
-                          <InputText
+                          <InputTextarea
                             id="descripcion"
                             {...input}
                             placeholder={t("categoria.descripcion")}
@@ -819,7 +820,7 @@ export default function CategoriaShowAll() {
                     <div className="field ">
                       <span className="p-float-label">
                         <div className="p-field px-5 text-900 ">
-                          <InputText
+                          <InputTextarea
                             id="descripcion"
                             {...input}
                             placeholder={t("categoria.descripcion")}
@@ -915,7 +916,7 @@ export default function CategoriaShowAll() {
                     <div className="field ">
                       <span className="p-float-label">
                         <div className="p-field px-5 text-900 ">
-                          <InputText
+                          <InputTextarea
                             id="descripcion"
                             {...input}
                             placeholder={t("categoria.descripcion")}
@@ -1004,7 +1005,7 @@ export default function CategoriaShowAll() {
               </div>
               <span className="p-float-label">
                 <div className="p-field px-5 text-900 ">
-                  <InputText
+                  <InputTextarea
                     className="tamanhoInput"
                     value={categoriaActual.descripcion}
                   />

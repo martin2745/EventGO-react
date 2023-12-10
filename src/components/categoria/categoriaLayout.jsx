@@ -30,18 +30,30 @@ export default function BasicDemo() {
     id: "",
     nombre: "",
     descripcion: "",
+    borradoLogico: "0",
   };
   let user = JSON.parse(localStorage.getItem("user"));
 
   useEffect(() => {
+    const div1 = document.getElementById("div1");
+    const div2 = document.getElementById("div2");
+    if (div1) {
+      div1.style.display = "none";
+    }
+    if (div2) {
+      div2.style.display = "none";
+    }
+
     if (user) {
-      categoriaService.buscarTodos().then((res) => {
+      categoriaService.buscarTodosParametros(categoriaVacio).then((res) => {
         setCategorias(res.data);
       });
     } else {
-      categoriaService.buscarTodosAbierto().then((res) => {
-        setCategorias(res.data);
-      });
+      categoriaService
+        .buscarTodosParametrosAbierto(categoriaVacio)
+        .then((res) => {
+          setCategorias(res.data);
+        });
     }
   }, []);
 
@@ -186,6 +198,7 @@ export default function BasicDemo() {
 
   const onSubmitBuscar = (data, form) => {
     const user = JSON.parse(localStorage.getItem("user"));
+    data["borradoLogico"] = "1";
     if (user) {
       categoriaService.buscarTodosParametros(data).then(
         (res) => {
@@ -236,7 +249,7 @@ export default function BasicDemo() {
   const reloadPage = () => {
     const user = JSON.parse(localStorage.getItem("user"));
     if (user) {
-      categoriaService.buscarTodos().then(
+      categoriaService.buscarTodosParametros(categoriaVacio).then(
         (res) => {
           if (res.data && Array.isArray(res.data)) {
             setCategorias(res.data);
@@ -256,7 +269,7 @@ export default function BasicDemo() {
         }
       );
     } else {
-      categoriaService.buscarTodosAbierto().then(
+      categoriaService.buscarTodosParametrosAbierto(categoriaVacio).then(
         (res) => {
           if (res.data && Array.isArray(res.data)) {
             setCategorias(res.data);

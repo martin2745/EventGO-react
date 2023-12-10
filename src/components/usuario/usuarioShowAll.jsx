@@ -983,8 +983,8 @@ export default function UsuarioShowAll() {
         />
         {rowData.borradoLogico === "1" && (
           <Button
-            icon="pi pi-heart mr-2"
-            className="p-button-rounded p-button-wrap"
+            icon="pi pi-heart"
+            className="p-button-rounded p-button-wrap mr-2"
             tooltip={t("botones.reactivar")}
             onClick={() => confirmarReactivarUsuario(rowData)}
           />
