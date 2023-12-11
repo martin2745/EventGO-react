@@ -97,10 +97,6 @@ export default function InicioSesion() {
     navigate("/registro");
   }
 
-  function vistaPrevia() {
-    navigate("/categoria/categoriaLayout/");
-  }
-
   function onRecuperarPassword(event) {
     navigate("/recuperarPassword");
   }
@@ -194,20 +190,14 @@ export default function InicioSesion() {
                 />
                 <Button
                   label={t("botones.iniciarSesion")}
-                  className="text-xl mb-4 mt-4"
+                  className="text-xl mt-4"
                   type="submit"
                   icon="pi pi-sign-in"
                 />
                 <Button
-                  label={t("botones.verAplicacion")}
-                  icon="pi pi-eye"
-                  className="text-xl p-button-outlined mr-2"
-                  onClick={vistaPrevia}
-                />
-                <Button
                   label={t("botones.registrarse")}
                   icon="pi pi-user-plus"
-                  className="text-xl p-button-outlined mr-2  mt-4"
+                  className="text-xl p-button-outlined mr-2 mt-4"
                   onClick={onRegister}
                 />
                 <Button

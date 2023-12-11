@@ -252,9 +252,21 @@ function Main() {
     window.location.reload();
   }
 
+  function vistaPrevia() {
+    navigate("/categoria/categoriaLayout/");
+  }
+
   function landing() {
     navigate("/eventGO");
   }
+
+  const cambiarCursor = () => {
+    document.body.style.cursor = "pointer";
+  };
+
+  const restaurarCursor = () => {
+    document.body.style.cursor = "default";
+  };
 
   return (
     <div>
@@ -267,7 +279,14 @@ function Main() {
               start={
                 <div className="grid">
                   <div className="col text-900 py-3">
-                    <h1 onClick={landing}> EventGO</h1>
+                    <h1
+                      onClick={landing}
+                      onMouseOver={cambiarCursor}
+                      onMouseOut={restaurarCursor}
+                    >
+                      {" "}
+                      EventGO
+                    </h1>
                   </div>
                 </div>
               }
@@ -527,36 +546,111 @@ function Main() {
             <section>
               {idioma == "Español" ? (
                 <>
-                  <img className="foto1" src={circuito} />
-                  <img src={concierto} />
-                  <img src={fiesta} />
-                  <img src={formula1} />
-                  <img className="foto5" src={restaurante} />
+                  <img
+                    className="foto1"
+                    src={circuito}
+                    onClick={vistaPrevia}
+                    onMouseOver={cambiarCursor}
+                    onMouseOut={restaurarCursor}
+                  />
+                  <img
+                    src={concierto}
+                    onClick={vistaPrevia}
+                    onMouseOver={cambiarCursor}
+                    onMouseOut={restaurarCursor}
+                  />
+                  <img
+                    src={fiesta}
+                    onClick={vistaPrevia}
+                    onMouseOver={cambiarCursor}
+                    onMouseOut={restaurarCursor}
+                  />
+                  <img
+                    src={formula1}
+                    onClick={vistaPrevia}
+                    onMouseOver={cambiarCursor}
+                    onMouseOut={restaurarCursor}
+                  />
+                  <img
+                    className="foto5"
+                    src={restaurante}
+                    onClick={vistaPrevia}
+                    onMouseOver={cambiarCursor}
+                    onMouseOut={restaurarCursor}
+                  />
                 </>
               ) : idioma == "Inglés" ? (
                 <>
-                  <img className="foto1" src={circuitoI} />
-                  <img src={conciertoI} />
-                  <img src={fiestaI} />
-                  <img src={formula1I} />
-                  <img className="foto5" src={restauranteI} />
+                  <img
+                    className="foto1"
+                    src={circuitoI}
+                    onClick={vistaPrevia}
+                    onMouseOver={cambiarCursor}
+                    onMouseOut={restaurarCursor}
+                  />
+                  <img
+                    src={conciertoI}
+                    onClick={vistaPrevia}
+                    onMouseOver={cambiarCursor}
+                    onMouseOut={restaurarCursor}
+                  />
+                  <img
+                    src={fiestaI}
+                    onClick={vistaPrevia}
+                    onMouseOver={cambiarCursor}
+                    onMouseOut={restaurarCursor}
+                  />
+                  <img
+                    src={formula1I}
+                    onClick={vistaPrevia}
+                    onMouseOver={cambiarCursor}
+                    onMouseOut={restaurarCursor}
+                  />
+                  <img
+                    className="foto5"
+                    src={restauranteI}
+                    onClick={vistaPrevia}
+                    onMouseOver={cambiarCursor}
+                    onMouseOut={restaurarCursor}
+                  />
                 </>
               ) : (
                 <>
-                  <img className="foto1" src={circuitoG} />
-                  <img src={concierto} />
-                  <img src={fiestaG} />
-                  <img src={formula1} />
-                  <img className="foto5" src={restaurante} />
+                  <img
+                    className="foto1"
+                    src={circuitoG}
+                    onClick={vistaPrevia}
+                    onMouseOver={cambiarCursor}
+                    onMouseOut={restaurarCursor}
+                  />
+                  <img
+                    src={concierto}
+                    onClick={vistaPrevia}
+                    onMouseOver={cambiarCursor}
+                    onMouseOut={restaurarCursor}
+                  />
+                  <img
+                    src={fiestaG}
+                    onClick={vistaPrevia}
+                    onMouseOver={cambiarCursor}
+                    onMouseOut={restaurarCursor}
+                  />
+                  <img
+                    src={formula1}
+                    onClick={vistaPrevia}
+                    onMouseOver={cambiarCursor}
+                    onMouseOut={restaurarCursor}
+                  />
+                  <img
+                    className="foto5"
+                    src={restaurante}
+                    onClick={vistaPrevia}
+                    onMouseOver={cambiarCursor}
+                    onMouseOut={restaurarCursor}
+                  />
                 </>
               )}
             </section>
-
-            <Button
-              label={t("botones.verAplicacion")}
-              icon="pi pi-eye"
-              className="text-xl p-button-outlined mr-2"
-            />
           </div>
         </div>
       )}
