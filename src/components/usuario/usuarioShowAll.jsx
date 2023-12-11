@@ -958,7 +958,7 @@ export default function UsuarioShowAll() {
           onClick={() => editarUsuario(rowData)}
         />
         <Button
-          icon="pi pi-envelope"
+          icon="pi pi-unlock"
           className="p-button-rounded p-button-wrap mr-2"
           tooltip={t("botones.cambiarPassword")}
           onClick={() => cambiarPassword(rowData)}

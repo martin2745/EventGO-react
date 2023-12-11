@@ -478,7 +478,7 @@ export default function MisSuscripciones() {
         doc.addImage(rowData.evento.imagenEvento, 140, 30, 50, 50);
         doc.line(10, 280, 200, 280);
         doc.text("Copyright 2023 Martín Gil Blanco - MEI", 60, 290);
-        doc.save(`factura_${rowData.evento.nombre}_${login}.pdf`);
+        doc.save(`evento_${rowData.evento.nombre}_${login}.pdf`);
         break;
       case "ga":
         doc = new jsPDF();
@@ -538,7 +538,7 @@ export default function MisSuscripciones() {
         doc.addImage(rowData.evento.imagenEvento, 140, 30, 50, 50);
         doc.line(10, 280, 200, 280);
         doc.text("Copyright 2023 Martín Gil Blanco - MEI", 60, 290);
-        doc.save(`factura_${rowData.evento.nombre}_${login}.pdf`);
+        doc.save(`evento_${rowData.evento.nombre}_${login}.pdf`);
         break;
       case "en":
         doc = new jsPDF();
@@ -586,7 +586,7 @@ export default function MisSuscripciones() {
         doc.addImage(rowData.evento.imagenEvento, 140, 30, 50, 50);
         doc.line(10, 280, 200, 280);
         doc.text("Copyright 2023 Martín Gil Blanco - MEI", 60, 290);
-        doc.save(`factura_${rowData.evento.nombre}_${login}.pdf`);
+        doc.save(`event_${rowData.evento.nombre}_${login}.pdf`);
         break;
       default:
         doc.save(`IDIOMA_NO_DISPONIBLE.pdf`);
