@@ -30,7 +30,7 @@ export default function EventGO() {
           className="mx-2"
           alt="Avatar"
         />
-        Amy Elsner
+        Martín Gil Blanco
       </div>
     );
   };
