@@ -25,4 +25,38 @@ Si el proceso ha sido exitoso, la interfaz del proyecto estará disponible en la
 
 ---
 
+## Imágenes del proyecto
+
+### Vista de inicio de la plataforma
+
+El usuario podrá acceder a la plataforma, registrarse, recuperar su contraseña por correo electrónico e incluso acceder a una vista previa de categorías y eventos. Si este desea inscribirse si deberá acceder a la aplicación con su cuenta.
+
+![Inicio](./documentacion/imagenes/Login.png)
+
+### Categorías de eventos
+
+Existen un conjunto de categorías donde se podrán agrupar los diferentes eventos de la plataforma. Esto hace que los usuarios puedan buscar más facilmente eventos de su interés en función de sus gustos.
+
+![Categorias](./documentacion/imagenes/Categorias.png)
+
+### Eventos
+
+Los usuarios podrán ver información sobre un evento o inscribirse en este si es de su agrado.
+
+![Eventos](./documentacion/imagenes/Eventos.png)
+
+### Comentarios
+
+Podrán ver y comentar su opinión sobre un evento para aportar más información a la comunidad de EventGO.
+
+![Comentarios](./documentacion/imagenes/Comentarios.png)
+
+### Amistades
+
+Podrán seguir a gerentes de eventos (responsables de gestionar los eventos existentes y crear nuevos eventos en la plataforma) para estar al día de novedades y recibir avisos por correo electrónico.
+
+![Amistades](./documentacion/imagenes/Amistades.png)
+
+---
+
 Trabajo realizado por: Martín Gil Blanco
